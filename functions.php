@@ -14,4 +14,13 @@ function et_builder_add_main_elements() {
     do_action( 'et_builder_ready' );
 }
 endif;
+
+function disable_media_comments( $post_id ) {
+    if( get_post_type( $post_id ) == 'attachment' ) {
+        wp_die("Comment not allowed.");
+    }
+    return $open;
+}
+add_action( 'pre_comment_on_post', 'disable_media_comments' );
+
 ?>

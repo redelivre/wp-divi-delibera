@@ -17603,7 +17603,7 @@ new ET_Builder_Module_Fullwidth_Post_Slider;
 
 class ET_Builder_Module_Delibera extends ET_Builder_Module {
     function init() {
-        $this->name = esc_html__( 'Delibera xxx', 'et_builder' );
+        $this->name = esc_html__( 'Delibera', 'et_builder' );
         $this->slug = 'et_pb_button';
 
         $this->whitelisted_fields = array(
@@ -17744,12 +17744,23 @@ class ET_Builder_Module_Delibera extends ET_Builder_Module {
 
         $wp_posts = delibera_get_pautas_em($filtro);
 
-        $output = "";
+        $output = '<div id="gridcontainer">';
 
         foreach($wp_posts as $key=>$value)
         {
-            $output .= '<a href="'.$wp_posts[$key]->guid.'"> '.$wp_posts[$key]->post_title.'</a>';
+            $imageCode = '';
+
+            if (has_post_thumbnail( $wp_posts[$key]->ID ) ){
+                $image = wp_get_attachment_image_src( get_post_thumbnail_id( $wp_posts[$key]->ID  ), 'thumbnail' );
+                $imageCode = '<img src="'.$image[0].'">';
+            }
+
+            $output .= '<div class="griditemleft">
+            <div class="postimage">	'.$imageCode.'</div>
+            <h2><a href="'.$wp_posts[$key]->guid.'">'.$wp_posts[$key]->post_title.'</a></h2></div>';
         }
+
+        $output .="</div>";
 
         /*
 
