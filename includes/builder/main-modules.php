@@ -17843,7 +17843,6 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             'field' => 'tag_ID',
             'terms' => $include_categories,
             'post_type' => 'pauta',
-            'orderby'        => 'rand',
             'post_status'        => 'publish',
         );
 
