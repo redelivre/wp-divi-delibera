@@ -17928,7 +17928,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 					<img src="%1$s" alt="%2$s" />
 				</div>',
                 esc_url( $image_url ),
-                esc_attr( $name ),
+                esc_attr( $titulo ),
                 esc_attr( " et_pb_animation_{$animation}" )
             );
         }
@@ -17947,7 +17947,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             ( '' !== $image ? $image : '' ),
             ( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
             ( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' ),
-            ( '' !== $name ? sprintf( '<h4>%1$s</h4>', esc_html( $titulo ) ) : '' ),
+            ( '' !== $titulo ? sprintf( '<h4>%1$s</h4>', esc_html( $titulo ) ) : '' ),
             ( '' !== $position ? sprintf( '<p class="et_pb_member_position">%1$s</p>', esc_html( $position ) ) : '' ),
             $social_links,
             $background_layout,
