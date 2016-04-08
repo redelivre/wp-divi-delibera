@@ -17622,6 +17622,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             'module_class',
             'icon_color',
             'icon_hover_color',
+            'include_categories',
         );
 
         $this->fields_defaults = array(
