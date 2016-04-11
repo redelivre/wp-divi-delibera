@@ -17630,7 +17630,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             'background_layout' => array( 'light' ),
         );
 
-        $this->main_css_element = '%%order_class%%.et_pb_team_member';
+        $this->main_css_element = '%%order_class%%.et_pb_delibera_member';
         $this->advanced_options = array(
             'fonts' => array(
                 'header' => array(
@@ -17661,15 +17661,15 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
         $this->custom_css_options = array(
             'member_image' => array(
                 'label'    => esc_html__( 'Member Image', 'et_builder' ),
-                'selector' => '.et_pb_team_member_image',
+                'selector' => '.et_pb_delibera_member_image',
             ),
             'member_description' => array(
                 'label'    => esc_html__( 'Member Description', 'et_builder' ),
-                'selector' => '.et_pb_team_member_description',
+                'selector' => '.et_pb_delibera_member_description',
             ),
             'title' => array(
                 'label'    => esc_html__( 'Title', 'et_builder' ),
-                'selector' => '.et_pb_team_member_description h4',
+                'selector' => '.et_pb_delibera_member_description h4',
             ),
             'member_position' => array(
                 'label'    => esc_html__( 'Member Position', 'et_builder' ),
@@ -17838,15 +17838,20 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
         $image = $social_links = '';
 
         $args = array(
-            'posts_per_page' =>  1,
-            'taxonomy' => 'tema',
-            'field' => 'tag_ID',
-            'terms' => $include_categories,
             'post_type' => 'pauta',
+            'orderby' => 'rand',
             'post_status'        => 'publish',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'tema',
+                    'field' => 'tag_id',
+                    'terms' => $include_categories,
+                    'include_children' => false
+                )
+            )
         );
 
-        $wp_posts = delibera_get_pautas_em($args);
+        $wp_posts = get_posts($args);
 
         foreach($wp_posts as $key=>$value)
         {
@@ -17923,7 +17928,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 
         if ( '' !== $image_url ) {
             $image = sprintf(
-                '<div class="et_pb_team_member_image et-waypoint%3$s">
+                '<div class="et_pb_delibera_member_image et-waypoint%3$s">
 					<img src="%1$s" alt="%2$s" />
 				</div>',
                 esc_url( $image_url ),
@@ -17933,24 +17938,25 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
         }
 
         $output = sprintf(
-            '<a href=%10$s><div%3$s class="et_pb_module et_pb_team_member%4$s%9$s et_pb_bg_layout_%8$s clearfix">
+            '<div%3$s class="et_pb_module et_pb_delibera_member%4$s%9$s et_pb_bg_layout_%8$s clearfix">
 				%2$s
-				<div class="et_pb_team_member_description">
+				<div class="et_pb_delibera_member_description">
+				<a href=%10$s>
 					%5$s
 					%6$s
 					%1$s
 					%7$s
 				</div> <!-- .et_pb_delibera_member_description -->
-			</div></a> <!-- .et_pb_delibera_member -->',
+			</a></div> <!-- .et_pb_delibera_member -->',
             $this->shortcode_content,
             ( '' !== $image ? $image : '' ),
             ( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
-            ( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' ),
+            ( '' !== $module_class ? sprintf( ' %1$s', esc_attr( str_replace("delibera","team",$module_class) ) ) : '' ),
             ( '' !== $titulo ? sprintf( '<h4>%1$s</h4>', esc_html( $titulo ) ) : '' ),
             ( '' !== $position ? sprintf( '<p class="et_pb_member_position">%1$s</p>', esc_html( $position ) ) : '' ),
             $social_links,
             $background_layout,
-            ( '' === $image ? ' et_pb_team_member_no_image' : '' ),
+            ( '' === $image ? ' et_pb_delibera_member_no_image' : '' ),
             $pauta_url
         );
 
