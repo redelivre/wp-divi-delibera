@@ -17969,7 +17969,7 @@ new ET_Builder_Module_Delibera_Member;
 class ET_Builder_Module_Formulario extends ET_Builder_Module {
     function init() {
         $this->name = esc_html__( 'Inserção de pauta', 'et_builder' );
-        $this->slug = 'et_pb_formulariooas';
+        $this->slug = 'et_pb_formulariooasx';
         $this->child_slug      = 'et_pb_contact_field_delibera';
         $this->child_item_text = esc_html__( 'Field', 'et_builder' );
 
