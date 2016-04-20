@@ -44,7 +44,6 @@ if ( ! function_exists( 'et_builder_include_categories_delibera_option' ) ) :
             $cats_array = get_categories();
         }
 
-
         if ( empty( $cats_array ) ) {
             $output = '<p>' . esc_html__( "You currently don't have any projects assigned to a category.", 'et_builder' ) . '</p>';
         }
@@ -56,7 +55,7 @@ if ( ! function_exists( 'et_builder_include_categories_delibera_option' ) ) :
             );
 
             $output .= sprintf(
-                '%4$s<label><input type="checkbox" name="et_pb_include_categories" value="%1$s"%3$s> %2$s xxx</label><br/>',
+                '%4$s<label><input type="checkbox" name="et_pb_include_categories" value="%1$s"%3$s> %2$s </label><br/>',
                 esc_attr( $category->term_id ),
                 esc_html( $category->name ),
                 $contains,
@@ -72,8 +71,7 @@ if ( ! function_exists( 'et_builder_include_categories_delibera_option' ) ) :
     }
 endif;
 
-
-/** modificações para alterar a taxonomia bairro */
+/** modificaï¿½ï¿½es para alterar a taxonomia bairro */
 
 /**
  * Registers the 'bairro' taxonomy for users.  This is a taxonomy for the 'user' object type rather than a
