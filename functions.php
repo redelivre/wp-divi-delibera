@@ -40,8 +40,8 @@ if ( ! function_exists( 'et_builder_include_categories_delibera_option' ) ) :
         if ( $args['use_terms'] ) {
             $cats_array = get_terms( $args['term_name'] );
         } else {
-            //$cats_array = get_categories( apply_filters( 'et_builder_get_categories_args', 'hide_empty=0' ) );
-            $cats_array = get_categories();
+            $cats_array = get_categories( apply_filters( 'et_builder_get_categories_args', 'hide_empty=0' ) );
+            //$cats_array = get_categories();
         }
 
         if ( empty( $cats_array ) ) {
@@ -87,8 +87,8 @@ if ( ! function_exists( 'et_builder_include_categories_delibera_form_option_radi
         if ( $args['use_terms'] ) {
             $cats_array = get_terms( $args['term_name'] );
         } else {
-            //$cats_array = get_categories( apply_filters( 'et_builder_get_categories_args', 'hide_empty=0' ) );
-            $cats_array = get_categories();
+            $cats_array = get_categories( apply_filters( 'et_builder_get_categories_args', 'hide_empty=0' ) );
+            //$cats_array = get_categories();
         }
 
         if ( empty( $cats_array ) ) {

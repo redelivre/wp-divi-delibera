@@ -17969,7 +17969,7 @@ new ET_Builder_Module_Delibera_Member;
 class ET_Builder_Module_Formulario extends ET_Builder_Module {
     function init() {
         $this->name = esc_html__( 'Inserção de pauta', 'et_builder' );
-        $this->slug = 'et_pb_formulariooasxq';
+        $this->slug = 'et_pb_formulariooasxqz';
         $this->child_slug      = 'et_pb_contact_field_delibera';
         $this->child_item_text = esc_html__( 'Field', 'et_builder' );
 
@@ -18329,11 +18329,10 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
                 'post_status'   => 'publish',
                 'post_type'     => 'pauta',
                 'tags_input'    => $processed_fields_values['tags']['value'],
+             'meta_input' => array("delibera_flow"=>"debate,relatoria,votacao"),
              'tax_input' => array( 'tema' => $_POST['et_pb_categories_' . $et_pb_contact_form_num] ));
 
             $post_id = wp_insert_post( $my_post );
-
-            add_post_meta( $post_id, 'delibera_flow', '01/01/2017' );
 
             $redirect_url = esc_url( get_permalink($post_id) );
             $use_redirect = "on";
