@@ -17891,12 +17891,12 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 			<BR><div class="tags" id="tags"><a href="#">tag1</a>, <a href="#">tag2</a></div>
 
 			<BR><div class="user" id="user">
-			<div class="imageInterna"><img src="http://www.freelanceme.net/Images/default%20profile%20picture.png"></div>
+			<div class="imageInterna"><img src="http://www.freelanceme.net/Images/default profile picture.png" width="25"></div>
 			<div class="name">Nome autor</div>
-			<div class="like">01</div>
+			</div>
+						<div class="like">01</div>
 			<div class="deslike">01</div>
 			<div class="coment">01</div>
-			</div>
 			</div> <!-- .et_pb_delibera_member -->',
             $this->shortcode_content,
             ( '' !== $image ? $image : '' ),
