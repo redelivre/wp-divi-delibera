@@ -17,3 +17,68 @@
 #gridcontainer .griditemleft{float: left; width: 30%; margin: 0 40px 40px 0;}
 #gridcontainer .griditemright{float: left; width: 32%px;}
 #gridcontainer .postimage{margin: 0 0 10px 0;}
+
+.et_pb_column #tema {
+	float: left;
+	width: 100%;
+	background: #FFAAAA;
+	text-align: center;
+	padding: 10px 0px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: black;
+	margin-bottom: 10px;
+}
+
+.et_pb_column h4 {
+	line-height: 1.3;
+}
+
+.et_pb_column #tags a {
+	color: black;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.et_pb_column 
+
+#user {
+	float: left;
+	width: 100%;
+}
+
+.et_pb_column #user .imageInterna {
+	float: left;
+	width: 50px;
+	height: 50px;
+}
+
+.et_pb_column #user .imageInterna img {
+	width: 100%;
+	height: auto;
+}
+
+.et_pb_column 
+
+#user .name {
+	padding-left: 70px;
+	line-height: 50px;
+	font-weight: bold;
+	color: black;
+}
+
+.et_pb_column .like,
+.et_pb_column .deslike,
+.et_pb_column .coment {
+	float: left;
+	width: 33%;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.et_pb_column .like img,
+.et_pb_column .deslike img,
+.et_pb_column .coment img {
+	vertical-align: middle;
+	margin-right: 5px;
+}
