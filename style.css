@@ -40,9 +40,7 @@
 	font-weight: bold;
 }
 
-.et_pb_column 
-
-#user {
+.et_pb_column #user {
 	float: left;
 	width: 100%;
 }
@@ -58,9 +56,7 @@
 	height: auto;
 }
 
-.et_pb_column 
-
-#user .name {
+.et_pb_column #user .name {
 	padding-left: 70px;
 	line-height: 50px;
 	font-weight: bold;
@@ -81,4 +77,17 @@
 .et_pb_column .coment img {
 	vertical-align: middle;
 	margin-right: 5px;
+}
+
+.et_pb_delibera_member_image img {
+	float: left;
+}
+
+.et_pb_column .faixa {
+	float: left;
+	margin-top: 15px;
+	width: 100%;
+	background: #FFAAAA;
+	text-align: right;
+	padding-top: 5px;
 }
