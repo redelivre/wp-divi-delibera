@@ -17897,6 +17897,9 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 			<div class="like"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/up.png">01</div>
 			<div class="deslike"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">01</div>
 			<div class="coment"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">01</div>
+
+			<div class="faixa"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/opn.png"></div>
+
 			</div> <!-- .et_pb_delibera_member -->',
             $this->shortcode_content,
             ( '' !== $image ? $image : '' ),
