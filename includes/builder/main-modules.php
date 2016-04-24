@@ -17894,9 +17894,9 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 			<div class="imageInterna"><img src="http://www.freelanceme.net/Images/default profile picture.png" width="25"></div>
 			<div class="name">Nome autor</div>
 			</div>
-						<div class="like">01</div>
-			<div class="deslike">01</div>
-			<div class="coment">01</div>
+			<div class="like"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/up.png">01</div>
+			<div class="deslike"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">01</div>
+			<div class="coment"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">01</div>
 			</div> <!-- .et_pb_delibera_member -->',
             $this->shortcode_content,
             ( '' !== $image ? $image : '' ),
