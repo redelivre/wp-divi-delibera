@@ -17604,7 +17604,7 @@ new ET_Builder_Module_Fullwidth_Post_Slider;
 class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
     function init() {
         $this->name = esc_html__( 'Delibera', 'et_builder' );
-        $this->slug = 'et_pb_delibera_member';
+        $this->slug = 'et_pb_delibera_pauta22v';
 
         $this->whitelisted_fields = array(
             'name',
@@ -17612,10 +17612,6 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             'image_url',
             'animation',
             'background_layout',
-            'facebook_url',
-            'twitter_url',
-            'google_url',
-            'linkedin_url',
             'content_new',
             'admin_label',
             'module_id',
@@ -17696,16 +17692,16 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
                 'description'      => esc_html__( 'Choose which categories you would like to include in the feed.', 'et_builder' ),
             ),
             'name' => array(
-                'label'           => esc_html__( 'Name', 'et_builder' ),
+                'label'           => esc_html__( 'Title', 'et_builder' ),
                 'type'            => 'text',
                 'option_category' => 'basic_option',
-                'description'     => esc_html__( 'Input the name of the person', 'et_builder' ),
+                'description'     => 'Insira um título',
             ),
             'position' => array(
-                'label'           => esc_html__( 'Position', 'et_builder' ),
+                'label'           => esc_html__( 'Subtitle', 'et_builder' ),
                 'type'            => 'text',
                 'option_category' => 'basic_option',
-                'description'     => esc_html__( "Input the person's position.", 'et_builder' ),
+                'description'     =>'insira um subtitulo',
             ),
             'image_url' => array(
                 'label'              => esc_html__( 'Image URL', 'et_builder' ),
@@ -17739,30 +17735,6 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
                     'dark'  => esc_html__( 'Light', 'et_builder' ),
                 ),
                 'description' => esc_html__( 'Here you can choose the value of your text. If you are working with a dark background, then your text should be set to light. If you are working with a light background, then your text should be dark.', 'et_builder' ),
-            ),
-            'facebook_url' => array(
-                'label'           => esc_html__( 'Facebook Profile Url', 'et_builder' ),
-                'type'            => 'text',
-                'option_category' => 'basic_option',
-                'description'     => esc_html__( 'Input Facebook Profile Url.', 'et_builder' ),
-            ),
-            'twitter_url' => array(
-                'label'           => esc_html__( 'Twitter Profile Url', 'et_builder' ),
-                'type'            => 'text',
-                'option_category' => 'basic_option',
-                'description'     => esc_html__( 'Input Twitter Profile Url', 'et_builder' ),
-            ),
-            'google_url' => array(
-                'label'           => esc_html__( 'Google+ Profile Url', 'et_builder' ),
-                'type'            => 'text',
-                'option_category' => 'basic_option',
-                'description'     => esc_html__( 'Input Google+ Profile Url', 'et_builder' ),
-            ),
-            'linkedin_url' => array(
-                'label'           => esc_html__( 'LinkedIn Profile Url', 'et_builder' ),
-                'type'            => 'text',
-                'option_category' => 'basic_option',
-                'description'     => esc_html__( 'Input LinkedIn Profile Url', 'et_builder' ),
             ),
             'content_new' => array(
                 'label'           => esc_html__( 'Description', 'et_builder' ),
@@ -17824,10 +17796,6 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
         $position          = $this->shortcode_atts['position'];
         $image_url         = $this->shortcode_atts['image_url'];
         $animation         = $this->shortcode_atts['animation'];
-        $facebook_url      = $this->shortcode_atts['facebook_url'];
-        $twitter_url       = $this->shortcode_atts['twitter_url'];
-        $google_url        = $this->shortcode_atts['google_url'];
-        $linkedin_url      = $this->shortcode_atts['linkedin_url'];
         $background_layout = $this->shortcode_atts['background_layout'];
         $icon_color        = $this->shortcode_atts['icon_color'];
         $icon_hover_color  = $this->shortcode_atts['icon_hover_color'];
@@ -17853,8 +17821,14 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 
         $wp_posts = get_posts($args);
 
+
         foreach($wp_posts as $key=>$value)
         {
+
+            $term_list = wp_get_post_terms($wp_posts[$key]->ID, 'tema', array("fields" => "all"));
+
+            $tema = $term_list[0]->name;
+
             $image_code = '';
             $pauta_url = "";
             $titulo = "";
@@ -17887,42 +17861,6 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             ) );
         }
 
-        if ( '' !== $facebook_url ) {
-            $social_links .= sprintf(
-                '<li><a href="%1$s" class="et_pb_font_icon et_pb_facebook_icon"><span>%2$s</span></a></li>',
-                esc_url( $facebook_url ),
-                esc_html__( 'Facebook', 'et_builder' )
-            );
-        }
-
-        if ( '' !== $twitter_url ) {
-            $social_links .= sprintf(
-                '<li><a href="%1$s" class="et_pb_font_icon et_pb_twitter_icon"><span>%2$s</span></a></li>',
-                esc_url( $twitter_url ),
-                esc_html__( 'Twitter', 'et_builder' )
-            );
-        }
-
-        if ( '' !== $google_url ) {
-            $social_links .= sprintf(
-                '<li><a href="%1$s" class="et_pb_font_icon et_pb_google_icon"><span>%2$s</span></a></li>',
-                esc_url( $google_url ),
-                esc_html__( 'Google+', 'et_builder' )
-            );
-        }
-
-        if ( '' !== $linkedin_url ) {
-            $social_links .= sprintf(
-                '<li><a href="%1$s" class="et_pb_font_icon et_pb_linkedin_icon"><span>%2$s</span></a></li>',
-                esc_url( $linkedin_url ),
-                esc_html__( 'LinkedIn', 'et_builder' )
-            );
-        }
-
-        if ( '' !== $social_links ) {
-            $social_links = sprintf( '<ul class="et_pb_member_social_links">%1$s</ul>', $social_links );
-        }
-
         if($image_code !='')
             $image_url = $image_code;
 
@@ -17942,13 +17880,24 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             '<div%3$s class="et_pb_module et_pb_delibera_member%4$s%9$s et_pb_bg_layout_%8$s clearfix">
 				%2$s
 				<div class="et_pb_delibera_member_description">
+				<div class="tema" id="tema">%11$s</div>
 				<a href=%10$s>
 					%5$s
 					%6$s
 					%1$s
 					%7$s
 				</div> <!-- .et_pb_delibera_member_description -->
-			</a></div> <!-- .et_pb_delibera_member -->',
+			</a>
+			<BR><div class="tags" id="tags"><a href="#">tag1</a>, <a href="#">tag2</a></div>
+
+			<BR><div class="user" id="user">
+			<div class="imageInterna"><img src="http://www.freelanceme.net/Images/default%20profile%20picture.png"></div>
+			<div class="name">Nome autor</div>
+			<div class="like">01</div>
+			<div class="deslike">01</div>
+			<div class="coment">01</div>
+			</div>
+			</div> <!-- .et_pb_delibera_member -->',
             $this->shortcode_content,
             ( '' !== $image ? $image : '' ),
             ( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
@@ -17958,7 +17907,8 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             $social_links,
             $background_layout,
             ( '' === $image ? ' et_pb_delibera_member_no_image' : '' ),
-            $pauta_url
+            $pauta_url,
+            $tema
         );
 
        return $output;
@@ -17969,7 +17919,7 @@ new ET_Builder_Module_Delibera_Member;
 class ET_Builder_Module_Formulario extends ET_Builder_Module {
     function init() {
         $this->name = esc_html__( 'Inserção de pauta', 'et_builder' );
-        $this->slug = 'et_pb_formulariooasxqz';
+        $this->slug = 'et_pb_formulariooasxqzx';
         $this->child_slug      = 'et_pb_contact_field_delibera';
         $this->child_item_text = esc_html__( 'Field', 'et_builder' );
 
@@ -17983,7 +17933,6 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
             'module_class',
             'form_background_color',
             'input_border_radius',
-            'custom_message',
             'use_redirect',
             'redirect_url',
             'success_message'
@@ -18085,14 +18034,9 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
                 'label'           => esc_html__( 'Title', 'et_builder' ),
                 'type'            => 'text',
                 'option_category' => 'basic_option',
-                'description'     => esc_html__( 'Define a title for your contact form.', 'et_builder' ),
+                'description'     => esc_html__( 'Define a title for your form.', 'et_builder' ),
             ),
-            'custom_message' => array(
-                'label'           => esc_html__( 'Message Pattern', 'et_builder' ),
-                'type'            => 'textarea',
-                'option_category' => 'configuration',
-                'description'     => et_get_safe_localization( __( 'Here you can define the custom pattern for the email Message. Fields should be included in following format - <strong>%%field_id%%</strong>. For example if you want to include the field with id = <strong>phone</strong> and field with id = <strong>message</strong>, then you can use the following pattern: <strong>My message is %%message%% and phone number is %%phone%%</strong>. Leave blank for default.', 'et_builder' ) ),
-            ),
+
             'use_redirect' => array(
                 'label'           => esc_html__( 'Enable Redirect URL', 'et_builder' ),
                 'type'            => 'yes_no_button',
@@ -18195,7 +18139,6 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
         $input_border_radius   = $this->shortcode_atts['input_border_radius'];
         $button_custom         = $this->shortcode_atts['custom_button'];
         $custom_icon           = $this->shortcode_atts['button_icon'];
-        $custom_message        = $this->shortcode_atts['custom_message'];
         $use_redirect          = $this->shortcode_atts['use_redirect'];
         $redirect_url          = $this->shortcode_atts['redirect_url'];
         $success_message       = $this->shortcode_atts['success_message'];
@@ -18300,13 +18243,7 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
 
             $contact_name = isset( $processed_fields_values['name'] ) ? stripslashes( sanitize_text_field( $processed_fields_values['name']['value'] ) ) : '';
 
-            if ( '' !== $custom_message ) {
-                $message_pattern = $custom_message;
-                // insert the data from contact form into the message pattern
-                foreach ( $processed_fields_values as $key => $value ) {
-                    $message_pattern = str_ireplace( "%%{$key}%%", $value['value'], $message_pattern );
-                }
-            } else {
+
                 // use default message pattern if custom pattern is not defined
                 $message_pattern = isset( $processed_fields_values['message']['value'] ) ? $processed_fields_values['message']['value'] : '';
 
@@ -18321,7 +18258,6 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
                         );
                     }
                 }
-            }
 
          $my_post = array(
                 'post_title'    => $processed_fields_values['titulo']['value'],
@@ -18329,28 +18265,16 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
                 'post_status'   => 'publish',
                 'post_type'     => 'pauta',
                 'tags_input'    => $processed_fields_values['tags']['value'],
-             'meta_input' => array("delibera_flow"=>"debate,relatoria,votacao"),
-             'tax_input' => array( 'tema' => $_POST['et_pb_categories_' . $et_pb_contact_form_num] ));
+                'meta_input'       => array("delibera_flow"=>"emvotacao"),
+                'tax_input'        => array( 'tema' => $_POST['et_pb_categories_' . $et_pb_contact_form_num] ));
 
-            $post_id = wp_insert_post( $my_post );
+            $post_id = deliberaCreateTopic( $my_post );
 
             $redirect_url = esc_url( get_permalink($post_id) );
             $use_redirect = "on";
 
-            /*
-
-            $headers[] = "From: \"{$contact_name}\" <{$contact_email}>";
-            $headers[] = "Reply-To: <{$contact_email}>"
-
-            wp_mail( apply_filters( 'et_contact_page_email_to', $et_email_to ),
-                et_get_safe_localization( sprintf(
-                    __( 'New Message From %1$s%2$s', 'et_builder' ),
-                    sanitize_text_field( html_entity_decode( $et_site_name ) ),
-                    ( '' !== $title ? et_get_safe_localization( sprintf( _x( ' - %s', 'contact form title separator', 'et_builder' ), sanitize_text_field( html_entity_decode( $title ) ) ) ) : '' )
-                ) ),
-                stripslashes( wp_strip_all_tags( $message_pattern ) ), apply_filters( 'et_contact_page_headers', $headers, $contact_name, $contact_email ) );
-*/
             $et_error_message = sprintf( '<p>%1$s</p>', esc_html( $success_message ) );
+
         }
 
         $form = '';
@@ -18373,7 +18297,7 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
 
         if ( $et_contact_error ) {
             $form = sprintf( '
-				<div class="et_pb_contact">
+				<div class="et_pb_contact" onclick="teste();">
 					<form class="et_pb_contact_form clearfix" method="post" action="%1$s">
 						%8$s
 						<input type="hidden" value="et_contact_proccess" name="et_pb_contactform_submit_%7$s">

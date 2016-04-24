@@ -279,5 +279,22 @@
         </div>
     </header> <!-- #main-header -->
 
+    <Script>
+
+    function teste()
+    {
+
+        jQuery.post('<?php echo admin_url('admin-ajax.php'); ?>', function(response) {
+        if(response == 'no') {
+
+        alert('Antes de interagir você deve se cadastrar');
+        window.location = '<?php echo wp_login_url( get_permalink() ); ?>';
+
+        }
+        });
+    }
+
+    </script>
+
     <div id="et-main-area">
         <div id="main-content">
