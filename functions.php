@@ -398,4 +398,7 @@ function ajax_check_user_logged_in() {
 }
 add_action('wp_ajax_is_user_logged_in', 'ajax_check_user_logged_in');
 add_action('wp_ajax_nopriv_is_user_logged_in', 'ajax_check_user_logged_in');
+
+
+
 ?>

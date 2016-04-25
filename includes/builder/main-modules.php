@@ -17829,8 +17829,6 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 
             $tema = $term_list[0]->name;
 
-            $temaLink = get_term_link($term_list[0]->slug,"tema");
-
             $image_code = '';
             $pauta_url = "";
             $titulo = "";
@@ -17882,7 +17880,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             '<div%3$s class="et_pb_module et_pb_delibera_member%4$s%9$s et_pb_bg_layout_%8$s clearfix">
 				%2$s
 				<div class="et_pb_delibera_member_description">
-				<div class="tema" id="tema"><a href="%12$s">%11$s</a></div>
+				<div class="tema" id="tema">%11$s</div>
 				<a href=%10$s>
 					%5$s
 					%6$s
@@ -17913,8 +17911,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             $background_layout,
             ( '' === $image ? ' et_pb_delibera_member_no_image' : '' ),
             $pauta_url,
-            $tema,
-            $temaLink
+            $tema
         );
 
        return $output;
