@@ -31,16 +31,17 @@ add_action( 'pre_comment_on_post', 'disable_media_comments' );
 
 if ( ! function_exists( 'et_builder_include_categories_delibera_option' ) ) :
     function et_builder_include_categories_delibera_option( $args = array() ) {
+
         $defaults = apply_filters( 'et_builder_include_categories_delibera_defaults', array (
             'use_terms' => true,
-            'term_name' => 'tema',
-            'post_type'=>'pauta'
+            'term_name' => 'tema', 
+             'post_type'=>'pauta'
         ) );
 
         $args = wp_parse_args( $args, $defaults );
 
         $output = "\t" . "<% var et_pb_include_categories_temp = typeof et_pb_include_categories !== 'undefined' ? et_pb_include_categories.split( ',' ) : []; %>" . "\n";
-		
+
         if ( $args['use_terms'] ) {
             $cats_array = get_terms( $args['term_name'], array( 'hide_empty' => false) );
         } else {
@@ -87,7 +88,7 @@ if ( ! function_exists( 'et_builder_include_categories_delibera_form_option_radi
         $args = wp_parse_args( $args, $defaults );
 
         $output = "\t" . "<% var et_pb_include_categories_temp = typeof et_pb_include_categories !== 'undefined' ? et_pb_include_categories.split( ',' ) : []; %>" . "\n";
-        
+
         if ( $args['use_terms'] ) {
             $cats_array = get_terms( $args['term_name'], array( 'hide_empty' => false) );
         } else {
