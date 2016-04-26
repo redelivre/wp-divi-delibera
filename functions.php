@@ -399,6 +399,7 @@ endif;
 
 function ajax_check_user_logged_in() {
     echo is_user_logged_in()?'yes':'no';
+    /*teste*/
     die();
 }
 add_action('wp_ajax_is_user_logged_in', 'ajax_check_user_logged_in');
