@@ -95,5 +95,5 @@
     .ciclos { display: none;}
     .title { display: none;}
     .description {display: none}
-    .tema {background-color: #3EA656; height: 12px}
-    .faixa {background-color: #3EA656;}
+    .temaVerde { background-color: #3EA656; height: 12px;}
+    .faixaVerde { background-color: #3EA656; }

@@ -1,111 +1,48 @@
-<?php if ( have_posts() ) while ( have_posts() ) : the_post();
-	$status_pauta = delibera_get_situacao($post->ID)->slug;
-//echo $status_pauta;
-	global $DeliberaFlow;
-	$flow = $DeliberaFlow->get(get_the_ID());
+<?php
+
+/*
+ * O loop padrão do archive.php
+ *
+ * Por enquanto, ele está apenas alinhado para funcionar com o Delibera. A ideia é deixa-lo específico
+ * o suficiente pra trabalhar com datas, categorias, tags e até taxonomias, antes de, quem sabe, separar
+ * os arquivos.
+ *
+ */
+
 ?>
-    
-<div class="pauta-content <?php echo $status_pauta; ?>">
+<div class="et_pb_section  et_pb_section_0 et_section_regular">
 
-	<div class="banner-ciclo status-ciclo">
-		<h3 class="title">Estágio da pauta</h3>
-		<ul class="ciclos"><?php
-			$i = 1;
-			foreach ($flow as $situacao)
-			{
-				switch($situacao)
-				{
-					case 'validacao':?>
-						<li class="validacao <?php echo ($status_pauta != "validacao" ? "inactive" : ""); ?>"><?php echo $i; ?><br>Validação</li><?php
-					break;
-					case 'discussao': ?>
-						<li class="discussao <?php echo ($status_pauta != "discussao" ? "inactive" : ""); ?>"><?php echo $i; ?><br>Discussão</li><?php
-					break;
-					case 'relatoria':
-					case 'eleicao_relator': ?>
-						<li class="relatoria <?php echo ($status_pauta != "relatoria" ? "inactive" : ""); ?>"><?php echo $i; ?><br>Relatoria</li><?php
-					break;
-					case 'emvotacao': ?>
-						<li class="emvotacao <?php echo ($status_pauta != "emvotacao" ? "inactive" : ""); ?>"><?php echo $i; ?><br>Votação</li><?php
-					break;
-					case 'naovalidada':
-					case 'comresolucao': ?>
-						<li class="comresolucao <?php echo ($status_pauta != "comresolucao" && $status_pauta != "naovalidada" ? "inactive" : ""); ?>"><?php echo $i; ?><br>Resolução</li><?php
-					break;
-				}
-				$i++;
-			}?>
-		</ul>
-	</div>
+<?php
+	if ( have_posts() ) : while ( have_posts() ) : the_post();
+	$status_pauta = delibera_get_situacao($post->ID)->slug;
+?>
+    <div class="et_pb_column et_pb_column_1_4  et_pb_column_0">
+        <div class="et_pb_row et_pb_row_0 et_pb_row_4col">
+        <div class="et_pb_module et_pb_delibera_member  et_pb_team_pauta22v_0 et_pb_bg_layout_light clearfix">
+            <div class="et_pb_delibera_member_image et-waypoint et_pb_animation_off et-animated">
 
+            </div>
+            <div class="et_pb_delibera_member_description">
+                <div class="temaVerde" id="tema"></div>
+                <h4><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" rel="bookmark"><?php the_title(); ?></a></h4>
+                </a></div>
+            <br><div class="tags" id="tags"><a href="#">tag1</a>, <a href="#">tag2</a></div>
 
+            <br><div class="user" id="user">
+                <div class="imageInterna"><img src="http://www.freelanceme.net/Images/default profile picture.png" width="25"></div>
+                <div class="name"><?=get_the_author()?></div>
+            </div>
+            <div class="like"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/up.png">01</div>
+            <div class="deslike"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">01</div>
+            <div class="coment"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">01</div>
 
-				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <div class="faixaVerde"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/opn.png"></div>
 
-					<div id="leader">
-						<h1 class="entry-title"><?php the_title(); ?></h1>
-						<div class="entry-prazo">
+        </div>
+        </div>
+    </div>
 
-							<?php
-							if ( \Delibera\Flow::getDeadlineDays( $post->ID ) == -1 )
-								_e( 'Prazo encerrado', 'delibera' );
-							else
-								printf( _n( 'Por mais <br><span class="numero">1</span> dia', 'Por mais <br><span class="numero">%1$s</span> dias', \Delibera\Flow::getDeadlineDays( $post->ID ), 'delibera' ), number_format_i18n( \Delibera\Flow::getDeadlineDays( $post->ID ) ) );
-							?>
-						</div><!-- .entry-prazo -->
-						<!--div class="entry-meta">
-							<div class="entry-situacao">
-								<?php printf( __( 'Situação da pauta', 'delibera' ).': %s', delibera_get_situacao($post->ID)->name );?>
-							</div .entry-situacao -->
-							<div class="entry-author">
-								<?php _e( 'Criado por', 'delibera' ); ?>
-								<span class="author vcard">
-									<a class="url fn n" href="<?php echo get_site_url().'/delibera/' . get_the_author_meta( 'ID' ) . '/pautas' ; ?>" title="<?php printf( __( 'Ver o perfil de %s', 'delibera' ), get_the_author() ); ?>">
-										<?php the_author(); ?>
-									</a>
-								</span>
-							</div><!-- .entry-author -->
-							<!--div class="entry-comment">
-								<?php if(comments_open(get_the_ID()) && is_user_logged_in())
-								{?>
-									<a href="#delibera-comments">
-										<?php _e( 'Discuta', 'delibera' ); ?>
-										<?php comments_number( '', '('. __( 'Um comentário', 'delibera' ) . ')', '('. __( '% comentários', 'delibera' ) . ')' ); ?>
-									</a>
-								<?php
-								}
-								elseif(delibera_comments_is_open(get_the_ID()) && !is_user_logged_in())
-								{
-								?>
-									<a href="<?php echo wp_login_url( get_post_type() == "pauta" ? get_permalink() : delibera_get_comment_link());?>#delibera-comments">
-										<?php _e( 'Discuta', 'delibera' ); ?>
-										<?php comments_number( '', '('. __( 'Um comentário', 'delibera' ) . ')', '('. __( '% comentários', 'delibera' ) . ')' ); ?>
-									</a>
-								<?php
-								}
-								?>
-							</div> .entry-comment -->
+		<?php comments_template( '', true ); ?>
 
-							<div class="entry-attachment">
-							</div><!-- .entry-attachment -->
-
-						<!--/div><!-- .entry-meta -->
-					</div><!-- #leader -->
-
-					<div class="entry-content">
-						<?php the_content(); ?>
-					</div><!-- .entry-content -->
-
-							<div class="entry-print button">
-								<a href="?delibera_print=1" class="">Imprimir</a>
-							</div><!-- .entry-print -->
-							<div class="entry-seguir button">
-								<?php echo delibera_gerar_seguir($post->ID); ?>
-							</div>
-							<?php social_buttons(get_permalink(), get_the_title()); ?>
-
-				</div><!-- #post-## -->
-
-				<?php comments_template( '', true ); ?>
+<?php endwhile; endif; ?>
 </div>
-<?php endwhile; // end of the loop. ?>
