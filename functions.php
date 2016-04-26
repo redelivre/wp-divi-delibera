@@ -29,7 +29,7 @@ if ( ! function_exists( 'et_builder_include_categories_delibera_option' ) ) :
 
         $defaults = apply_filters( 'et_builder_include_categories_delibera_defaults', array (
             'use_terms' => true,
-            'term_name' => 'tema',
+            'term_name' => 'tema', 
              'post_type'=>'pauta'
         ) );
 
