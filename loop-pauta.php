@@ -4,6 +4,7 @@
 	global $DeliberaFlow;
 	$flow = $DeliberaFlow->get(get_the_ID());
 ?>
+    
 <div class="pauta-content <?php echo $status_pauta; ?>">
 
 	<div class="banner-ciclo status-ciclo">
@@ -101,7 +102,7 @@
 							<div class="entry-seguir button">
 								<?php echo delibera_gerar_seguir($post->ID); ?>
 							</div>
-							<?php //social_buttons(get_permalink(), get_the_title()); ?>
+							<?php social_buttons(get_permalink(), get_the_title()); ?>
 
 				</div><!-- #post-## -->
 

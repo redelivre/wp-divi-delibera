@@ -17829,6 +17829,8 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 
             $tema = $term_list[0]->name;
 
+            $temaLink = get_term_link($term_list[0]->slug,"tema");
+
             $image_code = '';
             $pauta_url = "";
             $titulo = "";
@@ -17880,7 +17882,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             '<div%3$s class="et_pb_module et_pb_delibera_member%4$s%9$s et_pb_bg_layout_%8$s clearfix">
 				%2$s
 				<div class="et_pb_delibera_member_description">
-				<div class="tema" id="tema">%11$s</div>
+				<div class="tema" id="tema"><a href="%12$s">%11$s</a></div>
 				<a href=%10$s>
 					%5$s
 					%6$s
@@ -17911,7 +17913,8 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             $background_layout,
             ( '' === $image ? ' et_pb_delibera_member_no_image' : '' ),
             $pauta_url,
-            $tema
+            $tema,
+            $temaLink
         );
 
        return $output;
@@ -18262,7 +18265,7 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
                     }
                 }
 
-	        $my_post = array(
+         	$my_post = array(
 	            'post_title'    => $processed_fields_values['titulo']['value'],
 	            'post_content'  => $processed_fields_values['descricao']['value'],
 	            'post_type'     => 'pauta',
@@ -18555,3 +18558,4 @@ class ET_Builder_Module_Formulario_item extends ET_Builder_Module {
     }
 }
 new ET_Builder_Module_Formulario_item;
+
