@@ -8,6 +8,11 @@ function themify_custom_enqueue_child_theme_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'themify_custom_enqueue_child_theme_styles' );
 
+function divi_child_clear_local_storage () {
+	wp_enqueue_script( 'divi_child_clear_local_storage', get_stylesheet_directory_uri() . '/js/clear_local_storage.js' );
+}
+add_action( 'admin_enqueue_scripts', 'divi_child_clear_local_storage', 9999 );
+
 if ( ! function_exists( 'et_builder_add_main_elements' ) ) :
 function et_builder_add_main_elements() {
     require ET_BUILDER_DIR . 'main-structure-elements.php';
@@ -26,19 +31,18 @@ add_action( 'pre_comment_on_post', 'disable_media_comments' );
 
 if ( ! function_exists( 'et_builder_include_categories_delibera_option' ) ) :
     function et_builder_include_categories_delibera_option( $args = array() ) {
-
         $defaults = apply_filters( 'et_builder_include_categories_delibera_defaults', array (
             'use_terms' => true,
             'term_name' => 'tema',
-             'post_type'=>'pauta'
+            'post_type'=>'pauta'
         ) );
 
         $args = wp_parse_args( $args, $defaults );
 
         $output = "\t" . "<% var et_pb_include_categories_temp = typeof et_pb_include_categories !== 'undefined' ? et_pb_include_categories.split( ',' ) : []; %>" . "\n";
-
+		
         if ( $args['use_terms'] ) {
-            $cats_array = get_terms( $args['term_name'] );
+            $cats_array = get_terms( $args['term_name'], array( 'hide_empty' => false) );
         } else {
             $cats_array = get_categories( apply_filters( 'et_builder_get_categories_args', 'hide_empty=0' ) );
             //$cats_array = get_categories();
@@ -83,9 +87,9 @@ if ( ! function_exists( 'et_builder_include_categories_delibera_form_option_radi
         $args = wp_parse_args( $args, $defaults );
 
         $output = "\t" . "<% var et_pb_include_categories_temp = typeof et_pb_include_categories !== 'undefined' ? et_pb_include_categories.split( ',' ) : []; %>" . "\n";
-
+        
         if ( $args['use_terms'] ) {
-            $cats_array = get_terms( $args['term_name'] );
+            $cats_array = get_terms( $args['term_name'], array( 'hide_empty' => false) );
         } else {
             $cats_array = get_categories( apply_filters( 'et_builder_get_categories_args', 'hide_empty=0' ) );
             //$cats_array = get_categories();
