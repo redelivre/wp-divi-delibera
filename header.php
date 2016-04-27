@@ -305,4 +305,3 @@
     </script>
 
     <div id="et-main-area">
-        <div id="main-content">
