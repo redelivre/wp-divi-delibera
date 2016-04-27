@@ -398,10 +398,23 @@ function custom_register_ajax_send(){
 endif;
 
 function ajax_check_user_logged_in() {
-    echo is_user_logged_in()?'yes':'no';
+    echo is_user_logged_in()?'1':'0';
     /*teste*/
     die();
 }
+
+if ( function_exists('register_sidebar') ) {
+    register_sidebar(array(
+        'name' => 'Homepage Sidebar',
+        'id' => 'homepage-sidebar',
+        'description' => 'Appears as the sidebar on the custom homepage',
+        'before_widget' => '<div style="height: 280px"></div><li id="%1$s" class="widget %2$s">',
+        'after_widget' => '</li>',
+        'before_title' => '<h2 class="widgettitle">',
+        'after_title' => '</h2>',
+    ));
+}
+
 add_action('wp_ajax_is_user_logged_in', 'ajax_check_user_logged_in');
 add_action('wp_ajax_nopriv_is_user_logged_in', 'ajax_check_user_logged_in');
 ?>

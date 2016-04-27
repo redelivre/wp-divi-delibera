@@ -26,17 +26,19 @@
                 <div class="temaVerde" id="tema"></div>
                 <h4><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" rel="bookmark"><?php the_title(); ?></a></h4>
                 </a></div>
-            <br><div class="tags" id="tags"><a href="#">tag1</a>, <a href="#">tag2</a></div>
+            <br><div class="tags" id="tags">
+                <?php echo get_the_tag_list('Tags: ',', ','')?>
+            </div>
 
             <br><div class="user" id="user">
-                <div class="imageInterna"><img src="http://www.freelanceme.net/Images/default profile picture.png" width="25"></div>
+                <div class="imageInterna"><?php echo get_avatar( get_the_author_meta( 'ID' ), 25 ); ?></div>
                 <div class="name"><?=get_the_author()?></div>
             </div>
-            <div class="like"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/up.png">01</div>
-            <div class="deslike"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">01</div>
-            <div class="coment"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">01</div>
+            <div id="like" class="like"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/up.png">01</div>
+            <div id="deslike" class="deslike"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">01</div>
+            <div id="faixa" class="coment"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">01</div>
 
-            <div class="faixaVerde"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/opn.png"></div>
+            <div id="faixa" class="faixaVerde"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/opn.png"></div>
 
         </div>
         </div>
@@ -46,3 +48,5 @@
 
 <?php endwhile; endif; ?>
 </div>
+
+<?php get_sidebar('delibera'); ?>

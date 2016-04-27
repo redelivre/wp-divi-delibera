@@ -12,6 +12,20 @@
  Text Domain:  divi-child
 */
 
+/*
+ Theme Name:   DIVI
+ Theme URI:    http://example.com/twenty-fifteen-child/
+ Description:  DIVI Child
+ Author:       Samuel
+ Author URI:   http://example.com
+ Template:     divi
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  divi-child
+*/
+
 #gridcontainer{margin: 15px 0; width: 100%; }
 #gridcontainer h2 a{color: #77787a; font-size: 13px;}
 #gridcontainer .griditemleft{float: left; width: 30%; margin: 0 40px 40px 0;}
@@ -19,81 +33,134 @@
 #gridcontainer .postimage{margin: 0 0 10px 0;}
 
 .et_pb_column #tema {
-	float: left;
-	width: 100%;
-	background: #FFAAAA;
-	text-align: center;
-	padding: 10px 0px;
-	text-transform: uppercase;
-	font-weight: bold;
-	color: black;
-	margin-bottom: 10px;
+    float: left;
+    width: 100%;
+    background: #FFAAAA;
+    text-align: center;
+    padding: 10px 0px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.et_pb_column #tema a:link {
+    color: white;
+}
+
+.et_pb_column #tema a:visited {
+    color: white;
+}
+
+
+.et_pb_column #tema a:hover {
+    color: white;
+}
+
+.et_pb_column #tema a:active {
+    color: white;
 }
 
 .et_pb_column h4 {
-	line-height: 1.3;
+    line-height: 1.3;
 }
 
 .et_pb_column #tags a {
-	color: black;
-	font-size: 11px;
-	font-weight: bold;
+    color: black;
+    font-size: 11px;
+    font-weight: bold;
 }
 
 .et_pb_column #user {
-	float: left;
-	width: 100%;
+    float: left;
+    width: 100%;
 }
 
 .et_pb_column #user .imageInterna {
-	float: left;
-	width: 50px;
-	height: 50px;
+    float: left;
+    width: 50px;
+    height: 50px;
 }
 
 .et_pb_column #user .imageInterna img {
-	width: 100%;
-	height: auto;
+    width: 100%;
+    height: auto;
 }
 
 .et_pb_column #user .name {
-	padding-left: 70px;
-	line-height: 50px;
-	font-weight: bold;
-	color: black;
+    padding-left: 70px;
+    line-height: 50px;
+    font-weight: bold;
+    color: black;
 }
 
 .et_pb_column .like,
 .et_pb_column .deslike,
 .et_pb_column .coment {
-	float: left;
-	width: 33%;
-	margin-top: 10px;
-	font-weight: bold;
+    float: left;
+    width: 33%;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
 .et_pb_column .like img,
 .et_pb_column .deslike img,
 .et_pb_column .coment img {
-	vertical-align: middle;
-	margin-right: 5px;
+    vertical-align: middle;
+    margin-right: 5px;
 }
 
 .et_pb_delibera_member_image img {
-	float: left;
+    float: left;
 }
 
 .et_pb_column .faixa {
-	float: left;
-	margin-top: 15px;
-	width: 100%;
-	background: #FFAAAA;
-	text-align: right;
-	padding-top: 5px;
+    float: right;
+    margin-top: 15px;
+    width: 100%;
+    background: #FFAAAA;
+    text-align: right;
+    padding-top: 5px;
+    text-align: right;
 }
 
-    .ciclos { display: none;}
-    .title { display: none;}
-    .description {display: none}
-    .temaVerde { background-color: #3EA656; height: 12px;}
-    .faixaVerde { background-color: #3EA656; }
+.ciclos { display: none;}
+.title { display: none;}
+.description {display: none}
+.temaVerde {
+    background-color: #3EA656 !important; height: 12px;}
+.faixaVerde {
+    background-color: #3EA656; !important;
+    display: inline-block;
+    height: 40px;
+    width: 100%;
+    float:right;
+    text-align: right;
+}
+
+.lista-de-pautas {display:inline-block;}
+
+.et_pb_column #user {background-color:white;}
+
+.delibera-header { display:none; }
+
+.login h1 a {
+    background-image: url('../images/w-logo-blue.png?ver=20131202');
+    background-image: none, url('../images/wordpress-logo.svg?ver=20131107');
+    background-size: 80px 80px;
+    background-position: center top;
+    background-repeat: no-repeat;
+    color: #999;
+    height: 80px;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1.3em;
+    margin: 0 auto 25px;
+    padding: 0;
+    text-decoration: none;
+    width: 80px;
+    text-indent: -9999px;
+    outline: none;
+    overflow: hidden;
+    display: block;
+}
