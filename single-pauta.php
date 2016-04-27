@@ -23,7 +23,8 @@ $is_page_builder_used = et_pb_is_pagebuilder_used(get_the_ID());
 				}
 				else
 				{
-					load_template($this->themeFilePath('content-pauta.php'), true);
+					global $deliberaThemes;
+					load_template($deliberaThemes->themeFilePath('content-pauta.php'), true);
 				}
 				?>
 
