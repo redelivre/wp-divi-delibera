@@ -48,5 +48,3 @@
 
 <?php endwhile; endif; ?>
 </div>
-
-<?php get_sidebar('delibera'); ?>

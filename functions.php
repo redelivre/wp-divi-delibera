@@ -397,9 +397,11 @@ function custom_register_ajax_send(){
 }
 endif;
 
-function ajax_check_user_logged_in() {
-    echo is_user_logged_in()?'1':'0';
-    /*teste*/
+add_action('wp_ajax_check_user_logged_in', 'check_user_logged_in');
+add_action('wp_ajax_nopriv_check_user_logged_in', 'check_user_logged_in');
+
+function check_user_logged_in() {
+    echo is_user_logged_in() ? '1':'0';
     die();
 }
 
@@ -414,7 +416,4 @@ if ( function_exists('register_sidebar') ) {
         'after_title' => '</h2>',
     ));
 }
-
-add_action('wp_ajax_is_user_logged_in', 'ajax_check_user_logged_in');
-add_action('wp_ajax_nopriv_is_user_logged_in', 'ajax_check_user_logged_in');
 ?>
