@@ -38,7 +38,7 @@
             <div id="deslike" class="deslike"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">01</div>
             <div id="faixa" class="coment"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">01</div>
 
-            <div id="faixa" class="faixaVerde"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/opn.png"></div>
+            <div id="faixa" class="faixaVerde"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/opn-green.png"></div>
 
         </div>
         </div>
