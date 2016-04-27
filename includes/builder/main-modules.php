@@ -17825,9 +17825,17 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
         foreach($wp_posts as $key=>$value)
         {
 
+            print_R($wp_posts[$key]);
+
             $term_list = wp_get_post_terms($wp_posts[$key]->ID, 'tema', array("fields" => "all"));
 
+            $autor = get_userdata($wp_posts[$key]->post_author)->display_name;
+
+            $tags = get_the_tag_list('Tags: ',', ','',$wp_posts[$key]->ID);
+
             $tema = $term_list[0]->name;
+
+            $avatar = get_avatar( $wp_posts[$key]->post_author, '25');
 
             $temaLink = get_term_link($term_list[0]->slug,"tema");
 
@@ -17890,11 +17898,11 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 					%7$s
 				</div> <!-- .et_pb_delibera_member_description -->
 			</a>
-			<BR><div class="tags" id="tags"><a href="#">tag1</a>, <a href="#">tag2</a></div>
+			<BR><div class="tags" id="tags">%14$s</div>
 
 			<BR><div class="user" id="user">
-			<div class="imageInterna"><img src="http://www.freelanceme.net/Images/default profile picture.png" width="25"></div>
-			<div class="name">Nome autor</div>
+			<div class="imageInterna">%15$s</div>
+			<div class="name">%13$s</div>
 			</div>
 			<div class="like"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/up.png">01</div>
 			<div class="deslike"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">01</div>
@@ -17914,7 +17922,10 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             ( '' === $image ? ' et_pb_delibera_member_no_image' : '' ),
             $pauta_url,
             $tema,
-            $temaLink
+            $temaLink,
+            $autor,
+            $tags,
+            $avatar
         );
 
        return $output;
