@@ -18270,7 +18270,7 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
 	            'post_content'  => $processed_fields_values['descricao']['value'],
 	            'post_type'     => 'pauta',
 	            'tags_input'    => $processed_fields_values['tags']['value'],
-				'delibera_flow' => array("emvotacao", 'comresolucao'), //TODO option
+				'delibera_flow' => array("discussao", "emvotacao", 'comresolucao'), //TODO option
 				'redirect' => false
 	        );
 	        if(!empty( $_POST['et_pb_categories_' . $et_pb_contact_form_num] ))
