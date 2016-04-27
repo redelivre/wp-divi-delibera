@@ -17,9 +17,14 @@ $is_page_builder_used = et_pb_is_pagebuilder_used(get_the_ID());
 
 				// Chama o loop
 				// get_template_part( 'loop', 'pauta' );
-				load_template(
-						dirname(__FILE__) . DIRECTORY_SEPARATOR .
-								 'loop-pauta.php', true);
+				if(file_exists(get_stylesheet_directory()."/content-pauta.php"))
+				{
+					load_template(get_stylesheet_directory()."/content-pauta.php");
+				}
+				else
+				{
+					load_template($this->themeFilePath('content-pauta.php'), true);
+				}
 				?>
 
                     </div>
