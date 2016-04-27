@@ -226,8 +226,6 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
         foreach($wp_posts as $key=>$value)
         {
 
-            print_R($wp_posts[$key]);
-
             $term_list = wp_get_post_terms($wp_posts[$key]->ID, 'tema', array("fields" => "all"));
 
             $autor = get_userdata($wp_posts[$key]->post_author)->display_name;
