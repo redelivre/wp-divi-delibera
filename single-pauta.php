@@ -7,10 +7,9 @@ $is_page_builder_used = et_pb_is_pagebuilder_used(get_the_ID());
 
 ?>
 
-<div id="main-content">
-	<div class="container">
-		<div id="content-area" class="clearfix">
-			<div id="left-area">
+<div id="single wrap">
+    <main class="single wrap">
+
 				<?php
 				// Chama o cabeçalho que apresenta o sistema de discussão
 				get_delibera_header();
@@ -28,17 +27,22 @@ $is_page_builder_used = et_pb_is_pagebuilder_used(get_the_ID());
 				}
 				?>
 
-                    </div>
+<section class="single-sidebar">
+    <div class="sidebar-section">
+        <h2 class="sidebar-title">outras pautas</h2>
+        <div class="yarpp-related">
+            <ol class="yarpp-list">
+                <li class="yarpp-item">
+                    <a class="yarpp-link" rel="bookmark" href="#"> item </a>
+                </li>
                 <?php get_sidebar(); ?>
-			</div><!-- #content -->
-		</div><!-- #container -->
-             </div>
-			<!-- #left-area -->
-             <?php get_sidebar(); ?>
-		</div>
-		<!-- #content-area -->
-	</div>
-	<!-- .container -->
-</div>
-<!-- #main-content -->
+            </ol>
+        </div>
+    </div>
+</section>
+
+        <?php comments_template( '', true ); ?>
+
+</main>
+
 <?php get_footer(); ?>

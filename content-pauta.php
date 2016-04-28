@@ -4,8 +4,81 @@
 	global $DeliberaFlow;
 	$flow = $DeliberaFlow->get(get_the_ID());
 ?>
-<div class="pauta-content <?php echo $status_pauta; ?>">
 
+            <article class="single-content">
+                <h4 class="single-taxonomy">TEMA</h4>
+                    <h2 class="single-title">
+                        <a href="#"><?php the_title(); ?></a>
+                    </h2>
+
+                    <!--h2>
+                        <?php
+                        if ( \Delibera\Flow::getDeadlineDays( $post->ID ) == -1 )
+                            _e( 'Prazo encerrado', 'delibera' );
+                        else
+                            printf( _n( 'por mais <span class="numero">1</span> dia', 'por mais <span class="numero">%1$s</span> dias', \Delibera\Flow::getDeadlineDays( $post->ID ), 'delibera' ), number_format_i18n( \Delibera\Flow::getDeadlineDays( $post->ID ) ) );
+                        ?>
+                    </h2-->
+                    <BR>
+                    <p class="grid-ideia-tags">
+
+                        <?php
+                        $tags = get_the_tags();
+                        $html = '<div class="post_tags">';
+                        foreach ($tags as $tag){
+                            $tag_link = get_tag_link($tag->term_id);
+
+                            $html .= "<a href='{$tag_link}' title='{$tag->name} Tag' class='grid-ideia-tag'>";
+                            $html .= "{$tag->name}</a>";
+                        }
+                        echo $html;
+                        ?>
+                    </p>
+                    <div class="single-meta social-media">
+<span class="single-author">
+<a href="<?php echo get_site_url().'/delibera/' . get_the_author_meta( 'ID' ) . '/pautas' ; ?>" >
+    <span class="author-picture" style="background-image: url('<?php echo get_avatar_url(get_avatar(get_the_author_meta( 'ID' ))); ?> ');"> </span>
+    <?php the_author(); ?>
+</a>
+</span>
+                        <span class="single-meta-sep">·</span>
+                        <span class="single-date">
+                          <?php the_time('j \d\e F \d\e Y') ?> </span>
+<span class="social-sep">
+<hr>
+</span>
+<span class="social-buttons">
+<a class="social-button share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=<?=get_permalink();?>">
+    <i class="fa fa-fw fa-lg fa-facebook"></i>
+    Compartilhar
+</a>
+<a class="social-button share-twitter" target="_blank" href="https://twitter.com/share?url=<?=get_permalink();?>">
+    <i class="fa fa-fw fa-lg fa-twitter"></i>
+    Tuitar
+</a>
+</span>
+                    </div>
+                    <div class="entry">
+                        <p><?php the_content(); ?>.</p>
+                    </div>
+
+                    <!--div id="comments">
+                        <div class="ideia-comments-header">
+                            <a class="ideia-action ideia-upvote" data-vote="post_id|1407" href="#vote">
+                                <i class="fa fa-fw fa-lg fa-thumbs-up"></i>
+                                <span class="number">0</span>
+                            </a>
+                            <a class="ideia-action ideia-downvote" data-vote="post_id|1407" href="#vote">
+                                <i class="fa fa-fw fa-lg fa-thumbs-down"></i>
+                                <span class="number">0</span>
+                            </a>
+<span class="social-media">
+                        </div>
+                        <ul class="ideia-comments-list">
+                    </div-->
+            </article>
+
+<div class="pauta-content <?php echo $status_pauta; ?>" style="display: none" >
 	<div class="banner-ciclo status-ciclo">
 		<h3 class="title">Estágio da pauta</h3>
 		<ul class="ciclos"><?php
@@ -105,6 +178,6 @@
 
 				</div><!-- #post-## -->
 
-				<?php comments_template( '', true ); ?>
+
 </div>
 <?php endwhile; // end of the loop. ?>

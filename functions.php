@@ -416,4 +416,9 @@ if ( function_exists('register_sidebar') ) {
         'after_title' => '</h2>',
     ));
 }
+
+function get_avatar_url($get_avatar){
+    preg_match("/src='(.*?)'/i", $get_avatar, $matches);
+    return $matches[1];
+}
 ?>
