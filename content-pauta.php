@@ -3,10 +3,12 @@
 //echo $status_pauta;
 	global $DeliberaFlow;
 	$flow = $DeliberaFlow->get(get_the_ID());
+
+	$term_list = wp_get_post_terms(get_the_ID(), 'tema', array("fields" => "names"));
 ?>
 
             <article class="single-content">
-                <h4 class="single-taxonomy">TEMA</h4>
+                <h4 class="single-taxonomy"><?=$term_list[0]?></h4>
                     <h2 class="single-title">
                         <a href="#"><?php the_title(); ?></a>
                     </h2>
@@ -59,7 +61,7 @@
 </span>
                     </div>
                     <div class="entry">
-                        <p><?php the_content(); ?>.</p>
+                        <p><?php the_content(); ?></p>
                     </div>
 
                     <!--div id="comments">
@@ -177,7 +179,6 @@
 							<?php social_buttons(get_permalink(), get_the_title()); ?>
 
 				</div><!-- #post-## -->
-
 
 </div>
 <?php endwhile; // end of the loop. ?>

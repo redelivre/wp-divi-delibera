@@ -32,9 +32,29 @@ $is_page_builder_used = et_pb_is_pagebuilder_used(get_the_ID());
         <h2 class="sidebar-title">outras pautas</h2>
         <div class="yarpp-related">
             <ol class="yarpp-list">
-                <li class="yarpp-item">
-                    <a class="yarpp-link" rel="bookmark" href="#"> item </a>
-                </li>
+
+                <?php
+                $posts_array = get_posts(
+                array(
+                'posts_per_page' => 10,
+                'post_type' => 'pauta',
+                    'order'            => 'rand',
+                    'orderby'=>'rand'
+                )
+                );
+
+                foreach($posts_array as $key=>$value)
+                {
+                    ?>
+                    <li class="yarpp-item">
+                        <a class="yarpp-link" rel="bookmark" href="<?=$posts_array[$key]->guid?>"> <?=$posts_array[$key]->post_title?> </a>
+                    </li>
+                <?
+
+                }
+
+                ?>
+
                 <?php get_sidebar(); ?>
             </ol>
         </div>

@@ -4723,6 +4723,15 @@ ol.commentlist, .comment .children {
     line-height: 1 !important;
 }
 
+#main-content {
+    background-color: white !important;
+}
+
+#page-container {
+    background-color: white !important;
+    padding-top: 20px;
+}
+
 /*
 
 ol.commentlist, .comment .children {
