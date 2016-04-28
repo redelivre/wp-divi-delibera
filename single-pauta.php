@@ -47,9 +47,9 @@ $is_page_builder_used = et_pb_is_pagebuilder_used(get_the_ID());
                 {
                     ?>
                     <li class="yarpp-item">
-                        <a class="yarpp-link" rel="bookmark" href="<?=$posts_array[$key]->guid?>"> <?=$posts_array[$key]->post_title?> </a>
+                        <a class="yarpp-link" rel="bookmark" href="<?php echo $posts_array[$key]->guid; ?>"> <?php echo $posts_array[$key]->post_title; ?> </a>
                     </li>
-                <?
+                <?php
 
                 }
 
