@@ -222,7 +222,14 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 
         $wp_posts = get_posts($args);
 
-
+        $image_code = '';
+        $pauta_url = "";
+        $titulo = "";
+        $tema = false;
+        $temaLink = "";
+        $autor = "";
+        $tags = "";
+        $avatar = "";
         foreach($wp_posts as $key=>$value)
         {
 
@@ -237,10 +244,6 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             $avatar = get_avatar( $wp_posts[$key]->post_author, '25');
 
             $temaLink = get_term_link($term_list[0]->slug,"tema");
-
-            $image_code = '';
-            $pauta_url = "";
-            $titulo = "";
 
             if (has_post_thumbnail( $wp_posts[$key]->ID ) ){
                 $image_pauta_url = wp_get_attachment_image_src( get_post_thumbnail_id( $wp_posts[$key]->ID  ), 'thumbnail' );
