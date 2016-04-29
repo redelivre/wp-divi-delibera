@@ -8,7 +8,7 @@
 ?>
 
             <article class="single-content">
-                <h4 class="single-taxonomy"><?=$term_list[0]?></h4>
+                <h4 class="single-taxonomy"><?=is_array($term_list) && count($term_list) > 0 ? $term_list[0]: "" ?></h4>
                     <h2 class="single-title">
                         <a href="#"><?php the_title(); ?></a>
                     </h2>
@@ -26,14 +26,17 @@
 
                         <?php
                         $tags = get_the_tags();
-                        $html = '<div class="post_tags">';
-                        foreach ($tags as $tag){
-                            $tag_link = get_tag_link($tag->term_id);
-
-                            $html .= "<a href='{$tag_link}' title='{$tag->name} Tag' class='grid-ideia-tag'>";
-                            $html .= "{$tag->name}</a>";
+                        if(is_array($tags))
+                        {
+	                        $html = '<div class="post_tags">';
+	                        foreach ($tags as $tag){
+	                            $tag_link = get_tag_link($tag->term_id);
+	
+	                            $html .= "<a href='{$tag_link}' title='{$tag->name} Tag' class='grid-ideia-tag'>";
+	                            $html .= "{$tag->name}</a>";
+	                        }
+	                        echo $html;
                         }
-                        echo $html;
                         ?>
                     </p>
                     <div class="single-meta social-media">
