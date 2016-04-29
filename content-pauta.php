@@ -39,7 +39,7 @@
                     <div class="single-meta social-media">
 <span class="single-author">
 <a href="<?php echo get_site_url().'/delibera/' . get_the_author_meta( 'ID' ) . '/pautas' ; ?>" >
-    <span class="author-picture" style="background-image: url('<?php echo get_avatar_url(get_avatar(get_the_author_meta( 'ID' ))); ?> ');"> </span>
+    <span class="author-picture" style="background-image: url('<?php echo divi_child_get_avatar_url(get_avatar(get_the_author_meta( 'ID' ))); ?> ');"> </span>
     <?php the_author(); ?>
 </a>
 </span>

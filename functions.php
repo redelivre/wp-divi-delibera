@@ -1,5 +1,10 @@
 <?php
-
+if(defined(WP_DEBUG) && WP_DEBUG)
+{
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+}
 /**
  * Enqueues child theme stylesheet, loading first the parent theme stylesheet.
  */
@@ -417,7 +422,7 @@ if ( function_exists('register_sidebar') ) {
     ));
 }
 
-function get_avatar_url($get_avatar){
+function divi_child_get_avatar_url($get_avatar){
     preg_match("/src='(.*?)'/i", $get_avatar, $matches);
     return $matches[1];
 }
