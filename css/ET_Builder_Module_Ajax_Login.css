@@ -1,10 +1,11 @@
 .et_pb_ajax_login .et_pb_ajax_login_panel {
-    display: none;
+    display: block;
+    height: auto !important;
     left: 36%;
-    padding: 10px;
+    padding: 10px !important;
     position: fixed;
     top: 25%;
-    width: 25%;
+    width: 25% !important;
 }
 
 .et_pb_ajax_login .et_pb_newsletter_form.et_pb_login_form p {
@@ -24,6 +25,14 @@
     text-align: center;
     text-decoration: none;
     width: 100%;
+    margin-top: 5px;
+}
+
+.et_pb_ajax_login .wp-opauth-login-strategy > a {
+    display: block;
+    height: 100%;
+    position: relative;
+    width: 100%;
 }
 
 .et_pb_ajax_login .wp-opauth-login-strategy.wp-opauth-login-strategy-Facebook {
@@ -38,7 +47,20 @@
     background: #4c89e3 none repeat scroll 0 0;
 }
 
+.et_pb_ajax_login .wp-opauth-login-title,
 .et_pb_ajax_login .wp-opauth-login-strategy.wp-opauth-login-strategy-GitHub,
 .et_pb_ajax_login .wp-opauth-login-strategy.wp-opauth-login-strategy-LoginCidadao {
 	display: none;
+}
+
+.et_pb_ajax_login #wp-opauth-login {
+    margin-bottom: 10px;
+}
+
+.et_pb_ajax_login .et_pb_forgot_password > a {
+    margin-right: 20px;
+}
+
+.et_pb_ajax_login ul.wp-opauth-login-strategies {
+	padding: 0;
 }

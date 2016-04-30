@@ -426,4 +426,6 @@ function divi_child_get_avatar_url($get_avatar){
     preg_match("/src='(.*?)'/i", $get_avatar, $matches);
     return $matches[1];
 }
+
+require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
 ?>

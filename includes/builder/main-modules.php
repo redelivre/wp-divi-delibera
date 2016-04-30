@@ -995,6 +995,7 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 			'focus_text_color',
 			'use_focus_border_color',
 			'focus_border_color',
+			'show_button',
 		);
 
 		$this->fields_defaults = array(
@@ -1204,6 +1205,16 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 				'tab_slug'        => 'custom_css',
 				'option_class'    => 'et_pb_custom_css_regular',
 			),
+			'show_button' => array(
+				'label'           => esc_html__( 'Show Login Button', 'et_builder' ),
+				'type'            => 'yes_no_button',
+				'option_category' => 'configuration',
+				'options'         => array(
+					'on'          => esc_html__( 'Yes', 'et_builder' ),
+					'off'         => esc_html__( 'No', 'et_builder' ),
+				),
+				'description' => esc_html__( 'Show or not the Login, use this for hide Login on menu, and put this css class on menu: et_pb_ajax_login_button', 'et_builder' ),
+			),
 		);
 		return $fields;
 	}
@@ -1225,6 +1236,7 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 		$focus_border_color          = $this->shortcode_atts['focus_border_color'];
 		$button_custom               = $this->shortcode_atts['custom_button'];
 		$custom_icon                 = $this->shortcode_atts['button_icon'];
+		$show_button				 = $this->shortcode_atts['show_button'];
 		$content                     = $this->shortcode_content;
 
 		$module_class = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
@@ -1324,6 +1336,7 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 			
 			$form = sprintf( '
 				<div class="et_pb_newsletter_form et_pb_login_form">
+					'.$form_meta.'
 					<form action="%7$s" method="post">
 						<p>
 							<label class="et_pb_contact_form_label" for="user_login" style="display: none;">%3$s</label>
@@ -1333,12 +1346,11 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 							<label class="et_pb_contact_form_label" for="user_pass" style="display: none;">%5$s</label>
 							<input id="user_pass" placeholder="%6$s" class="input" type="password" value="" name="pwd" />
 						</p>
-						<p class="et_pb_forgot_password"><a href="%2$s">%1$s</a></p>
+						<p class="et_pb_forgot_password"><a href="%12$s">%13$s</a><a href="%2$s">%1$s</a></p>
 						<p>
 							<button type="submit" class="et_pb_newsletter_button et_pb_button%11$s"%10$s>%8$s</button>
 							%9$s
 						</p>
-					'.$form_meta.'
 					</form>
 				</div>',
 					esc_html__( 'Forgot your password?', 'et_builder' ),
@@ -1357,11 +1369,13 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 							' data-icon="%1$s"',
 							esc_attr( et_pb_process_font_icon( $custom_icon ) )
 							) : '',
-					'' !== $custom_icon && 'on' === $button_custom ? ' et_pb_custom_button_icon' : ''
+					'' !== $custom_icon && 'on' === $button_custom ? ' et_pb_custom_button_icon' : '',
+					wp_registration_url(),
+					esc_html__( 'Register', 'et_builder' )
 					);
 			$output = sprintf(
 					'<div%6$s class="et_pb_newsletter et_pb_login clearfix%4$s%7$s"%5$s>
-					<div class="et_pb_ajax_login_button">
+					<div style="%8$s" class="et_pb_ajax_login_button">
 						%1$s
 					</div>
 					<div class="et_pb_ajax_login_panel"%5$s>
@@ -1376,11 +1390,12 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 					$form,
 					esc_attr( $class ),
 					( 'on' === $use_background_color
-							? sprintf( ' style="background-color: %1$s;"', esc_attr( $background_color ) )
-							: ''
+							? sprintf( ' style="background-color: %1$s;'.( 'on' === $show_button ? '' : ' height:0;margin:0;padding:0;width:0;' ).'"', esc_attr( $background_color ) )
+							: ( 'on' === $show_button ? '' : ' style="height:0;margin:0;padding:0;width:0;"' )
 							),
 					( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
-					( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' )
+					( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' ),
+					( 'on' === $show_button ? '' : 'display:none;' )
 					);
 		}
 
