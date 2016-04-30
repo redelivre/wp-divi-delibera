@@ -8,7 +8,7 @@
 ?>
 
             <article class="single-content">
-                <h4 class="single-taxonomy"><?=$term_list[0]?></h4>
+                <h4 class="single-taxonomy"><?=is_array($term_list) && count($term_list) > 0 ? $term_list[0]: "" ?></h4>
                     <h2 class="single-title">
                         <a href="#"><?php the_title(); ?></a>
                     </h2>
@@ -26,21 +26,24 @@
 
                         <?php
                         $tags = get_the_tags();
-                        $html = '<div class="post_tags">';
-                        foreach ($tags as $tag){
-                            $tag_link = get_tag_link($tag->term_id);
-
-                            $html .= "<a href='{$tag_link}' title='{$tag->name} Tag' class='grid-ideia-tag'>";
-                            $html .= "{$tag->name}</a>";
+                        if(is_array($tags))
+                        {
+	                        $html = '<div class="post_tags">';
+	                        foreach ($tags as $tag){
+	                            $tag_link = get_tag_link($tag->term_id);
+	
+	                            $html .= "<a href='{$tag_link}' title='{$tag->name} Tag' class='grid-ideia-tag'>";
+	                            $html .= "{$tag->name}</a>";
+	                        }
+	                        echo $html;
                         }
-                        echo $html;
                         ?>
                         </div>
                     </p>
                     <div class="single-meta social-media">
 <span class="single-author">
 <a href="<?php echo get_site_url().'/delibera/' . get_the_author_meta( 'ID' ) . '/pautas' ; ?>" >
-    <span class="author-picture" style="background-image: url('<?php echo get_avatar_url(get_avatar(get_the_author_meta( 'ID' ))); ?> ');"> </span>
+    <span class="author-picture" style="background-image: url('<?php echo divi_child_get_avatar_url(get_avatar(get_the_author_meta( 'ID' ))); ?> ');"> </span>
     <?php the_author(); ?>
 </a>
 </span>
