@@ -705,14 +705,16 @@ class ET_Builder_Module_Formulario extends ET_Builder_Module {
          	
             $post_id = deliberaCreateTopic( $my_post );
 
+            $_SESSION['last_id'] = $post_id;
+
             if($redirect_url == "pauta")
             {
                 $redirect_url = esc_url( get_permalink($post_id) );
             }
 
-            $use_redirect = "on";
+            $redirect_url = esc_url( get_permalink($post_id) );
 
-            $et_error_message = sprintf( '<p>%1$s</p>', esc_html( $success_message ) );
+            $et_error_message = sprintf( '<p>%1$s</p>', 'Obrigado por participar, você pode ver sua proposta <a href="'.$redirect_url.'">aqui</a>.' );
 
         }
 

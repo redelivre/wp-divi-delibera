@@ -143,6 +143,11 @@
                 <div id="delibera-comment-botoes-<?php echo $post->ID;?>" class="delibera-comment-botoes" >
                 </div-->
 
+                <div id="delibera-comment-botoes" style="float: left; text-align: left; width: 100%" class="delibera-comment-botoes" ><?php
+                    echo delibera_gerar_curtir($post->ID, 'pauta');
+                    echo delibera_gerar_discordar($post->ID, 'pauta');?>
+                </div>
+
             </article>
 
 <div class="pauta-content <?php echo $status_pauta; ?>" style="display: none" >
