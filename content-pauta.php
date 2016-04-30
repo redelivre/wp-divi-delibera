@@ -35,10 +35,12 @@
 	                            $html .= "<a href='{$tag_link}' title='{$tag->name} Tag' class='grid-ideia-tag'>";
 	                            $html .= "{$tag->name}</a>";
 	                        }
+
+                            $html .= '</div>';
+
 	                        echo $html;
                         }
                         ?>
-                        </div>
                     </p>
                     <div class="single-meta social-media">
 <span class="single-author">
