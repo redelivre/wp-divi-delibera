@@ -988,7 +988,6 @@ class ET_Builder_Module_Formulario_item extends ET_Builder_Module {
 }
 new ET_Builder_Module_Formulario_item;
 
-<<<<<<< HEAD
 class ET_Builder_Module_Delibera_Categoria extends ET_Builder_Module {
     function init() {
         $this->name = esc_html__( 'Delibera categoria', 'et_builder' );
@@ -1357,9 +1356,6 @@ class ET_Builder_Module_Delibera_Categoria extends ET_Builder_Module {
     }
 }
 new ET_Builder_Module_Delibera_Categoria;
-
-
-=======
 
 class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 	function init() {
@@ -1791,4 +1787,3 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 	}
 }
 new ET_Builder_Module_Ajax_Login;
->>>>>>> 98f6c6c2d99b3778503b1d5f319dfcb6125a7033
