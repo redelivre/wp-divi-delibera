@@ -427,5 +427,12 @@ function divi_child_get_avatar_url($get_avatar){
     return $matches[1];
 }
 
+function divi_child_login_form()
+{
+	$content = '[et_pb_ajax_login admin_label="Ajax Login" title="Entrar" current_page_redirect="on" use_background_color="on" background_color="rgba(48,23,25,0.84)" background_layout="dark" text_orientation="center" use_focus_border_color="off" header_font_size_tablet="51" header_line_height_tablet="2" body_font_size_tablet="51" body_line_height_tablet="2" use_border_color="off" border_color="#ffffff" border_style="solid" custom_button="off" button_letter_spacing="0" button_use_icon="default" button_icon_placement="right" button_on_hover="on" button_letter_spacing_hover="0" show_button="off"] [/et_pb_ajax_login]';
+	echo do_shortcode($content);
+}
+add_action('wp_footer', 'divi_child_login_form');
+
 require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
 ?>
