@@ -9,7 +9,7 @@
     z-index: 9999;
 }
 
-.et_pb_ajax_login .et_pb_forgot_password,
+.et_pb_ajax_login .et_pb_forgot_password a,
 .et_pb_ajax_login .wp-opauth-login-strategy span {
     color: #ffffff;
 }
