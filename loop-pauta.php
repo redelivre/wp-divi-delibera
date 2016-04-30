@@ -20,7 +20,6 @@
         <div class="et_pb_row et_pb_row_0 et_pb_row_4col">
         <div class="et_pb_module et_pb_delibera_member  et_pb_team_pauta22v_0 et_pb_bg_layout_light clearfix">
             <div class="et_pb_delibera_member_image et-waypoint et_pb_animation_off et-animated">
-
             </div>
             <div class="et_pb_delibera_member_description">
                 <div class="temaVerde" id="tema"></div>

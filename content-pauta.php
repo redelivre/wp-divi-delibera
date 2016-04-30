@@ -35,6 +35,7 @@
                         }
                         echo $html;
                         ?>
+                        </div>
                     </p>
                     <div class="single-meta social-media">
 <span class="single-author">
@@ -78,6 +79,65 @@
                         </div>
                         <ul class="ideia-comments-list">
                     </div-->
+
+                <!--
+                <?php
+
+                if (is_user_logged_in()) {
+                    $user_id = get_current_user_id();
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                }
+
+                $type = "pauta";
+
+                if(get_post_meta($post->ID, 'delibera_numero_curtir', true) == "")
+                {
+                    $cutidas = 0;
+                }
+                else
+                {
+                    $cutidas = get_post_meta($post->ID, 'delibera_numero_curtir', true);
+                }
+
+                $jacurtiu = delibera_ja_curtiu($ID, $user_id, $ip, $type);
+
+                if(get_post_meta($post->ID, 'delibera_numero_discordar', true) == "")
+                {
+                    $descutidas = 0;
+                }
+                else
+                {
+                    $descutidas = get_post_meta($post->ID, 'delibera_numero_discordar', true);
+                }
+
+                $jadescurtiu = delibera_ja_discordou($post->ID, $user_id, $ip, $type);
+
+                ?>
+
+                <div>
+
+                    <div class="delibera_like" style="float: left; padding-right: 15px; background:none; text-indent:unset;">
+                        <img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/up.png">
+                        <div class="delibera-like-count" style="float: right"><?php echo $cutidas; ?></div>
+                        <input type='hidden' name='object_id' value='<?php echo $post->ID?>' />
+                        <input type='hidden' name='type' value='pauta' />
+                    </div>
+                    <div class="deslike delibera_unlike" style="float: left; padding-right: 15px; background:none;">
+                        <img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">
+                        <div class="delibera-unlike-count" style="float: right"><?php echo $descutidas; ?></div>
+                        <input type='hidden' name='object_id' value='<?php echo $post->ID?>' />
+                        <input type='hidden' name='type' value='pauta' />
+                    </div>
+                    <div class="coment">
+                        <img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">
+                        01
+                    </div>
+
+                </div>
+
+                <div id="delibera-comment-botoes-<?php echo $post->ID;?>" class="delibera-comment-botoes" >
+                </div-->
+
             </article>
 
 <div class="pauta-content <?php echo $status_pauta; ?>" style="display: none" >

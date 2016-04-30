@@ -1,4 +1,4 @@
-/*
+﻿/*
  Theme Name:   DIVI
  Theme URI:    http://example.com/twenty-fifteen-child/
  Description:  DIVI Child
@@ -4690,8 +4690,9 @@ button:disabled .if-sending {
 .delibera-comment-body {
     background-color:white !important;
     margin-left: 0px !important;
-    padding-left: 0px !important;
+    padding-left: 15px !important 
     width: 748px;
+    border-left: 5px solid silver;
 
 }
 
