@@ -12,10 +12,7 @@ jQuery(document).ready(function() {
 	                type : jQuery(this).children('input[name="type"]').val(),
 	            },
 	            function(response) {
-	                jQuery(container).parent().children(".delibera_unlike").remove();
 	                jQuery(container).parent().children('.delibera-like-count').text(response);
-	                jQuery(container).parent().children('.delibera-like-count').show();
-	                jQuery(container).remove();
 	            }
 	        );
         }
@@ -33,10 +30,7 @@ jQuery(document).ready(function() {
 	                type : jQuery(this).children('input[name="type"]').val(),
 	            },
 	            function(response) {
-	                jQuery(container).parent().children(".delibera_like").remove();
 	                jQuery(container).parent().children('.delibera-unlike-count').text(response);
-	                jQuery(container).parent().children('.delibera-unlike-count').show();
-	                jQuery(container).remove();
 	            }
 	        );
         }
