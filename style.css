@@ -16,3 +16,9 @@
     float: left;
     font-size: 20px;
 }
+
+.et_pb_delibera_member .delibera_unlike,
+.et_pb_delibera_member .delibera_like {
+	background-image: none;
+	text-indent: 0;
+}

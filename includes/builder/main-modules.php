@@ -477,9 +477,11 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             );
         }
 
+        global $deliberaThemes;
+        $svg = $deliberaThemes->themeFileUrl('images/icons.svg');
         $like = $this->deliberaGerarCurtir($wp_posts[$key]->ID);
         $unlike = $this->deliberaGerarDiscordar($wp_posts[$key]->ID);
-        //$nlikes = de
+        $comment_count = delibera_comment_number($wp_posts[$key]->ID,'todos');
 
         $output = sprintf(
             '<div%3$s class="et_pb_module et_pb_delibera_member%4$s%9$s et_pb_bg_layout_%8$s clearfix">
@@ -501,7 +503,7 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 			</div>
 			%16$s
         	%17$s
-			<div class="coment"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">01</div>
+			<div class="comments"><span class="comments-count">%18$s<span><svg class="icon-comment"><use xlink:href="%19$s#icon-comment"></use></svg></div>
 
 			<div class="faixa"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/opn.png"></div>
 
@@ -522,7 +524,9 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             $tags,
             $avatar,
         	$like,
-        	$unlike
+        	$unlike,
+        	$comment_count,
+        	$svg
         );
 
        return $output;
