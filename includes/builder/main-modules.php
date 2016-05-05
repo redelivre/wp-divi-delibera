@@ -78,6 +78,9 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
                 'selector' => '.et_pb_member_social_links',
             ),
         );
+        
+        add_action('wp_enqueue_scripts', array($this, 'cssFiles'), 1000);
+        add_action('wp_enqueue_scripts', array($this, 'javascriptFiles'), 1000);
     }
 
     function get_fields() {
@@ -196,6 +199,182 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
         );
         return $fields;
     }
+    
+    function cssFiles()
+    {
+    	if(file_exists(get_stylesheet_directory()."/delibera_style.css"))
+    	{
+    		wp_enqueue_style('delibera_style', get_stylesheet_directory_uri()."/delibera_style.css");
+    	}
+    	else
+    	{
+    		global $deliberaThemes;
+    		wp_enqueue_style('delibera_style', $deliberaThemes->themeFileUrl('delibera_style.css'));
+    	}
+    }
+    
+    function javascriptFiles()
+    {
+    	wp_enqueue_script('divi-delibera-concordar', get_stylesheet_directory_uri().'/js/delibera_concordar.js', array('jquery'));
+    	
+    	$data = array(
+    		'ajax_url' => admin_url('admin-ajax.php'),
+    	);
+    	wp_localize_script('divi-delibera-concordar', 'divi_delibera_concordar', $data);
+    }
+    
+    /**
+     * Gera código html para criação do botão curtir/concordar do sistema delibera
+     *
+     * @param $ID post_ID ou comment_ID
+     * @param $type 'pauta' ou 'comment'
+     */
+    function deliberaGerarCurtir($ID, $type ='pauta')
+    {
+    	global $post;
+    
+    	$situacoes_validas = array('validacao' => false, 'discussao' => true, 'relatoria' => true, 'emvotacao' => false, 'comresolucao' => true);
+    	if($type == 'pauta')
+    	{
+    		$situacoes_validas = array('validacao' => true, 'discussao' => true, 'relatoria' => true, 'emvotacao' => true, 'comresolucao' => true);
+    	}
+    
+    	$postID = $ID;
+    	if(is_object($ID))
+    	{
+    		if($type == 'post' || $type == 'pauta')
+    		{
+    			$ID = $ID->ID;
+    			$postID = $ID;
+    		}
+    		else
+    		{
+    			$postID = $ID->comment_post_ID;
+    			$ID = $ID->comment_ID;
+    		}
+    	}
+    
+    	$ncurtiu = intval($type == 'pauta' || $type == 'post' ? get_post_meta($ID, 'delibera_numero_curtir', true) : get_comment_meta($ID, 'delibera_numero_curtir', true));
+    	$situacao = delibera_get_situacao($postID);
+    	$html = '';
+    	
+    	global $deliberaThemes;
+    	 
+    	$svg = $deliberaThemes->themeFileUrl('images/icons.svg');
+    	
+    	if ($ncurtiu > 0) {
+    		$html = '<div id="thebutton'.$type.$ID.'" class="delibera_like" >';
+    		$html .= '<span class="delibera-like-count">' . $ncurtiu.'</span><svg class="icon-thumbs-up"><use xlink:href="'.$svg.'#icon-thumbs-up"></use></svg>';
+    		$html .= '</div>';
+    	} else {
+    		$html = '<span class="delibera-like-count" style="display: none;"></span>';
+    	}
+    
+    	if (is_user_logged_in()) {
+    		$user_id = get_current_user_id();
+    		$ip = $_SERVER['REMOTE_ADDR'];
+    
+    		if(
+    				!delibera_ja_curtiu($ID, $user_id, $ip, $type) && // Ainda não curitu
+    				(is_object($situacao) && array_key_exists($situacao->slug, $situacoes_validas)) && $situacoes_validas[$situacao->slug] && // é uma situação válida
+    				!(delibera_ja_discordou($ID, $user_id, $ip, $type)) // não discordou
+    				)
+    		{
+    			$html .= '<div id="thebutton'.$type.$ID.'" class="delibera_like" ><svg class="icon-thumbs-up"><use xlink:href="'.$svg.'#icon-thumbs-up"></use></svg>';
+    			$html .= "<input type='hidden' name='object_id' value='{$ID}' />";
+    			$html .= "<input type='hidden' name='type' value='{$type}' />";
+    			$html .= '</div>';
+    		}
+    	} else {
+    		$html .= '<div id="thebutton'.$type.$ID.'" class="delibera_like" >';
+    		if (is_object($situacao) && array_key_exists($situacao->slug, $situacoes_validas) && $situacoes_validas[$situacao->slug]) { // é uma situação válida
+    			$html .= '<a class="delibera-like-login" href="';
+    			$html .= wp_login_url( $type == "pauta" ? get_permalink() : delibera_get_comment_link());
+    			$html .= '" ><span class="delibera_like_text">'.__('Concordo','delibera').'</span></a>';
+    		}
+    		$html .= '</div>';
+    	}
+    
+    	return $html;
+    }
+    
+    /**
+     *
+     * Gera código html para criação do botão discordar do sistema delibera
+     * @param $ID int post_ID ou comment_ID
+     * @param $type string 'pauta' ou 'comment'
+     */
+    function deliberaGerarDiscordar($ID, $type ='pauta')
+    {
+    	global $post;
+    
+    	$situacoes_validas = array('validacao' => false, 'discussao' => true, 'relatoria' => true, 'emvotacao' => false, 'comresolucao' => true);
+    	if($type == 'pauta')
+    	{
+    		$situacoes_validas = array('validacao' => true, 'discussao' => true, 'relatoria' => true, 'emvotacao' => true, 'comresolucao' => true);
+    	}
+    
+    	$postID = $ID;
+    	if(is_object($ID))
+    	{
+    		if($type == 'post' || $type == 'pauta')
+    		{
+    			$ID = $ID->ID;
+    			$postID = $ID;
+    		}
+    		else
+    		{
+    			$postID = $ID->comment_post_ID;
+    			$ID = $ID->comment_ID;
+    		}
+    	}
+		$ndiscordou = intval($type == 'pauta' || $type == 'post' ? get_post_meta($ID, 'delibera_numero_discordar', true) : get_comment_meta($ID, 'delibera_numero_discordar', true));
+    	$situacao = delibera_get_situacao($postID);
+    	$html = '';
+    	 
+    	global $deliberaThemes;
+    	
+    	$svg = $deliberaThemes->themeFileUrl('images/icons.svg');
+    	
+    	if ($ndiscordou > 0) {
+    		$html = '<div id="thebuttonDiscordo'.$type.$ID.'" class="delibera_unlike" >';
+    		$html .= '<span class="delibera-unlike-count">' . $ndiscordou .'</span><svg class="icon-thumbs-down"><use xlink:href="'.$svg.'#icon-thumbs-down"></use></svg>';
+    		$html .= '</div>';
+    	} else {
+    		$html = '<div id="thebuttonDiscordo'.$type.$ID.'" class="delibera_unlike" >';
+    		$html .= '<span class="delibera-unlike-count" style="display: none;"></span><svg class="icon-thumbs-down"><use xlink:href="'.$svg.'#icon-thumbs-down"></use></svg>';
+    		$html .= '</div>';
+    	}
+    
+    	if(is_user_logged_in())
+    	{
+    		$user_id = get_current_user_id();
+    		$ip = $_SERVER['REMOTE_ADDR'];
+    
+    		if(
+    				!delibera_ja_discordou($ID, $user_id, $ip, $type) && // Ainda não curitu
+    				(is_object($situacao) && array_key_exists($situacao->slug, $situacoes_validas)) && $situacoes_validas[$situacao->slug] &&// é uma situação válida
+    				!(delibera_ja_curtiu($ID, $user_id, $ip, $type)) // não discordou
+    				)
+    		{
+    			$html .= '<div id="thebuttonDiscordo'.$type.$ID.'" class="delibera_unlike" ><svg class="icon-thumbs-down"><use xlink:href="'.$svg.'#icon-thumbs-down"></use></svg>';
+    			$html .= "<input type='hidden' name='object_id' value='{$ID}' />";
+    			$html .= "<input type='hidden' name='type' value='{$type}' />";
+    			$html .= '</div>';
+    		}
+    	}
+    	else
+    	{
+    		$html = '<div id="thebuttonDiscordo'.$type.$ID.'" class="delibera_unlike" >';
+    		if(is_object($situacao) && array_key_exists($situacao->slug, $situacoes_validas) && $situacoes_validas[$situacao->slug]) // é uma situação válida
+    		{
+    			$html .= '<a class="delibera-unlike-login" href="';
+    			$html .= wp_login_url( $type == "pauta" ? get_permalink() : delibera_get_comment_link());
+    			$html .= '" ><span class="delibera_unlike_text">'.__('Discordo','delibera').'</span></a>';
+    		}
+    	}
+    	return $html;
+    }
 
     function shortcode_callback( $atts, $content = null, $function_name ) {
         $module_id         = $this->shortcode_atts['module_id'];
@@ -298,6 +477,9 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             );
         }
 
+        $like = $this->deliberaGerarCurtir($wp_posts[$key]->ID);
+        $unlike = $this->deliberaGerarDiscordar($wp_posts[$key]->ID);
+        //$nlikes = de
 
         $output = sprintf(
             '<div%3$s class="et_pb_module et_pb_delibera_member%4$s%9$s et_pb_bg_layout_%8$s clearfix">
@@ -317,8 +499,8 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
 			<div class="imageInterna">%15$s</div>
 			<div class="name">%13$s</div>
 			</div>
-			<div class="like"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/up.png">01</div>
-			<div class="deslike"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/down.png">01</div>
+			%16$s
+        	%17$s
 			<div class="coment"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/com.png">01</div>
 
 			<div class="faixa"><img src="http://acidadequeeuquero.beta.campanhacompleta.com.br/files/2016/04/opn.png"></div>
@@ -338,7 +520,9 @@ class ET_Builder_Module_Delibera_Member extends ET_Builder_Module {
             $temaLink,
             $autor,
             $tags,
-            $avatar
+            $avatar,
+        	$like,
+        	$unlike
         );
 
        return $output;

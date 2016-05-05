@@ -12,3 +12,7 @@
  Text Domain:  divi-delibera
 */
 
+.et_pb_delibera_member span.delibera-like-count, .et_pb_delibera_member span.delibera-unlike-count {
+    float: left;
+    font-size: 20px;
+}
