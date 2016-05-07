@@ -39,7 +39,10 @@
 					<label for="custom-register-email"><?php echo _x('Email', 'registro-de-usuario', 'campanha-completa'); ?></label> <br />
 					<input type="email" required="required" id="custom-register-email" name="custom-register-email" class="input" />
 				</p>
-
+				<p>
+					<label for="custom-register-telefone"><?php echo _x('Telefone', 'registro-de-usuario', 'campanha-completa'); ?></label> <br />
+					<input type="email" required="required" id="custom-register-telefone" name="custom-register-telefone" class="input" />
+				</p>
 
 				
 				<?php
