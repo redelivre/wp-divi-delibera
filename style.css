@@ -88,7 +88,7 @@
 }
 
 .et_pb_column #user .name {
-    padding-left: 70px;
+/*    padding-left: 70px;*/
     line-height: 50px;
     font-weight: bold;
     color: black;
@@ -4748,3 +4748,14 @@ ol.commentlist, .comment .children {
 }
 
 */
+
+.second-register-painel {
+    background-color: rgba(255, 255, 255, 0.9);
+    display: block;
+    height: auto;
+    left: 25%;
+    padding: 20px;
+    position: fixed;
+    top: 25%;
+    width: 30%;
+}
