@@ -13,7 +13,74 @@ jQuery(document).ready(function() {
 		jQuery('.et_pb_ajax_login').find(".et_pb_ajax_login_panel").toggle();
 		
 	});
+	jQuery('.second-register-painel .close-button').click(function(){
+		jQuery('.second-register-painel').hide();
+	});
+	
+	jQuery(".second-register-painel .submit-button").click(function() {
+		var container = jQuery(this).parent();
+		
+		if(
+			container.find('.custom-register-bairro').val() > 0 &&
+			isValidEmail(container.find('input[name="user-email"]').val()) &&
+			container.find('input[name="phone"]').val() > 0 
+		)
+		{
+			jQuery.post(
+				ajaxurl,
+				{
+					action : "second_register",
+					_wpnonce : container.find('input[name="_wpnonce"]').val(),
+					_wp_http_referer: container.find('input[name="_wp_http_referer"]').val(),
+					email: container.find('input[name="user-email"]').val(),
+					bairro: container.find('.custom-register-bairro').val(),
+					telefone: container.find('input[name="phone"]').val(),
+				},
+				function(response) {
+					alert('Obrigado!');
+					container.hide();
+				}
+			);
+		}
+		else
+		{
+			if(container.find('.custom-register-bairro').val() < 1)
+			{
+				container.find('.custom-register-bairro').addClass('invalid');
+			}
+			else
+			{
+				container.find('.custom-register-bairro').removeClass('invalid');
+			}
+			
+			if(! isValidEmail(container.find('input[name="user-email"]').val()))
+			{
+				container.find('input[name="user-email"]').addClass('invalid');
+			}
+			else
+			{
+				container.find('input[name="user-email"]').removeClass('invalid');
+			}
+			
+			if(container.find('input[name="phone"]').val() < 1)
+			{
+				container.find('input[name="phone"]').addClass('invalid');
+			}
+			else
+			{
+				container.find('input[name="phone"]').removeClass('invalid');
+			}
+			alert("Favor preecher corretamente os campos, obrigado");
+		}
+	});
+	
 });
+
+function isValidEmail(email)
+{
+	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	return regex.test(email) && !(email.search(ET_Builder_Module_Ajax_Login.invalid_email) > 0);
+}
 
 function ajax_login_toggle_panel()
 {

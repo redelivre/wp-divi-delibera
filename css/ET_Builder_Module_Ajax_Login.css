@@ -84,6 +84,77 @@
 	padding: 0;
 }
 
+.second-register-painel {
+    background-color: rgba(71, 71, 71, 0.9);
+    display: block;
+    height: auto;
+    left: 30%;
+    padding: 20px;
+    position: fixed;
+    text-align: center;
+    top: 22%;
+    width: 20%;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #888888;
+}
+
+.second-register-painel > p {
+    margin: 4px 0;
+}
+
+.second-register-painel input, .second-register-painel select {
+    width: 100%;
+    padding-left: 10px;
+}
+
+.second-register-painel .close-button {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #ffffff;
+    font-weight: bold;
+    right: 8px;
+    top: 6px;
+}
+
+.second-register-painel .submit-button {
+    background-color: #78485f;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 5px;
+    position: relative;
+    width: 100%;
+}
+
+.second-register-painel .user-name {
+    display: block;
+    font-weight: bolder;
+    padding-left: 10px;
+    position: relative;
+    width: 100%;
+    background-color: #ccc;
+}
+
+.second-register-painel input:disabled {
+	background-color: #ccc;
+}
+
+.second-register-painel .invalid {
+    border: 2px dotted red;
+}
+
+.second-register-painel .user-email {
+    display: block;
+    font-weight: bolder;
+    padding-left: 10px;
+    position: relative;
+    width: 100%;
+}
+
 @media (max-width: 980px) {
     .et_pb_ajax_login .et_pb_ajax_login_panel {
 	    font-size: 0.4em;

@@ -5,6 +5,11 @@ if(defined(WP_DEBUG) && WP_DEBUG)
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
 }
+if(!defined(WPOPAUTH_INVALID_EMAIL))
+{
+	define('WPOPAUTH_INVALID_EMAIL', 'noemail@example.com');
+}
+
 /**
  * Enqueues child theme stylesheet, loading first the parent theme stylesheet.
  */
@@ -33,101 +38,6 @@ function disable_media_comments( $post_id ) {
     return $open;
 }
 add_action( 'pre_comment_on_post', 'disable_media_comments' );
-
-if ( ! function_exists( 'et_builder_include_categories_delibera_option' ) ) :
-    function et_builder_include_categories_delibera_option( $args = array() ) {
-
-        $defaults = apply_filters( 'et_builder_include_categories_delibera_defaults', array (
-            'use_terms' => true,
-            'term_name' => 'tema', 
-             'post_type'=>'pauta'
-        ) );
-
-        $args = wp_parse_args( $args, $defaults );
-
-        $output = "\t" . "<% var et_pb_include_categories_temp = typeof et_pb_include_categories !== 'undefined' ? et_pb_include_categories.split( ',' ) : []; %>" . "\n";
-
-        if ( $args['use_terms'] ) {
-            $cats_array = get_terms( $args['term_name'], array( 'hide_empty' => false) );
-        } else {
-            $cats_array = get_categories( apply_filters( 'et_builder_get_categories_args', 'hide_empty=0' ) );
-            //$cats_array = get_categories();
-        }
-
-        if ( empty( $cats_array ) ) {
-            $output = '<p>' . esc_html__( "You currently don't have any projects assigned to a category.", 'et_builder' ) . '</p>';
-        }
-
-        foreach ( $cats_array as $category ) {
-            $contains = sprintf(
-                '<%%= _.contains( et_pb_include_categories_temp, "%1$s" ) ? checked="checked" : "" %%>',
-                esc_html( $category->term_id )
-            );
-
-            $output .= sprintf(
-                '%4$s<label><input type="checkbox" name="et_pb_include_categories" value="%1$s"%3$s> %2$s </label><br/>',
-                esc_attr( $category->term_id ),
-                esc_html( $category->name ),
-                $contains,
-                "\n\t\t\t\t\t"
-            );
-        }
-
-        $output = '<div id="et_pb_include_categories">' . $output . '</div>';
-
-        return $output;
-
-        //return apply_filters( 'et_builder_include_categories_option_html', $output );
-    }
-endif;
-
-if ( ! function_exists( 'et_builder_include_categories_delibera_form_option_radio' ) ) :
-    function et_builder_include_categories_delibera_form_option_radio( $args = array() ) {
-
-        $defaults = apply_filters( 'et_builder_include_categories_delibera_form_defaults', array (
-            'use_terms' => true,
-            'term_name' => 'tema',
-            'post_type'=>'pauta'
-        ) );
-
-        $args = wp_parse_args( $args, $defaults );
-
-        $output = "\t" . "<% var et_pb_include_categories_temp = typeof et_pb_include_categories !== 'undefined' ? et_pb_include_categories.split( ',' ) : []; %>" . "\n";
-
-        if ( $args['use_terms'] ) {
-            $cats_array = get_terms( $args['term_name'], array( 'hide_empty' => false) );
-        } else {
-            $cats_array = get_categories( apply_filters( 'et_builder_get_categories_args', 'hide_empty=0' ) );
-            //$cats_array = get_categories();
-        }
-
-        if ( empty( $cats_array ) ) {
-            $output = '<p>' . esc_html__( "You currently don't have any projects assigned to a category.", 'et_builder' ) . '</p>';
-        }
-
-        foreach ( $cats_array as $category ) {
-            $contains = sprintf(
-                '<%%= _.contains( et_pb_include_categories_temp, "%1$s" ) ? checked="checked" : "" %%>',
-                esc_html( $category->term_id )
-            );
-
-            $output .= sprintf(
-                '%4$s<label><input type="checkbox" name="et_pb_include_categories" value="%1$s"%3$s> %2$s </label><br/>',
-                esc_attr( $category->term_id ),
-                esc_html( $category->name ),
-                $contains,
-                "\n\t\t\t\t\t"
-            );
-        }
-
-        $output = '<div id="et_pb_include_categories">' . $output . '</div>';
-
-        return $output;
-
-        //return apply_filters( 'et_builder_include_categories_option_html', $output );
-    }
-endif;
-
 
 /** modifica��es para alterar a taxonomia bairro */
 
@@ -427,12 +337,95 @@ function divi_child_get_avatar_url($get_avatar){
     return $matches[1];
 }
 
-function divi_child_secund_register()
-{
-	?>
-	
-	<?php
+function diviSelectBairro(  ) {
+
+	$tax = get_taxonomy( 'bairro' );
+	$user = wp_get_current_user();
+
+	/* Get the terms of the 'bairro' taxonomy. */
+	$terms = get_terms( 'bairro', array( 'hide_empty' => false ) );
+	if(! empty($terms))
+	{
+		?>
+		<select name="custom-register-bairro" class="custom-register-bairro">
+			<option value="-1"><?php _e( 'Selecione um Bairro' ); ?></option><?php
+			foreach($terms as $term)
+			{?>
+				<option value="<?php echo $term->term_id; ?>" <?php checked( true, is_object_in_term( $user->ID, 'bairro', $term ) ); ?> ><?php echo $term->name; ?></option><?php
+			}?>
+		</select><?php
+		
+	}
+	/* If there are no bairro terms, display a message. */
+	else
+	{
+		_e('Ainda não há bairros cadastrados');
+	}
 }
+
+function divi_child_second_register()
+{
+	if(is_user_logged_in())
+	{
+		$current_user = wp_get_current_user();
+		$valid_email = strpos($current_user->user_email, WPOPAUTH_INVALID_EMAIL) === false;
+		$telefone = get_user_meta($current_user->ID, 'telefone', true);
+		$bairro = array_shift(wp_get_object_terms($current_user->ID, 'bairro'));
+		
+		if(!(is_object($bairro) && get_class($bairro) == 'WP_Term' && $valid_email && strlen($telefone) > 0))
+		{
+			?>
+			<div class="second-register-painel">
+				<?php wp_nonce_field("second_register"); ?>
+				<span class="close-button">X</span>
+				<img alt="" src="http://acidadequeeuquero.org.br/files/2016/04/A-cidade-que-eu-quero_Logo-sombra.png">
+				<p>
+					<input type="text" class="user-name" value="<?php echo $current_user->display_name; ?>" disabled="disabled" />
+				</p>
+				<p>
+					<input type="text" name="user-email" class="user-email" value="<?php echo $current_user->user_email; ?>" <?php echo $valid_email ? 'disabled="disabled"' : ''; ?> />
+				</p>
+				<p>
+					<input type="text" placeholder="Telefone (WhatsApp)" name="phone" value="<?php echo $telefone; ?>"/>
+				</p>
+				<p>
+					<?php
+						diviSelectBairro();
+					?>
+				</p>
+				<span class="submit-button"><?php _e('Cadastrar'); ?></span>
+			</div>
+			<?php
+		}
+	}
+}
+add_action('wp_footer', 'divi_child_second_register');
+
+function divi_child_second_register_callback()
+{
+	if(check_ajax_referer( 'second_register'))
+	{
+		$current_user = wp_get_current_user();
+		$user_id = $current_user->ID;
+		$result = false;
+		if(array_key_exists('email', $_POST) && !empty($_POST['email']))
+		{
+			$result = wp_update_user(array('ID' => $user_id, 'user_email' => sanitize_email($_POST['email'])));
+		}
+		
+		$term = (int)esc_attr( $_POST['bairro'] );
+		
+		/* Sets the terms (we're just using a single term) for the user. */
+		wp_set_object_terms( $user_id, $term, 'bairro', false);
+		
+		clean_object_term_cache( $user_id, 'bairro' );
+		
+		update_user_meta($user_id, 'telefone', sanitize_text_field($_POST['telefone']));
+		
+	}		
+	die();
+}
+add_action('wp_ajax_second_register', 'divi_child_second_register_callback');
 
 function divi_child_login_form()
 {

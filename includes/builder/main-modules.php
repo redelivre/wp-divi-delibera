@@ -97,6 +97,8 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 	function javascriptFiles()
 	{
 		wp_enqueue_script('ET_Builder_Module_Ajax_Login', get_stylesheet_directory_uri().'/js/ET_Builder_Module_Ajax_Login.js', array('jquery'));
+		$data = array('invalid_email' => WPOPAUTH_INVALID_EMAIL);
+		wp_localize_script('ET_Builder_Module_Ajax_Login', 'ET_Builder_Module_Ajax_Login', $data);
 	}
 
 	function get_fields() {

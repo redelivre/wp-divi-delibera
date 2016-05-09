@@ -47,7 +47,7 @@
 				
 				<?php
 
-				my_select_bairro();
+					diviSelectBairro();
 
 					if(class_exists('siCaptcha', false))
 					{
