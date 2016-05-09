@@ -340,7 +340,10 @@ function divi_child_get_avatar_url($get_avatar){
 function diviSelectBairro(  ) {
 
 	$tax = get_taxonomy( 'bairro' );
-	$user = wp_get_current_user();
+	if(is_user_logged_in())
+	{
+		$user = wp_get_current_user();
+	}
 
 	/* Get the terms of the 'bairro' taxonomy. */
 	$terms = get_terms( 'bairro', array( 'hide_empty' => false ) );
@@ -351,7 +354,7 @@ function diviSelectBairro(  ) {
 			<option value="-1"><?php _e( 'Selecione um Bairro' ); ?></option><?php
 			foreach($terms as $term)
 			{?>
-				<option value="<?php echo $term->term_id; ?>" <?php selected( is_object_in_term( $user->ID, 'bairro', $term ), true, true ); ?> ><?php echo $term->name; ?></option><?php
+				<option value="<?php echo $term->term_id; ?>" <?php if(is_user_logged_in()) selected( is_object_in_term( $user->ID, 'bairro', $term ), true, true ); ?> ><?php echo $term->name; ?></option><?php
 			}?>
 		</select><?php
 		

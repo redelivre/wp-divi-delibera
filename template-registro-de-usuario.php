@@ -41,7 +41,7 @@
 				</p>
 				<p>
 					<label for="custom-register-telefone"><?php echo _x('Telefone', 'registro-de-usuario', 'campanha-completa'); ?></label> <br />
-					<input type="email" required="required" id="custom-register-telefone" name="custom-register-telefone" class="input" />
+					<input type="tel" required="required" id="custom-register-telefone" name="custom-register-telefone" class="input" />
 				</p>
 
 				
