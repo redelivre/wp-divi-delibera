@@ -407,7 +407,7 @@ function divi_child_second_register_callback()
 	}		
 	die();
 }
-add_action('wp_ajax_second_register', 'divi_child_second_register_callback');
+//add_action('wp_ajax_second_register', 'divi_child_second_register_callback');
 
 function divi_child_login_form()
 {
