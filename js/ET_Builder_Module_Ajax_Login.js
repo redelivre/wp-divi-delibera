@@ -15,6 +15,7 @@ jQuery(document).ready(function() {
 	});
 	jQuery('.second-register-painel .close-button').click(function(){
 		jQuery('.second-register-painel').hide();
+		jQuery('.second-register-overlay').hide();
 	});
 	
 	jQuery(".second-register-painel .submit-button").click(function() {
@@ -39,6 +40,7 @@ jQuery(document).ready(function() {
 				function(response) {
 					alert('Obrigado!');
 					container.hide();
+					jQuery('.second-register-overlay').hide();
 				}
 			);
 		}
@@ -73,7 +75,10 @@ jQuery(document).ready(function() {
 			alert("Favor preecher corretamente os campos, obrigado");
 		}
 	});
-	
+	if(jQuery('.second-register-painel').length > 0)
+	{
+		jQuery('.second-register-overlay').show();
+	}
 });
 
 function isValidEmail(email)

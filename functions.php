@@ -351,7 +351,7 @@ function diviSelectBairro(  ) {
 			<option value="-1"><?php _e( 'Selecione um Bairro' ); ?></option><?php
 			foreach($terms as $term)
 			{?>
-				<option value="<?php echo $term->term_id; ?>" <?php checked( true, is_object_in_term( $user->ID, 'bairro', $term ) ); ?> ><?php echo $term->name; ?></option><?php
+				<option value="<?php echo $term->term_id; ?>" <?php selected( is_object_in_term( $user->ID, 'bairro', $term ), true, true ); ?> ><?php echo $term->name; ?></option><?php
 			}?>
 		</select><?php
 		
