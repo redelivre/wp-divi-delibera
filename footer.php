@@ -37,7 +37,7 @@ if ( ! is_page_template( 'page-template-blank.php' ) ) : ?>
 					}
 				?>
 
-						<p id="footer-info"><?php printf( et_get_safe_localization( __( 'Projeto desenvolvido em %2$s utilizando o Software Livre %1$s"', 'Divi' ) ), '<a href="https://github.com/redelivre/delibera" title="Plugin Delibera">Delibera</a>', '<a href="http://www.wordpress.org">WordPress</a>' ); ?></p>
+						<p id="footer-info"><?php printf( et_get_safe_localization( __( 'Projeto desenvolvido em %2$s utilizando o Software Livre %1$s', 'Divi' ) ), '<a href="https://github.com/redelivre/delibera" title="Plugin Delibera">Delibera</a>', '<a href="http://www.wordpress.org">WordPress</a>' ); ?></p>
 					</div>	<!-- .container -->
 				</div>
 			</footer> <!-- #main-footer -->
