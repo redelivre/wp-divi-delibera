@@ -84,7 +84,7 @@ jQuery(document).ready(function() {
 function isValidEmail(email)
 {
 	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	return regex.test(email) && !(email.search(ET_Builder_Module_Ajax_Login.invalid_email) > 0);
+	return regex.test(email) && (email.search(ET_Builder_Module_Ajax_Login.invalid_email) == -1);
 }
 
 function ajax_login_toggle_panel()
