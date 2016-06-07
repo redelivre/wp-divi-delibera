@@ -162,7 +162,9 @@ function my_edit_user_bairro_section( $user ) {
         return;
 
     /* Get the terms of the 'bairro' taxonomy. */
-    $terms = get_terms( 'bairro', array( 'hide_empty' => false ) ); ?>
+    $terms = get_terms( 'bairro', array( 'hide_empty' => false ) );
+    $telefone = get_user_meta($user->ID, 'telefone', true);
+    ?>
 
     <h3><?php _e( 'Bairro' ); ?></h3>
 
@@ -187,6 +189,10 @@ function my_edit_user_bairro_section( $user ) {
                 }
 
                 ?></td>
+            <th><label for="telefone"><?php _e( 'Telephone' ); ?></label></th>
+            <td>
+            	<input type="text" name="telefone" id="telefone" value="<?php echo esc_attr( $telefone ); ?>" />
+			</td>
         </tr>
 
     </table>
@@ -217,6 +223,9 @@ function my_save_user_bairro_terms( $user_id ) {
     wp_set_object_terms( $user_id, array( $term ), 'bairro', false);
 
     clean_object_term_cache( $user_id, 'bairro' );
+    
+    if(array_key_exists('telefone', $_POST))
+    	update_user_meta($user_id, 'telefone', esc_attr($_POST['telefone']));
 }
 
 
