@@ -28,7 +28,7 @@ jQuery(document).ready(function() {
 		)
 		{
 			jQuery.post(
-				ajaxurl,
+				ET_Builder_Module_Ajax_Login.ajaxurl,
 				{
 					action : "second_register",
 					_wpnonce : container.find('input[name="_wpnonce"]').val(),
