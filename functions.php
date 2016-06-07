@@ -366,13 +366,17 @@ function divi_child_second_register()
 		$telefone = get_user_meta($current_user->ID, 'telefone', true);
 		$bairro = array_shift(wp_get_object_terms($current_user->ID, 'bairro'));
 		
+		$logo = ( $user_logo = et_get_option( 'divi_logo' ) ) && '' != $user_logo
+		? $user_logo
+		: get_template_directory_uri() . '/images/logo.png';
+		
 		if(!(is_object($bairro) && get_class($bairro) == 'WP_Term' && $valid_email && strlen($telefone) > 0))
 		{
 			?>
 			<div class="second-register-painel">
 				<?php wp_nonce_field("second_register"); ?>
 				<span class="close-button">X</span>
-				<img alt="" src="http://acidadequeeuquero.org.br/files/2016/04/A-cidade-que-eu-quero_Logo-sombra.png">
+				<img alt="" src="<?php echo esc_attr($logo); ?>">
 				<p>
 					<input type="text" class="user-name" value="<?php echo $current_user->display_name; ?>" disabled="disabled" />
 				</p>
