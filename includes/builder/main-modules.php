@@ -434,3 +434,395 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 	}
 }
 new ET_Builder_Module_Ajax_Login;
+
+
+class ET_Builder_Module_Social_Media_Share extends ET_Builder_Module {
+	function init() {
+		$this->name            = esc_html__( 'Social Media Share', 'et_builder' );
+		$this->slug            = 'et_pb_social_media_share';
+		$this->child_slug      = 'et_pb_social_media_share_network';
+		$this->child_item_text = esc_html__( 'Social Network', 'et_builder' );
+
+		$this->whitelisted_fields = array(
+			'link_shape',
+			'background_layout',
+			'url_new_window',
+			'follow_button',
+			'admin_label',
+			'module_id',
+			'module_class',
+		);
+
+		$this->fields_defaults = array(
+			'link_shape'        => array( 'rounded_rectangle' ),
+			'background_layout' => array( 'light' ),
+			'url_new_window'    => array( 'on' ),
+			'follow_button'     => array( 'off' ),
+		);
+
+		$this->custom_css_options = array(
+			'social_follow' => array(
+				'label'    => esc_html__( 'Social Follow', 'et_builder' ),
+				'selector' => 'li',
+			),
+			'social_icon' => array(
+				'label'    => esc_html__( 'Social Icon', 'et_builder' ),
+				'selector' => 'li a.icon',
+			),
+			'follow_button' => array(
+				'label'    => esc_html__( 'Follow Button', 'et_builder' ),
+				'selector' => 'li a.follow_button',
+			),
+		);
+	}
+
+	function get_fields() {
+		$fields = array(
+			'link_shape' => array(
+				'label'           => esc_html__( 'Link Shape', 'et_builder' ),
+				'type'            => 'select',
+				'option_category' => 'layout',
+				'options'         => array(
+					'rounded_rectangle' => esc_html__( 'Rounded Rectangle', 'et_builder' ),
+					'circle'            => esc_html__( 'Circle', 'et_builder' ),
+				),
+				'description' => esc_html__( 'Here you can choose the shape of your social network icons.', 'et_builder' ),
+			),
+			'background_layout' => array(
+				'label'           => esc_html__( 'Text Color', 'et_builder' ),
+				'type'            => 'select',
+				'option_category' => 'color_option',
+				'options'         => array(
+					'light' => esc_html__( 'Dark', 'et_builder' ),
+					'dark'  => esc_html__( 'Light', 'et_builder' ),
+				),
+				'description' => esc_html__( 'Here you can choose whether your text should be light or dark. If you are working with a dark background, then your text should be light. If your background is light, then your text should be set to dark.', 'et_builder' ),
+			),
+			'url_new_window' => array(
+				'label'           => esc_html__( 'Url Opens', 'et_builder' ),
+				'type'            => 'select',
+				'option_category' => 'configuration',
+				'options'         => array(
+					'off' => esc_html__( 'In The Same Window', 'et_builder' ),
+					'on'  => esc_html__( 'In The New Tab', 'et_builder' ),
+				),
+				'description' => esc_html__( 'Here you can choose whether or not your link opens in a new window', 'et_builder' ),
+			),
+			'follow_button' => array(
+				'label'           => esc_html__( 'Follow Button', 'et_builder' ),
+				'type'            => 'yes_no_button',
+				'option_category' => 'configuration',
+				'options'           => array(
+					'off' => esc_html__( 'Off', 'et_builder' ),
+					'on'  => esc_html__( 'On', 'et_builder' ),
+				),
+				'description' => esc_html__( 'Here you can choose whether or not to include the follow button next to the icon.', 'et_builder' ),
+			),
+			'disabled_on' => array(
+				'label'           => esc_html__( 'Disable on', 'et_builder' ),
+				'type'            => 'multiple_checkboxes',
+				'options'         => array(
+					'phone'   => esc_html__( 'Phone', 'et_builder' ),
+					'tablet'  => esc_html__( 'Tablet', 'et_builder' ),
+					'desktop' => esc_html__( 'Desktop', 'et_builder' ),
+				),
+				'additional_att'  => 'disable_on',
+				'option_category' => 'configuration',
+				'description'     => esc_html__( 'This will disable the module on selected devices', 'et_builder' ),
+			),
+			'admin_label' => array(
+				'label'       => esc_html__( 'Admin Label', 'et_builder' ),
+				'type'        => 'text',
+				'description' => esc_html__( 'This will change the label of the module in the builder for easy identification.', 'et_builder' ),
+			),
+			'module_id' => array(
+				'label'           => esc_html__( 'CSS ID', 'et_builder' ),
+				'type'            => 'text',
+				'option_category' => 'configuration',
+				'tab_slug'        => 'custom_css',
+				'option_class'    => 'et_pb_custom_css_regular',
+			),
+			'module_class' => array(
+				'label'           => esc_html__( 'CSS Class', 'et_builder' ),
+				'type'            => 'text',
+				'option_category' => 'configuration',
+				'tab_slug'        => 'custom_css',
+				'option_class'    => 'et_pb_custom_css_regular',
+			),
+		);
+		return $fields;
+	}
+
+	function pre_shortcode_content() {
+		global $et_pb_social_media_share_link;
+
+		$link_shape        = $this->shortcode_atts['link_shape'];
+		$url_new_window    = $this->shortcode_atts['url_new_window'];
+		$follow_button     = $this->shortcode_atts['follow_button'];
+
+		$et_pb_social_media_share_link = array(
+			'url_new_window' => $url_new_window,
+			'shape'          => $link_shape,
+			'follow_button'  => $follow_button,
+		);
+	}
+
+	function shortcode_callback( $atts, $content = null, $function_name ) {
+		global $et_pb_social_media_share_link;
+
+		$module_id         = $this->shortcode_atts['module_id'];
+		$module_class      = $this->shortcode_atts['module_class'];
+		$background_layout = $this->shortcode_atts['background_layout'];
+
+		$class = " et_pb_module et_pb_bg_layout_{$background_layout}";
+
+		$module_class = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
+
+		$output = sprintf(
+			'<ul%3$s class="et_pb_social_media_follow%2$s%4$s%5$s clearfix">
+			<ul style="width:100 float:left; height:30px; margin:0px; padding:0;">Compartilhe</ul>
+				 %1$s
+			</ul> <!-- .et_pb_counters -->',
+			$this->shortcode_content,
+			esc_attr( $class ),
+			( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
+			( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' ),
+			( 'on' === $et_pb_social_media_share_link['follow_button'] ? ' has_follow_button' : '' )
+		);
+
+		return $output;
+	}
+}
+new ET_Builder_Module_Social_Media_Share;
+
+class ET_Builder_Module_Social_Media_Share_Item extends ET_Builder_Module {
+	function init() {
+		$this->name                        = esc_html__( 'Social Network', 'et_builder' );
+		$this->slug                        = 'et_pb_social_media_share_network';
+		$this->type                        = 'child';
+		$this->child_title_var             = 'content_new';
+
+		$this->whitelisted_fields = array(
+			'social_network',
+			'content_new',
+			'url',
+			'bg_color',
+			'skype_url',
+			'skype_action',
+		);
+
+		$this->fields_defaults = array(
+			'url'          => array( '#' ),
+			'bg_color'     => array( et_builder_accent_color(), 'only_default_setting' ),
+			'skype_action' => array( 'call' ),
+		);
+
+		$this->advanced_setting_title_text = esc_html__( 'New Social Network', 'et_builder' );
+		$this->settings_text               = esc_html__( 'Social Network Settings', 'et_builder' );
+
+		$this->custom_css_options = array(
+			'social_icon' => array(
+				'label'    => esc_html__( 'Social Icon', 'et_builder' ),
+				'selector' => 'a.icon',
+			),
+			'follow_button' => array(
+				'label'    => esc_html__( 'Follow Button', 'et_builder' ),
+				'selector' => 'a.follow_button',
+			),
+		);
+	}
+
+	function get_fields() {
+		$fields = array(
+			'social_network' => array(
+				'label'           => esc_html__( 'Social Network', 'et_builder' ),
+				'type'            => 'select',
+				'option_category' => 'basic_option',
+				'class'           => 'et-pb-social-network',
+				'options' => array(
+					''            => esc_html__( 'Select a Network', 'et_builder' ),
+					'facebook'    => array(
+						'value' => esc_html__( 'facebook', 'et_builder' ),
+						'data'  => array( 'color' => '#3b5998' ),
+					),
+					'twitter'     => array(
+						'value' => esc_html__( 'Twitter', 'et_builder' ),
+						'data'  => array( 'color' => '#00aced' ),
+					),
+					'google-plus' => array(
+						'value' => esc_html__( 'Google+', 'et_builder' ),
+						'data'  => array( 'color' => '#dd4b39' ),
+					),
+					'pinterest'   => array(
+						'value' => esc_html__( 'Pinterest', 'et_builder' ),
+						'data'  => array( 'color' => '#cb2027' ),
+					),
+					'linkedin'    => array(
+						'value' => esc_html__( 'LinkedIn', 'et_builder' ),
+						'data'  => array( 'color' => '#007bb6' ),
+					),
+					'tumblr'      => array(
+						'value' => esc_html__( 'tumblr', 'et_builder' ),
+						'data'  => array( 'color' => '#32506d' ),
+					),
+					'instagram'   => array(
+						'value' => esc_html__( 'Instagram', 'et_builder' ),
+						'data'  => array( 'color' => '#517fa4' ),
+					),
+					'skype'       => array(
+						'value' => esc_html__( 'skype', 'et_builder' ),
+						'data'  => array( 'color' => '#12A5F4' ),
+					),
+					'flikr'       => array(
+						'value' => esc_html__( 'flikr', 'et_builder' ),
+						'data'  => array( 'color' => '#ff0084' ),
+					),
+					'myspace'     => array(
+						'value' => esc_html__( 'MySpace', 'et_builder' ),
+						'data'  => array( 'color' => '#3b5998' ),
+					),
+					'dribbble'    => array(
+						'value' => esc_html__( 'dribbble', 'et_builder' ),
+						'data'  => array( 'color' => '#ea4c8d' ),
+					),
+					'youtube'     => array(
+						'value' => esc_html__( 'Youtube', 'et_builder' ),
+						'data'  => array( 'color' => '#a82400' ),
+					),
+					'vimeo'       => array(
+						'value' => esc_html__( 'Vimeo', 'et_builder' ),
+						'data'  => array( 'color' => '#45bbff' ),
+					),
+					'rss'         => array(
+						'value' => esc_html__( 'RSS', 'et_builder' ),
+						'data'  => array( 'color' => '#ff8a3c' ),
+					),
+				),
+				'affects'           => array(
+					'#et_pb_url',
+					'#et_pb_skype_url',
+					'#et_pb_skype_action',
+				),
+				'description' => esc_html__( 'Choose the social network', 'et_builder' ),
+			),
+			'content_new' => array(
+				'label' => esc_html__( 'Content', 'et_builder' ),
+				'type'  => 'hidden',
+			),
+			'url' => array(
+				'label'               => esc_html__( 'Account URL', 'et_builder' ),
+				'type'                => 'text',
+				'option_category'     => 'basic_option',
+				'description'         => esc_html__( 'The URL for this social network link.', 'et_builder' ),
+				'depends_show_if_not' => 'skype',
+			),
+			'skype_url' => array(
+				'label'           => esc_html__( 'Account Name', 'et_builder' ),
+				'type'            => 'text',
+				'option_category' => 'basic_option',
+				'description'     => esc_html__( 'The Skype account name.', 'et_builder' ),
+				'depends_show_if' => 'skype',
+			),
+			'skype_action' => array(
+				'label'           => esc_html__( 'Skype Button Action', 'et_builder' ),
+				'type'            => 'select',
+				'option_category' => 'basic_option',
+				'options'         => array(
+					'call' => esc_html__( 'Call', 'et_builder' ),
+					'chat' => esc_html__( 'Chat', 'et_builder' ),
+				),
+				'depends_show_if' => 'skype',
+				'description'     => esc_html__( 'Here you can choose which action to execute on button click', 'et_builder' ),
+			),
+			'bg_color' => array(
+				'label'           => esc_html__( 'Icon Color', 'et_builder' ),
+				'type'            => 'color-alpha',
+				'description'     => esc_html__( 'This will change the icon color.', 'et_builder' ),
+				'additional_code' => '<span class="et-pb-reset-setting reset-default-color" style="display: none;"></span>',
+			),
+		);
+		return $fields;
+	}
+
+	function shortcode_callback( $atts, $content = null, $function_name ) {
+		global $et_pb_social_media_share_link;
+
+		$social_network = $this->shortcode_atts['social_network'];
+		$url            = $this->shortcode_atts['url'];
+		$bg_color       = $this->shortcode_atts['bg_color'];
+		$skype_url      = $this->shortcode_atts['skype_url'];
+		$skype_action   = $this->shortcode_atts['skype_action'];
+		$follow_button  = '';
+		$is_skype       = false;
+
+		if ( isset( $bg_color ) && '' !== $bg_color ) {
+			$bg_color_style = sprintf( 'background-color: %1$s;', esc_attr( $bg_color ) );
+		}
+
+		if ( 'skype' === $social_network ) {
+			$skype_url = sprintf(
+				'skype:%1$s?%2$s',
+				sanitize_text_field( $skype_url ),
+				sanitize_text_field( $skype_action )
+			);
+			$is_skype = true;
+		}
+
+		if ( 'on' === $et_pb_social_media_share_link['follow_button'] ) {
+			$follow_button = sprintf(
+				'<a href="%1$s" class="follow_button" title="%2$s"%3$s>%4$s</a>',
+				! $is_skype ? esc_url( $url ) : $skype_url,
+				esc_attr( trim( wp_strip_all_tags( $content ) ) ),
+				( 'on' === $et_pb_social_media_share_link['url_new_window'] ? ' target="_blank"' : '' ),
+				esc_html__( 'Follow', 'et_builder' )
+			);
+		}
+
+		$url = 'http';
+		if( isset($_SERVER["HTTPS"]) ) {
+			if ($_SERVER["HTTPS"] == "on") {$url .= "s";}
+		}
+		$pageURL .= "://";
+		if ($_SERVER["SERVER_PORT"] != "80") {
+			$url .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+		} else {
+			$url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		}
+
+		if($social_network=="facebook")
+		{
+			$url = 'https://www.facebook.com/sharer/sharer.php?u='.$url;
+		}
+		elseif ($social_network=="google-plus")
+		{
+			$url = 'https://plus.google.com/share?url='.$url;
+
+		}
+		elseif($social_network=="twitter")
+		{
+			$url = 'https://twitter.com/home?status=Visite '.$url;
+		}
+
+				//print_r($url);
+
+		$social_network = ET_Builder_Element::add_module_order_class( $social_network, $function_name );
+
+		$output = sprintf(
+			'<li class="et_pb_social_icon et_pb_social_network_link%1$s">
+				<a href="%4$s" class="icon%2$s" target="_blank" title="%5$s"%7$s style="%3$s"><span>%6$s</span></a>
+				%8$s
+			</li>',
+			( '' !== $social_network ? sprintf( ' et-social-%s', esc_attr( $social_network ) ) : '' ),
+			( '' !== $et_pb_social_media_share_link['shape'] ? sprintf( ' %s', esc_attr( $et_pb_social_media_share_link['shape'] ) ) : '' ),
+			$bg_color_style,
+			! $is_skype ? esc_url( $url ) : $skype_url,
+			esc_attr( trim( wp_strip_all_tags( $content ) ) ),
+			sanitize_text_field( $content ),
+			( 'on' === $et_pb_social_media_share_link['url_new_window'] ? ' target="_blank"' : '' ),
+			$follow_button
+		);
+
+		return $output;
+	}
+}
+new ET_Builder_Module_Social_Media_Share_Item;
