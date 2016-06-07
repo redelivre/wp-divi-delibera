@@ -370,7 +370,7 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 			ob_clean();
 			
 			$form = sprintf( '
-				<div class="et_pb_newsletter_form et_pb_login_form">
+				<div class="et_pb_newsletter_form et_pb_login_form"><span class="close-button">X</span>
 					'.$form_meta.'
 					<form action="%7$s" method="post">
 						<p>
