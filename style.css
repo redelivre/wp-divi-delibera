@@ -4733,6 +4733,15 @@ ol.commentlist, .comment .children {
     padding-top: 20px;
 }
 
+.social-buttons{
+    float:left !important;
+    width: 90% !important;
+}
+
+.social-buttons a {
+    font-size: 14px !important;
+}
+
 /*
 
 ol.commentlist, .comment .children {
