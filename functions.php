@@ -384,7 +384,7 @@ function divi_child_second_register()
 		$telefone = get_user_meta($current_user->ID, 'telefone', true);
 		$bairro = array_shift(wp_get_object_terms($current_user->ID, 'bairro'));
 		
-		if(!(is_object($bairro) && get_class($bairro) == 'WP_Term' && $valid_email && strlen($telefone) > 0))
+		if(!(is_object($bairro) && (get_class($bairro) == 'WP_Term' || get_class($bairro) == 'stdClass') && $valid_email && strlen($telefone) > 0))
 		{
 			?>
 			<div class="second-register-painel">
