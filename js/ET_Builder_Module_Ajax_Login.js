@@ -7,8 +7,8 @@ jQuery(document).ready(function() {
 	        seen = true;
 	});
 	//jQuery('.et_pb_ajax_login li.wp-opauth-login-strategy').addClass('et_pb_button');
-	jQuery('.et_pb_ajax_login_button a').attr("href", "javascript:ajax_login_toggle_panel();");
-	jQuery('.et_pb_ajax_login_button a').click(function(event){
+	jQuery('.et_pb_ajax_login_button a, a.delibera-like-login, a.delibera-unlike-login, a.delibera-seguir-login, .pauta-content .warning.message a.button').attr("href", "javascript:ajax_login_toggle_panel();");
+	jQuery('.et_pb_ajax_login_button a, a.delibera-like-login, a.delibera-unlike-login, a.delibera-seguir-login, .pauta-content .warning.message a.button').click(function(event){
 		event.preventDefault();
 		jQuery('.et_pb_ajax_login').find(".et_pb_ajax_login_panel").toggle();
 		
