@@ -18,6 +18,10 @@ jQuery(document).ready(function() {
 		jQuery('.second-register-overlay').hide();
 	});
 	
+	jQuery('.et_pb_ajax_login_panel .close-button').click(function(){
+		jQuery('.et_pb_ajax_login').find(".et_pb_ajax_login_panel").toggle();
+	});
+	
 	jQuery(".second-register-painel .submit-button").click(function() {
 		var container = jQuery(this).parent();
 		
