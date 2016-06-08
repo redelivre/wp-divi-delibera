@@ -60,7 +60,7 @@
     <i class="fa fa-fw fa-lg fa-facebook"></i>
     Compartilhar
 </a>
-<a class="social-button share-twitter" target="_blank" href="https://twitter.com/share?url=<?=get_permalink();?>">
+<a class="social-button share-twitter" target="_blank" href="https://twitter.com/share?url=<?=get_permalink();?>&text=<?=the_title();?>">
     <i class="fa fa-fw fa-lg fa-twitter"></i>
     Tuitar
 </a>
