@@ -97,7 +97,11 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 	function javascriptFiles()
 	{
 		wp_enqueue_script('ET_Builder_Module_Ajax_Login', get_stylesheet_directory_uri().'/js/ET_Builder_Module_Ajax_Login.js', array('jquery'));
-		$data = array('invalid_email' => WPOPAUTH_INVALID_EMAIL);
+		$data = array(
+			'invalid_email' => WPOPAUTH_INVALID_EMAIL,
+			'ajaxurl' => admin_url('admin-ajax.php') 
+		);
+		
 		wp_localize_script('ET_Builder_Module_Ajax_Login', 'ET_Builder_Module_Ajax_Login', $data);
 	}
 
@@ -366,7 +370,7 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 			ob_clean();
 			
 			$form = sprintf( '
-				<div class="et_pb_newsletter_form et_pb_login_form">
+				<div class="et_pb_newsletter_form et_pb_login_form"><span class="close-button">X</span>
 					'.$form_meta.'
 					<form action="%7$s" method="post">
 						<p>

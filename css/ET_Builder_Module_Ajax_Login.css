@@ -84,6 +84,22 @@
 	padding: 0;
 }
 
+.et_pb_ajax_login .close-button {
+    border: 1px solid #ccc;
+    font-size: 0.7em;
+    line-height: 1em;
+    padding: 1px 2px;
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    cursor: pointer;
+}
+
+.et_pb_ajax_login .close-button:hover {
+	color: #ccc;
+	border: 1px solid #FFF;
+}
+
 .second-register-painel {
     background-color: rgba(71, 71, 71, 0.9);
     display: block;
