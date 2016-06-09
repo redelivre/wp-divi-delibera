@@ -279,30 +279,4 @@
             </div>
         </div>
     </header> <!-- #main-header -->
-
-    <Script>
-
-    function teste()
-    {
-
-        var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
-
-        var $that = jQuery(this);
-        var data = {
-            'action': 'check_user_logged_in'
-        };
-
-        jQuery.post(ajaxurl, data,function(response){ // aja
-
-        if(response == '0') {
-
-        alert('Antes de interagir você deve se cadastrar');
-        window.location = '<?php echo wp_login_url( get_permalink() ); ?>';
-
-        }
-        });
-    }
-
-    </script>
-
     <div id="et-main-area">
