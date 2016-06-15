@@ -191,6 +191,12 @@
 	    width: 35% !important;
 	    left:25%;
 	}
+	.second-register-painel {
+		width: 35%;
+	    left:25%;
+	    top: 25%;
+	}
+	
 }
 
 @media (max-width: 680px) {
@@ -200,6 +206,11 @@
 	    width: 60% !important;
 	    left:18%;
 	}
+	.second-register-painel {
+	    top: 15%;
+	    width: 60%;
+	    left:18%;
+	}
 }
 
 @media (max-width: 400px) {
@@ -207,6 +218,11 @@
 	    font-size: 0.4em;
 	    top: 10%;
 	    width: 100% !important;
+	    left:0;
+	}
+	.second-register-painel {
+	    top: 10%;
+	    width: 100%;
 	    left:0;
 	}
 }
