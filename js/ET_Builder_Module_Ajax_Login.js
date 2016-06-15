@@ -26,7 +26,7 @@ jQuery(document).ready(function() {
 		var container = jQuery(this).parent();
 		
 		if(
-			container.find('.custom-register-bairro').val() > 0 &&
+			( container.find('.custom-register-bairro option').length == 0 || container.find('.custom-register-bairro').val() > 0 ) &&
 			isValidEmail(container.find('input[name="user-email"]').val()) &&
 			container.find('input[name="phone"]').val() > 0 
 		)
