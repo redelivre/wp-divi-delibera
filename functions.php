@@ -352,8 +352,10 @@ function diviSelectBairro(  ) {
 	}
 	/* If there are no bairro terms, display a message. */
 	else
-	{
-		_e('Ainda não há bairros cadastrados');
+	{?>
+		<div class="custom-register-bairro-empty"><?php 
+			_e('Ainda não há bairros cadastrados');?>
+		</div><?php
 	}
 }
 
@@ -365,12 +367,13 @@ function divi_child_second_register()
 		$valid_email = strpos($current_user->user_email, WPOPAUTH_INVALID_EMAIL) === false;
 		$telefone = get_user_meta($current_user->ID, 'telefone', true);
 		$bairro = array_shift(wp_get_object_terms($current_user->ID, 'bairro'));
+		$bairros = get_terms( 'bairro', array( 'hide_empty' => false, 'number' => 1 ) );
 		
 		$logo = ( $user_logo = et_get_option( 'divi_logo' ) ) && '' != $user_logo
 		? $user_logo
 		: get_template_directory_uri() . '/images/logo.png';
 		
-		if(!(is_object($bairro) && (get_class($bairro) == 'WP_Term' || get_class($bairro) == 'stdClass') && $valid_email && strlen($telefone) > 0))
+		if(!(is_object($bairro) && (! empty($bairros) && (get_class($bairro) == 'WP_Term' || get_class($bairro) == 'stdClass')) && $valid_email && strlen($telefone) > 0))
 		{
 			?>
 			<div class="second-register-painel">
