@@ -387,7 +387,15 @@ function divi_child_second_register()
 		$bairro = array_shift(wp_get_object_terms($current_user->ID, 'bairro'));
 		$bairros = get_terms( 'bairro', array( 'hide_empty' => false, 'number' => 1 ) );
 		
-		if(!(is_object($bairro) && (! empty($bairros) && (get_class($bairro) == 'WP_Term' || get_class($bairro) == 'stdClass')) && $valid_email && strlen($telefone) > 0))
+		if(!(
+				(
+						empty($bairros) ||
+						(is_object($bairro) && ( (get_class($bairro) == 'WP_Term' || get_class($bairro) == 'stdClass')))
+				) &&
+				$valid_email &&
+				strlen($telefone) > 0
+			)
+		)
 		{
 			?>
 			<div class="second-register-painel">
