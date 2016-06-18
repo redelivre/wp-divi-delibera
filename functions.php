@@ -373,7 +373,15 @@ function divi_child_second_register()
 		? $user_logo
 		: get_template_directory_uri() . '/images/logo.png';
 		
-		if(!(is_object($bairro) && (! empty($bairros) && (get_class($bairro) == 'WP_Term' || get_class($bairro) == 'stdClass')) && $valid_email && strlen($telefone) > 0))
+		if(!(
+				(
+						empty($bairros) ||
+						(is_object($bairro) && ( (get_class($bairro) == 'WP_Term' || get_class($bairro) == 'stdClass')))
+				) &&
+				$valid_email &&
+				strlen($telefone) > 0
+			)
+		)
 		{
 			?>
 			<div class="second-register-painel">
