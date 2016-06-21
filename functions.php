@@ -604,7 +604,7 @@ function divi_child_second_register()
 			<div class="second-register-painel">
 				<?php wp_nonce_field("second_register"); ?>
 				<span class="close-button">X</span>
-				<img alt="" src="http://acidadequeeuquero.org.br/files/2016/04/A-cidade-que-eu-quero_Logo-sombra.png"><?php
+				<img alt="" src="<?php echo esc_attr($logo); ?>"><?php
 				if($display_name_show)
 				{
 					?>
