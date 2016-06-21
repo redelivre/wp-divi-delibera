@@ -377,6 +377,190 @@ function diviSelectBairro(  ) {
 	}
 }
 
+/**
+ * Add Customize Options and settings
+ * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+ */
+function divi_child_customize_register( $wp_customize )
+{
+	/*
+	 *
+	 */
+	$wp_customize->add_section( 'SecondForm', array(
+		'title'    => __( 'Opções do Segundo Formulário de Cadastro', 'divi-child' ),
+		'priority' => 30,
+	) );
+
+	// Element to append html content
+	$wp_customize->add_setting( 'divi-child-second-form-show-firstname', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+
+	$wp_customize->add_control( 'divi-child-second-form-show-firstname', array(
+		'label'      => __( 'Pedir o primeiro nome?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-required-firstname', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-required-firstname', array(
+		'label'      => __( 'Primeiro nome é obrigatório?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+
+	$wp_customize->add_setting( 'divi-child-second-form-show-lastname', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-show-lastname', array(
+		'label'      => __( 'Pedir o sobrenome?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-required-lastname', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-required-lastname', array(
+		'label'      => __( 'O sobrenome é obrigatório?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	$wp_customize->add_setting( 'divi-child-second-form-show-bairro', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-show-bairro', array(
+		'label'      => __( 'Pedir o bairro?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-required-bairro', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-required-bairro', array(
+		'label'      => __( 'O bairro é obrigatório?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	$wp_customize->add_setting( 'divi-child-second-form-show-city', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-show-city', array(
+		'label'      => __( 'Pedir a cidade?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-required-city', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-required-city', array(
+		'label'      => __( 'A cidade é obrigatória?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-show-state', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-show-state', array(
+		'label'      => __( 'Pedir o estado?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-required-state', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-required-state', array(
+		'label'      => __( 'O estado é obrigatório?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-show-cpf', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-show-cpf', array(
+		'label'      => __( 'Pedir o CPF?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-required-cpf', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-required-cpf', array(
+		'label'      => __( 'O CPF é obrigatório?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-show-company', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-show-company', array(
+		'label'      => __( 'Pedir a instituição?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-second-form-required-company', array(
+		'default'     => 0,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-required-company', array(
+		'label'      => __( 'A instituição é obrigatória?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+}
+add_action( 'customize_register', 'divi_child_customize_register');
+
 function divi_child_second_register()
 {
 	if(is_user_logged_in())
@@ -386,14 +570,47 @@ function divi_child_second_register()
 		$telefone = get_user_meta($current_user->ID, 'telefone', true);
 		$bairro = array_shift(wp_get_object_terms($current_user->ID, 'bairro'));
 		$bairros = get_terms( 'bairro', array( 'hide_empty' => false, 'number' => 1 ) );
+		$firstname = $current_user->user_firstname;
+		$lastname = $current_user->user_lastname;
+		$city = get_user_meta($current_user->ID, 'city', true); //TODO term?
+		$state = get_user_meta($current_user->ID, 'state', true); //TODO term?
+		$cpf = get_user_meta($current_user->ID, 'cpf', true);
+		$company = get_user_meta($current_user->ID, 'company', true);
+		
+		$firstname_required = get_theme_mod('divi-child-second-form-required-firstname', false);
+		$lastname_required = get_theme_mod('divi-child-second-form-required-lastname', false);
+		$city_required = get_theme_mod('divi-child-second-form-required-city', false);
+		$state_required = get_theme_mod('divi-child-second-form-required-state', false);
+		$cpf_required = get_theme_mod('divi-child-second-form-required-cpf', false);
+		$company_required = get_theme_mod('divi-child-second-form-required-company', false);
+		$email_required = get_theme_mod('divi-child-second-form-required-email', true);
+		$telefone_required = get_theme_mod('divi-child-second-form-required-telefone', true);
+		$bairro_required = get_theme_mod('divi-child-second-form-required-bairro', false);
+		
+		$firstname_show = get_theme_mod('divi-child-second-form-show-firstname', false);
+		$lastname_show = get_theme_mod('divi-child-second-form-show-lastname', false);
+		$city_show = get_theme_mod('divi-child-second-form-show-city', false);
+		$state_show = get_theme_mod('divi-child-second-form-show-state', false);
+		$cpf_show = get_theme_mod('divi-child-second-form-show-cpf', false);
+		$company_show = get_theme_mod('divi-child-second-form-show-company', false);
+		$email_show = get_theme_mod('divi-child-second-form-show-email', true);
+		$telefone_show = get_theme_mod('divi-child-second-form-show-telefone', true);
+		$bairro_show = get_theme_mod('divi-child-second-form-show-bairro', false);
+		$display_name_show = get_theme_mod('divi-child-second-form-show-display_name', true);
 		
 		if(!(
 				(
-						empty($bairros) ||
+						empty($bairros) || !$bairro_show ||
 						(is_object($bairro) && ( (get_class($bairro) == 'WP_Term' || get_class($bairro) == 'stdClass')))
 				) &&
 				$valid_email &&
-				strlen($telefone) > 0
+				strlen($telefone) > 0 &&
+				(!$firstname_show || !$firstname_required || strlen($firstname) > 0) &&
+				(!$lastname_show || !$lastname_required || strlen($lastname) > 0) &&
+				(!$city_show || !$city_required || strlen($city) > 0) &&
+				(!$state_show || !$state_required || strlen($state) > 0) &&
+				(!$cpf_show || !$cpf_required || strlen($cpf) > 0) &&
+				(!$company_show || !$company_required || strlen($company) > 0)
 			)
 		)
 		{
@@ -401,21 +618,80 @@ function divi_child_second_register()
 			<div class="second-register-painel">
 				<?php wp_nonce_field("second_register"); ?>
 				<span class="close-button">X</span>
-				<img alt="" src="http://acidadequeeuquero.org.br/files/2016/04/A-cidade-que-eu-quero_Logo-sombra.png">
-				<p>
-					<input type="text" class="user-name" value="<?php echo $current_user->display_name; ?>" disabled="disabled" />
-				</p>
-				<p>
-					<input type="text" name="user-email" class="user-email" value="<?php echo $current_user->user_email; ?>" <?php echo $valid_email ? 'disabled="disabled"' : ''; ?> />
-				</p>
-				<p>
-					<input type="text" placeholder="Telefone (WhatsApp)" name="phone" value="<?php echo $telefone; ?>"/>
-				</p>
-				<p>
-					<?php
-						diviSelectBairro();
+				<img alt="" src="http://acidadequeeuquero.org.br/files/2016/04/A-cidade-que-eu-quero_Logo-sombra.png"><?php
+				if($display_name_show)
+				{
 					?>
-				</p>
+					<p>
+						<input type="text" class="user-name" value="<?php echo $current_user->display_name; ?>" disabled="disabled" />
+					</p><?php
+				}
+				if($firstname_show)
+				{
+					?>
+					<p>
+						<input type="text" name="user-firstname" class="user-firstname" value="<?php echo $firstname; ?>" placeholder="Primeiro Nome" />
+					</p><?php
+				}
+				if($lastname_show)
+				{
+					?>
+					<p>
+						<input type="text" name="user-lastname" class="user-lastname" value="<?php echo $lastname; ?>" placeholder="Sobrenome" />
+					</p><?php
+				}
+				if($email_show)
+				{
+					?>
+					<p>
+						<input type="text" name="user-email" class="user-email" value="<?php echo $current_user->user_email; ?>" <?php echo $valid_email ? 'disabled="disabled"' : ''; ?> />
+					</p><?php
+				}
+				if($telefone_show)
+				{
+					?>
+					<p>
+						<input type="text" placeholder="Telefone (WhatsApp)" name="phone" value="<?php echo $telefone; ?>"/>
+					</p><?php
+				}
+				if($cpf_show)
+				{
+					?>
+					<p>
+						<input type="text" name="cpf" class="cpf" value="<?php echo $cpf; ?>" placeholder="CPF" />
+					</p><?php
+				}
+				if($bairro_show)
+				{
+					?>
+					<p>
+						<?php
+							diviSelectBairro();
+						?>
+					</p><?php
+				}
+				if($city_show)
+				{
+					?>
+					<p>
+						<input type="text" name="city" class="city" value="<?php echo $city; ?>" placeholder="Cidade" />
+					</p><?php
+				}
+				if($state_show)
+				{
+					?>
+					<p>
+						<input type="text" name="state" class="state" value="<?php echo $state; ?>" placeholder="Estado" />
+					</p><?php
+				}
+				if($company_show)
+				{
+					?>
+					<p>
+						<input type="text" name="company" class="company" value="<?php echo $company; ?>" placeholder="Instituição" />
+					</p><?php
+				}
+				?>
 				<span class="submit-button"><?php _e('Cadastrar'); ?></span>
 			</div>
 			<?php
@@ -431,9 +707,24 @@ function divi_child_second_register_callback()
 		$current_user = wp_get_current_user();
 		$user_id = $current_user->ID;
 		$result = false;
+		$user_to_update = array('ID' => $user_id);
+		
 		if(array_key_exists('email', $_POST) && !empty($_POST['email']))
 		{
-			$result = wp_update_user(array('ID' => $user_id, 'user_email' => sanitize_email($_POST['email'])));
+			$user_to_update['user_email'] = sanitize_email($_POST['email']);
+		}
+		if(array_key_exists('user-firstname', $_POST) && !empty($_POST['user-firstname']))
+		{
+			$user_to_update['first_name'] = sanitize_text_field($_POST['user-firstname']);
+		}
+		if(array_key_exists('user-lastname', $_POST) && !empty($_POST['user-lastname']))
+		{
+			$user_to_update['last_name'] = sanitize_text_field($_POST['user-lastname']);
+		}
+		
+		if(count($user_to_update) > 1)
+		{
+			$result = wp_update_user($user_to_update);
 		}
 		
 		$term = (int)esc_attr( $_POST['bairro'] );
@@ -443,7 +734,26 @@ function divi_child_second_register_callback()
 		
 		clean_object_term_cache( $user_id, 'bairro' );
 		
-		update_user_meta($user_id, 'telefone', sanitize_text_field($_POST['telefone']));
+		if(array_key_exists('telefone', $_POST) )
+		{
+			update_user_meta($user_id, 'telefone', sanitize_text_field($_POST['telefone']));
+		}
+		if(array_key_exists('city', $_POST) )
+		{
+			update_user_meta($user_id, 'city', sanitize_text_field($_POST['city']));
+		}
+		if(array_key_exists('state', $_POST) )
+		{
+			update_user_meta($user_id, 'state', sanitize_text_field($_POST['state']));
+		}
+		if(array_key_exists('cpf', $_POST) )
+		{
+			update_user_meta($user_id, 'cpf', sanitize_text_field($_POST['cpf']));
+		}
+		if(array_key_exists('company', $_POST) )
+		{
+			update_user_meta($user_id, 'company', sanitize_text_field($_POST['company']));
+		}
 		
 	}		
 	die();

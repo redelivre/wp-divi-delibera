@@ -99,7 +99,18 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 		wp_enqueue_script('ET_Builder_Module_Ajax_Login', get_stylesheet_directory_uri().'/js/ET_Builder_Module_Ajax_Login.js', array('jquery'));
 		$data = array(
 			'invalid_email' => WPOPAUTH_INVALID_EMAIL,
-			'ajaxurl' => admin_url('admin-ajax.php') 
+			'ajaxurl' => admin_url('admin-ajax.php'),
+			'required_inputs' => array(
+				'user-firstname' => get_theme_mod('divi-child-second-form-required-firstname', false),
+				'user-lastname' => get_theme_mod('divi-child-second-form-required-lastname', false),
+				'city' => get_theme_mod('divi-child-second-form-required-city', false),
+				'state' => get_theme_mod('divi-child-second-form-required-state', false),
+				'cpf' => get_theme_mod('divi-child-second-form-required-cpf', false),
+				'company' => get_theme_mod('divi-child-second-form-required-company', false),
+				//'user-email' => get_theme_mod('divi-child-second-form-required-email', true), // custom checked
+				//'phone' => get_theme_mod('divi-child-second-form-required-telefone', true), // custom checked
+				//'custom-register-bairro' => get_theme_mod('divi-child-second-form-required-bairro', false) // custom checked
+			)
 		);
 		
 		wp_localize_script('ET_Builder_Module_Ajax_Login', 'ET_Builder_Module_Ajax_Login', $data);

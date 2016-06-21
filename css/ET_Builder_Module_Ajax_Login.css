@@ -108,7 +108,7 @@
     padding: 20px;
     position: fixed;
     text-align: center;
-    top: 22%;
+    top: 12%;
     width: 20%;
     border-radius: 20px;
     box-shadow: 5px 5px 5px #888888;
@@ -194,7 +194,7 @@
 	.second-register-painel {
 		width: 35%;
 	    left:25%;
-	    top: 25%;
+	    top: 12%;
 	}
 	
 }
@@ -207,7 +207,7 @@
 	    left:18%;
 	}
 	.second-register-painel {
-	    top: 15%;
+	    top: 5%;
 	    width: 60%;
 	    left:18%;
 	}
@@ -221,7 +221,7 @@
 	    left:0;
 	}
 	.second-register-painel {
-	    top: 10%;
+	    top: 5%;
 	    width: 100%;
 	    left:0;
 	}
