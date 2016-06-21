@@ -164,6 +164,10 @@ function my_edit_user_bairro_section( $user ) {
     /* Get the terms of the 'bairro' taxonomy. */
     $terms = get_terms( 'bairro', array( 'hide_empty' => false ) );
     $telefone = get_user_meta($user->ID, 'telefone', true);
+    $city = get_user_meta($user->ID, 'city', true); //TODO term?
+    $state = get_user_meta($user->ID, 'state', true); //TODO term?
+    $cpf = get_user_meta($user->ID, 'cpf', true);
+    $company = get_user_meta($user->ID, 'company', true);
     ?>
 
     <h3><?php _e( 'Bairro' ); ?></h3>
@@ -189,9 +193,29 @@ function my_edit_user_bairro_section( $user ) {
                 }
 
                 ?></td>
+        </tr>
+		<tr>
             <th><label for="telefone"><?php _e( 'Telephone' ); ?></label></th>
             <td>
             	<input type="text" name="telefone" id="telefone" value="<?php echo esc_attr( $telefone ); ?>" />
+			</td>
+			<th><label ><?php _e( 'CPF' ); ?></label></th>
+			<td>
+				<input type="text" name="cpf" class="cpf" value="<?php echo $cpf; ?>" placeholder="CPF" />
+			</td>
+			<th><label ><?php _e( 'Cidade' ); ?></label></th>
+			<td>
+				<input type="text" name="city" class="city" value="<?php echo $city; ?>" placeholder="Cidade" />
+			</td>
+			<th><label ><?php _e( 'Estado (UF)' ); ?></label></th>
+			<td>
+				<input type="text" name="state" class="state" value="<?php echo $state; ?>" placeholder="Estado" />
+			</td>
+		</tr>
+		<tr>
+			<th><label ><?php _e( 'Instituição' ); ?></label></th>
+			<td>
+				<input type="text" name="company" class="company" value="<?php echo $company; ?>" placeholder="Instituição" />
 			</td>
         </tr>
 
@@ -225,7 +249,26 @@ function my_save_user_bairro_terms( $user_id ) {
     clean_object_term_cache( $user_id, 'bairro' );
     
     if(array_key_exists('telefone', $_POST))
+    {
     	update_user_meta($user_id, 'telefone', esc_attr($_POST['telefone']));
+    }
+    
+    if(array_key_exists('city', $_POST) )
+    {
+    	update_user_meta($user_id, 'city', sanitize_text_field($_POST['city']));
+    }
+    if(array_key_exists('state', $_POST) )
+    {
+    	update_user_meta($user_id, 'state', sanitize_text_field($_POST['state']));
+    }
+    if(array_key_exists('cpf', $_POST) )
+    {
+    	update_user_meta($user_id, 'cpf', sanitize_text_field($_POST['cpf']));
+    }
+    if(array_key_exists('company', $_POST) )
+    {
+    	update_user_meta($user_id, 'company', sanitize_text_field($_POST['company']));
+    }
 }
 
 

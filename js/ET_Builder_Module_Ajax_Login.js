@@ -29,7 +29,7 @@ jQuery(document).ready(function() {
 		
 		for(var key in ET_Builder_Module_Ajax_Login.required_inputs)
 		{
-			if(key && container.find('input[name="'+key+'"]').length > 0)
+			if(ET_Builder_Module_Ajax_Login.required_inputs.key && container.find('input[name="'+key+'"]').length > 0)
 			{
 				if(container.find('input[name="'+key+'"]').val().length < 1)
 				{
@@ -56,7 +56,7 @@ jQuery(document).ready(function() {
 			};
 			for(var key in ET_Builder_Module_Ajax_Login.required_inputs)
 			{
-				if(key && container.find('input[name="'+key+'"]').length > 0)
+				if(container.find('input[name="'+key+'"]').length > 0)
 				{
 					data[key] = container.find('input[name="'+key+'"]').val();
 				}
