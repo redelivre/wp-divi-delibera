@@ -25,22 +25,45 @@ jQuery(document).ready(function() {
 	jQuery(".second-register-painel .submit-button").click(function() {
 		var container = jQuery(this).parent();
 		
+		var valid_required_inputs = true;
+		
+		for(var key in ET_Builder_Module_Ajax_Login.required_inputs)
+		{
+			if(key && container.find('input[name="'+key+'"]').length > 0)
+			{
+				if(container.find('input[name="'+key+'"]').val().length < 1)
+				{
+					valid_required_inputs = false;
+					container.find('input[name="'+key+'"]').addClass('invalid');
+				}
+			}
+		}
+		
 		if(
 			( container.find('.custom-register-bairro option').length == 0 || container.find('.custom-register-bairro').val() > 0 ) &&
 			isValidEmail(container.find('input[name="user-email"]').val()) &&
-			container.find('input[name="phone"]').val() > 0 
+			container.find('input[name="phone"]').val() > 0 &&
+			valid_required_inputs
 		)
 		{
-			jQuery.post(
-				ET_Builder_Module_Ajax_Login.ajaxurl,
-				{
+			var data = {
 					action : "second_register",
 					_wpnonce : container.find('input[name="_wpnonce"]').val(),
 					_wp_http_referer: container.find('input[name="_wp_http_referer"]').val(),
 					email: container.find('input[name="user-email"]').val(),
 					bairro: container.find('.custom-register-bairro').val(),
 					telefone: container.find('input[name="phone"]').val(),
-				},
+			};
+			for(var key in ET_Builder_Module_Ajax_Login.required_inputs)
+			{
+				if(key && container.find('input[name="'+key+'"]').length > 0)
+				{
+					data[key] = container.find('input[name="'+key+'"]').val();
+				}
+			}
+			jQuery.post(
+				ET_Builder_Module_Ajax_Login.ajaxurl,
+				data,
 				function(response) {
 					alert('Obrigado!');
 					container.hide();
