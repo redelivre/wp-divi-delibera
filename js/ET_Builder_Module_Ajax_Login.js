@@ -40,9 +40,9 @@ jQuery(document).ready(function() {
 		}
 		
 		if(
-			( container.find('.custom-register-bairro option').length == 0 || container.find('.custom-register-bairro').val() > 0 ) &&
+			( container.find('.custom-register-bairro option').length == 0 || container.find('.custom-register-bairro').val().length > 0 ) &&
 			isValidEmail(container.find('input[name="user-email"]').val()) &&
-			container.find('input[name="phone"]').val() > 0 &&
+			container.find('input[name="phone"]').val().length > 0 &&
 			valid_required_inputs
 		)
 		{
