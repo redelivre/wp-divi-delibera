@@ -1,12 +1,12 @@
 <?php
-if(defined(WP_DEBUG) && WP_DEBUG)
+if(defined('WP_DEBUG') && WP_DEBUG)
 {
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL & ~E_STRICT);
-	
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL & ~E_STRICT);
 }
-if(!defined(WPOPAUTH_INVALID_EMAIL))
+
+if(!defined('WPOPAUTH_INVALID_EMAIL'))
 {
 	define('WPOPAUTH_INVALID_EMAIL', 'noemail@example.com');
 }
