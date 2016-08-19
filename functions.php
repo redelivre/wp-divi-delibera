@@ -417,6 +417,19 @@ function divi_child_customize_register( $wp_customize )
 	) );
 
 	// Element to append html content
+	$wp_customize->add_setting( 'divi-child-second-form-show', array(
+		'default'     => 1,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-second-form-show', array(
+		'label'      => __( 'Pedir mais dados ao usuário?', 'divi-child'),
+		'section'    => 'SecondForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	// Element to append html content
 	$wp_customize->add_setting( 'divi-child-second-form-show-firstname', array(
 		'default'     => 0,
 		'capability'    => 'edit_theme_options',
@@ -588,7 +601,7 @@ add_action( 'customize_register', 'divi_child_customize_register');
 
 function divi_child_second_register()
 {
-	if(is_user_logged_in())
+	if(is_user_logged_in() && get_theme_mod('divi-child-second-form-show', true ) )
 	{
 		$current_user = wp_get_current_user();
 		$valid_email = strpos($current_user->user_email, WPOPAUTH_INVALID_EMAIL) === false;
