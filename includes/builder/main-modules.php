@@ -372,9 +372,9 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 			$actual_link = htmlspecialchars( $actual_link, ENT_QUOTES, 'UTF-8' );
 			//$form_meta .= '<input type="hidden" name="redirect_to" value="'.$actual_link.'" />';
 			
-			if (!isset($_SESSION))
+			if (!isset($_SESSION) && !headers_sent())
 			{
-				session_start();
+					session_start();
 			}
 			$_SESSION['wp-opauth-redirect'] = $actual_link;
 			
