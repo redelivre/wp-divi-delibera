@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+.et_pb_mobilizacao_form_container select {
+	margin-left: 0;
+	border-radius: 4px;
+	border: none;
+	box-shadow: none;
+	background: #F1F5F9;
+	padding: 13px;
+	font-size: 14px;
+	color: #32373C;
+	height: auto;
+	width: auto;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	width: 100%;
+	margin-bottom: 0;
+	-webkit-transition: background .5s;
+	-moz-transition: background .5s;
+	transition: background .5s;
+}

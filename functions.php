@@ -797,4 +797,5 @@ function divi_child_login_form()
 add_action('wp_footer', 'divi_child_login_form');
 
 require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
+require_once get_stylesheet_directory().'/includes/modules/modules.php';
 ?>
