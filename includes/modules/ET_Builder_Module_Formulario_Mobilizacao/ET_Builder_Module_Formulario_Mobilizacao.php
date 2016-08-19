@@ -87,6 +87,8 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 		
 		add_action('wp_enqueue_scripts', array($this, 'javascriptFiles'), 1001);
 		add_action('wp_enqueue_scripts', array($this, 'cssFiles'), 1001);
+		//add_filter('query_vars', array($this, 'query_vars')); //moved to function, no loading here 
+		add_action('template_redirect', array($this, 'template_redirect'));
 	}
 
 	function get_fields() {
@@ -380,7 +382,7 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 			$data['browser'] = array( 'label' => __('Browser', 'et_builder'), 'value' => $this->getBrowser());
 			$data['OS'] = array( 'label' => __('OS', 'et_builder'), 'value' => $this->getOS());
 			$data['geoip'] = array( 'label' => __('Geo Data', 'et_builder'), 'value' => json_decode(file_get_contents("http://ipinfo.io/{$data['ip']}/json")));
-			$data = array_merge($data, $processed_fields_values);
+			$data = array_merge($processed_fields_values, $data);
 			
 			add_post_meta(get_the_ID(), '_et_pb_mobilizacao_form_registrations_'.$et_pb_mobilizacao_form_num, $data, false);
 
@@ -553,7 +555,83 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 	
 	}
 	
+	/**
+	 * Form Query Variables
+	 */ 
+	/*function query_vars($public_query_vars) {
+		$public_query_vars[] = 'et_pb_formulario_mobilizacao_export';
+		return $public_query_vars;
+	}*/ // Moved to functions
 	
+	/**
+	 * Export When asked
+	 */
+	function template_redirect()
+	{
+		if(is_user_logged_in() && current_user_can('edit_'.get_post_type(), get_the_ID()) && intval(get_query_var('et_pb_formulario_mobilizacao_export')) > 0 )
+		{
+			global $wp_query,$et_pb_mobilizacao_form_num;
+			
+			if(!isset($et_pb_mobilizacao_form_num)) $et_pb_mobilizacao_form_num = 0;
+			
+			$registrations = get_post_meta(get_the_ID(), '_et_pb_mobilizacao_form_registrations_'.$et_pb_mobilizacao_form_num);
+			//echo '<pre>';print_r($registrations);echo '</pre>';
+			
+			if(is_array($registrations) && count($registrations) > 0)
+			{
+			
+				header('Pragma: public');
+				header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
+				header("Pragma: no-cache");
+				header("Expires: 0");
+				header('Content-Transfer-Encoding: none');
+				header('Content-Type: application/vnd.ms-excel; charset=UTF-8'); // This should work for IE & Opera
+				header("Content-type: application/x-msexcel; charset=UTF-8"); // This should work for the rest
+				header('Content-Disposition: attachment; filename='.date('Ymd_His').'_'.__('registrations_report', 'et_builder').'.xls');
+				
+				$table_header = array();
+				$row = $registrations[0];
+				
+				foreach ($row as $item => $values)
+				{
+					$table_header[$item] = $values['label'];
+				}
+				ob_start(); ?>
+				<table>
+				    <tr><?php
+				    	foreach ($table_header as $key => $header)
+				    	{
+				    		echo "<td>$header</td>";
+				    	}?>
+				    </tr><?php
+				    echo utf8_decode(ob_get_clean());
+				    foreach ($registrations as $registration) :
+					    ob_start(); ?>
+					    <tr><?php
+					    	foreach (array_keys($table_header) as $key)
+					    	{
+					    		if(array_key_exists($key, $registration))
+					    		{
+					    			if($key == 'bairro')
+					    			{
+					    				$bairro = get_term($registration[$key]['value'], 'bairro');
+					    				if(is_object($bairro))
+					    				{
+					    					$registration[$key]['value'] = $bairro->name;
+					    				}
+					    			}
+					    			echo "<td>{$registration[$key]['value']}</td>";
+					    		}
+					    	}?>
+					    </tr><?php
+					    echo utf8_decode(ob_get_clean());
+					endforeach; ?>
+				</table><?php
+				
+				die();
+			}
+		}
+	}
 }
 new ET_Builder_Module_Formulario_Mobilizacao();
 
@@ -739,15 +817,6 @@ class ET_Builder_Module_Formulario_Mobilizacao_item extends ET_Builder_Module {
 						);
 				break;
 			case 'bairro' :
-				/*
-				$input_field = sprintf(
-				'<input type="text" id="et_pb_contact_%3$s_%2$s" class="input" value="%1$s" name="et_pb_contact_%3$s_%2$s" data-required_mark="%5$s" data-field_type="%4$s" data-original_id="%3$s">',
-				( isset( $_POST['et_pb_contact_' . $field_id . '_' . $current_module_num] ) ? esc_attr( sanitize_text_field( $_POST['et_pb_contact_' . $field_id . '_' . $current_module_num] ) ) : esc_attr( $field_title ) ),
-				esc_attr( $current_module_num ),
-				esc_attr( $field_id ),
-				esc_attr( $field_type ),
-				'off' === $required_mark ? 'not_required' : 'required'
-						);*/
 				$tax = get_taxonomy( 'bairro' );
 				if(is_user_logged_in())
 				{

@@ -809,6 +809,15 @@ function divi_child_login_form()
 }
 add_action('wp_footer', 'divi_child_login_form');
 
+/**
+ * Form Query Variables
+ */
+function wp_divi_delibera_query_vars($public_query_vars) {
+	$public_query_vars[] = 'et_pb_formulario_mobilizacao_export';
+	return $public_query_vars;
+}
+add_filter('query_vars', 'wp_divi_delibera_query_vars');
+
 require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
 require_once get_stylesheet_directory().'/includes/modules/modules.php';
 ?>
