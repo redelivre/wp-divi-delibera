@@ -568,13 +568,14 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 	 */
 	function template_redirect()
 	{
-		if(is_user_logged_in() && current_user_can('edit_'.get_post_type(), get_the_ID()) && intval(get_query_var('et_pb_formulario_mobilizacao_export')) > 0 )
+		$post_id = is_front_page() && get_option( 'show_on_front' ) == 'page' ? get_option( 'page_on_front' ) : get_the_ID();
+		if(is_user_logged_in() && current_user_can('edit_'.get_post_type(), $post_id) && intval(get_query_var('et_pb_formulario_mobilizacao_export')) > 0 )
 		{
 			global $wp_query,$et_pb_mobilizacao_form_num;
 			
 			if(!isset($et_pb_mobilizacao_form_num)) $et_pb_mobilizacao_form_num = 0;
 			
-			$registrations = get_post_meta(get_the_ID(), '_et_pb_mobilizacao_form_registrations_'.$et_pb_mobilizacao_form_num);
+			$registrations = get_post_meta($post_id, '_et_pb_mobilizacao_form_registrations_'.$et_pb_mobilizacao_form_num);
 			//echo '<pre>';print_r($registrations);echo '</pre>';
 			
 			if(is_array($registrations) && count($registrations) > 0)
