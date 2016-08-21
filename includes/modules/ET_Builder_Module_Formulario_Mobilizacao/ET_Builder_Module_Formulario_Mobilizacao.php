@@ -274,7 +274,6 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 
 		// check that the form was submitted and et_pb_contactform_validate field is empty to protect from spam
 		if ( $nonce_result && isset( $_POST['et_pb_mobilizacaoform_submit_' . $et_pb_mobilizacao_form_num] ) && empty( $_POST['et_pb_contactform_validate_' . $et_pb_mobilizacao_form_num] ) ) {
-			//echo 'AAAAAaaaaaaaaaaaaaa';print_r($current_form_fields);echo 'CCCCCCCccccc'.$et_pb_mobilizacao_form_num."BBBBBBbbb";die();
 			if ( '' !== $current_form_fields )
 			{
 				$fields_data_json = str_replace( '\\', '' ,  $current_form_fields );
@@ -288,7 +287,6 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 
 				// check all fields on current form and generate error message if needed
 				if ( ! empty( $fields_data_array ) ) {
-					//print_r($fields_data_array);die();
 					foreach( $fields_data_array as $index => $value ) {
 						// check all the required fields, generate error message if required field is empty
 						if ( 'required' === $value['required_mark'] && empty( $_POST[ $value['field_id'] ] ) ) {
@@ -576,19 +574,18 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 			if(!isset($et_pb_mobilizacao_form_num)) $et_pb_mobilizacao_form_num = 0;
 			
 			$registrations = get_post_meta($post_id, '_et_pb_mobilizacao_form_registrations_'.$et_pb_mobilizacao_form_num);
-			//echo '<pre>';print_r($registrations);echo '</pre>';
 			
 			if(is_array($registrations) && count($registrations) > 0)
 			{
 			
-				/*header('Pragma: public');
+				header('Pragma: public');
 				header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 				header("Pragma: no-cache");
 				header("Expires: 0");
 				header('Content-Transfer-Encoding: none');
 				header('Content-Type: application/vnd.ms-excel; charset=UTF-8'); // This should work for IE & Opera
 				header("Content-type: application/x-msexcel; charset=UTF-8"); // This should work for the rest
-				header('Content-Disposition: attachment; filename='.date('Ymd_His').'_'.__('registrations_report', 'et_builder').'.xls');*/
+				header('Content-Disposition: attachment; filename='.date('Ymd_His').'_'.__('registrations_report', 'et_builder').'.xls');
 				
 				$table_header = array();
 				$row = $registrations[0];
