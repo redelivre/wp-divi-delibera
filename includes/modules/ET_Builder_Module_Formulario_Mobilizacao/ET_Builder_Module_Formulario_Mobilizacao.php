@@ -378,10 +378,10 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 			$data['time'] = array( 'label' => __('Unix Time', 'et_builder'), 'value' => time());
 			$data['datetime'] = array( 'label' => __('Wordpress Date', 'et_builder'), 'value' => mysql2date( get_option( 'date_format' ), date('Y-m-d H:i:s') ));
 			$data['ip'] = array( 'label' => __('IP', 'et_builder'), 'value' => $_SERVER['REMOTE_ADDR']);
-			$data['hostaddress'] = array( 'label' => __('Host Name', 'et_builder'), 'value' => gethostbyaddr($data['ip']));
+			$data['hostaddress'] = array( 'label' => __('Host Name', 'et_builder'), 'value' => gethostbyaddr($data['ip']['value']));
 			$data['browser'] = array( 'label' => __('Browser', 'et_builder'), 'value' => $this->getBrowser());
 			$data['OS'] = array( 'label' => __('OS', 'et_builder'), 'value' => $this->getOS());
-			$data['geoip'] = array( 'label' => __('Geo Data', 'et_builder'), 'value' => json_decode(file_get_contents("http://ipinfo.io/{$data['ip']}/json")));
+			$data['geoip'] = array( 'label' => __('Geo Data', 'et_builder'), 'value' => json_decode(file_get_contents("http://ipinfo.io/{$data['ip']['value']}/json")));
 			$data = array_merge($processed_fields_values, $data);
 			
 			add_post_meta(get_the_ID(), '_et_pb_mobilizacao_form_registrations_'.$et_pb_mobilizacao_form_num, $data, false);
@@ -581,14 +581,14 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 			if(is_array($registrations) && count($registrations) > 0)
 			{
 			
-				header('Pragma: public');
+				/*header('Pragma: public');
 				header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 				header("Pragma: no-cache");
 				header("Expires: 0");
 				header('Content-Transfer-Encoding: none');
 				header('Content-Type: application/vnd.ms-excel; charset=UTF-8'); // This should work for IE & Opera
 				header("Content-type: application/x-msexcel; charset=UTF-8"); // This should work for the rest
-				header('Content-Disposition: attachment; filename='.date('Ymd_His').'_'.__('registrations_report', 'et_builder').'.xls');
+				header('Content-Disposition: attachment; filename='.date('Ymd_His').'_'.__('registrations_report', 'et_builder').'.xls');*/
 				
 				$table_header = array();
 				$row = $registrations[0];
@@ -619,6 +619,24 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 					    				if(is_object($bairro))
 					    				{
 					    					$registration[$key]['value'] = $bairro->name;
+					    				}
+					    			}
+					    			if($key == 'geoip')
+					    			{
+					    				$value = $registration[$key]['value'];
+					    				if(is_object($value))
+					    				{
+					    					$value = get_object_vars($value);
+					    				}
+					    				if(is_array($value))
+					    				{
+					    					$ret = '';
+					    					foreach ($value as $key => $val)
+					    					{
+					    						if(strlen($ret) > 0) $ret .= ', ';
+					    						$ret .= $key.'=>'.$val;
+					    					}
+					    					$registration[$key]['value'] = $ret;
 					    				}
 					    			}
 					    			echo "<td>{$registration[$key]['value']}</td>";
