@@ -567,6 +567,7 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 	function template_redirect()
 	{
 		$post_id = is_home() && get_option( 'show_on_front' ) == 'page' ? get_option( 'page_on_front' ) : get_the_ID();
+		
 		if(is_user_logged_in() && current_user_can('edit_'.get_post_type(), $post_id) && intval(get_query_var('et_pb_formulario_mobilizacao_export')) > 0 )
 		{
 			global $wp_query,$et_pb_mobilizacao_form_num;
@@ -646,6 +647,27 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 				
 				die();
 			}
+			else
+			{
+				$url = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+				$url = str_replace('et_pb_formulario_mobilizacao_export=1', '', $url);
+				?>
+				<script type="text/javascript">
+				<!--
+					window.alert('<?php _e('Sem dados para exportar!', 'et_builder'); ?>')
+					window.location.href='<?php echo $url; ?>';
+				//-->
+				</script>
+				<NOSCRIPT>
+					<a href='<?php echo $url; ?>'><?php _e('Sem dados para exportar!', 'et_builder');echo ' ';_e('clique aqui para continuar', 'et_builder'); ?></a>
+				</NOSCRIPT>
+				<?php
+				die();
+			}
+		}
+		elseif(!is_user_logged_in())
+		{
+			auth_redirect();
 		}
 	}
 }
