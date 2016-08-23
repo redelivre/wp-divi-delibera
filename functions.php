@@ -599,6 +599,114 @@ function divi_child_customize_register( $wp_customize )
 }
 add_action( 'customize_register', 'divi_child_customize_register');
 
+/**
+ * Add Customize Options and settings
+ * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+ */
+function divi_child_customize_login( $wp_customize )
+{
+	/*
+	 *
+	 */
+	$wp_customize->add_section( 'DeliberaLoginForm', array(
+		'title'    => __( 'Opções da tela de Login', 'divi-child' ),
+		'priority' => 30,
+	) );
+
+	// Element to append html content
+	$wp_customize->add_setting( 'divi-child-delibera-login-show', array(
+		'default'     => 1,
+		'capability'    => 'edit_theme_options',
+	) );
+
+	$wp_customize->add_control( 'divi-child-delibera-login-show', array(
+		'label'      => __( 'Usar tela de login especial do Delibera?', 'divi-child'),
+		'section'    => 'DeliberaLoginForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+
+	$wp_customize->add_setting( 'divi-child-delibera-login-header-text', array(
+		'default'     => 'Você precisa se cadastrar para participar',
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-delibera-login-header-text', array(
+		'label'      => __( 'Texto do cabeçalho da caixa de login', 'divi-child'),
+		'section'    => 'DeliberaLoginForm',
+		'type'		 => 'text',
+		'std'		 => 'Você precisa se cadastrar para participar'
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-delibera-login-show-wordpress-login', array(
+		'default'     => 1,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-delibera-login-show-wordpress-login', array(
+		'label'      => __( 'Mostrar Login do Wordpress?', 'divi-child'),
+		'section'    => 'DeliberaLoginForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-delibera-login-show-wordpress-register', array(
+		'default'     => 1,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-delibera-login-show-wordpress-register', array(
+		'label'      => __( 'Mostrar botão de registro do Wordpress?', 'divi-child'),
+		'section'    => 'DeliberaLoginForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+
+	$wp_customize->add_setting( 'divi-child-delibera-login-show-wordpress-lost-password', array(
+		'default'     => 1,
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$wp_customize->add_control( 'divi-child-delibera-login-show-wordpress-lost-password', array(
+		'label'      => __( 'Mostrar botão de recuperação de senha do Wordpress?', 'divi-child'),
+		'section'    => 'DeliberaLoginForm',
+		'type'		 => 'checkbox',
+		'std'		 => 1
+	) );
+	
+	$wp_customize->add_setting( 'divi-child-delibera-login-force-login-service', array(
+		'default'     => 'n',
+		'capability'    => 'edit_theme_options',
+	) );
+	
+	$choices = array('n' => 'Selecione um provider' );
+	if(class_exists('WPOpauth'))
+	{
+		global $WPOpauth;
+		$strategies = $WPOpauth->getStrategies();
+		foreach ($strategies as $id => $values)
+		{
+			$choices[$id] = $values['name'];
+		}
+	}
+	
+	$wp_customize->add_control( 'divi-child-delibera-login-force-login-service', array(
+		'label'      => __( 'Tornar o botão de login o serviço:', 'divi-child'),
+		'section'    => 'DeliberaLoginForm',
+		'type'		 => 'select',
+		'std'		 => 'n',
+		'choices'	 => $choices,
+	) );
+	
+}
+add_action( 'customize_register', 'divi_child_customize_login');
+
+function divi_child_customize_controls_enqueue_scripts()
+{
+	wp_enqueue_script('divi-delibera-custom-preview', get_stylesheet_directory_uri().'/js/customizer_section.js', array('customize-controls'));
+}
+add_action( 'customize_controls_enqueue_scripts', 'divi_child_customize_controls_enqueue_scripts');
+
 function divi_child_second_register()
 {
 	if(is_user_logged_in() && get_theme_mod('divi-child-second-form-show', true ) )
@@ -804,7 +912,8 @@ add_action('wp_ajax_second_register', 'divi_child_second_register_callback');
 
 function divi_child_login_form()
 {
-	$content = '[et_pb_ajax_login admin_label="Ajax Login" title="Entrar" current_page_redirect="on" use_background_color="on" background_color="rgba(71,71,71,0.9)" background_layout="dark" text_orientation="center" use_focus_border_color="off" header_font_size_tablet="51" header_line_height_tablet="2" body_font_size_tablet="51" body_line_height_tablet="2" use_border_color="off" border_color="#ffffff" border_style="solid" custom_button="off" button_letter_spacing="0" button_use_icon="default" button_icon_placement="right" button_on_hover="on" button_letter_spacing_hover="0" show_button="off"]Você precisa se cadastrar para participar[/et_pb_ajax_login]';
+	$text = get_theme_mod('divi-child-delibera-login-header-text', 'Você precisa se cadastrar para participar');
+	$content = '[et_pb_ajax_login admin_label="Ajax Login" title="Entrar" current_page_redirect="on" use_background_color="on" background_color="rgba(71,71,71,0.9)" background_layout="dark" text_orientation="center" use_focus_border_color="off" header_font_size_tablet="51" header_line_height_tablet="2" body_font_size_tablet="51" body_line_height_tablet="2" use_border_color="off" border_color="#ffffff" border_style="solid" custom_button="off" button_letter_spacing="0" button_use_icon="default" button_icon_placement="right" button_on_hover="on" button_letter_spacing_hover="0" show_button="off"]'.$text.'[/et_pb_ajax_login]';
 	echo do_shortcode($content);
 }
 add_action('wp_footer', 'divi_child_login_form');
@@ -817,6 +926,40 @@ function wp_divi_delibera_query_vars($public_query_vars) {
 	return $public_query_vars;
 }
 add_filter('query_vars', 'wp_divi_delibera_query_vars');
+
+function wp_divi_customize_login_css()
+{
+	?>
+	<style type="text/css"><?php 
+		if(!get_theme_mod('divi-child-delibera-login-show-wordpress-login', true))
+		{?>
+			.et_pb_ajax_login form {
+				display: none;
+			}<?php
+		}
+		if(!get_theme_mod('divi-child-delibera-login-show-wordpress-register', true))
+		{?>
+			.et_pb_ajax_login .et_pb_register_link {
+				display: none;
+			}<?php
+		}
+		if(!get_theme_mod('divi-child-delibera-login-show-wordpress-lost-password', true))
+		{?>
+			.et_pb_ajax_login .et_pb_forgot_password_link {
+				display: none;
+			}<?php
+		}
+		/*if(get_theme_mod('divi-child-delibera-login-show-wordpress-login', true))
+		{?>
+			.et_pb_ajax_login form {
+				display: none;
+			}<?php
+		}*/
+	?>
+	</style>
+	<?php
+}
+add_action( 'wp_head', 'wp_divi_customize_login_css');
 
 require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
 require_once get_stylesheet_directory().'/includes/modules/modules.php';

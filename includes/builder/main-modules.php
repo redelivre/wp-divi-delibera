@@ -296,7 +296,10 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 						),
 			) );
 		}
-
+		if(isset($_REQUEST['showDeliberaLoginForm']) && $_REQUEST['showDeliberaLoginForm'] == 1)
+		{
+			
+		}
 		if ( '' !== $focus_text_color ) {
 			ET_Builder_Element::set_style( $function_name, array(
 				'selector'    => '%%order_class%%.et_pb_newsletter_form p input:focus',
@@ -345,23 +348,14 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 		? ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
 		: '';
 
-		if ( is_user_logged_in() ) {
-			global $current_user;
-			get_currentuserinfo();
-
-			$content .= sprintf( '<br/>%1$s <a href="%2$s">%3$s</a>',
-					sprintf( esc_html__( 'Logged in as %1$s', 'et_builder' ), esc_html( $current_user->display_name ) ),
-					esc_url( wp_logout_url( $redirect_url ) ),
-					esc_html__( 'Log out', 'et_builder' )
-					);
-		}
-
-		$class = " et_pb_ajax_login et_pb_module et_pb_bg_layout_{$background_layout} et_pb_text_align_{$text_orientation}";
-
+		$force_show = isset($_REQUEST['showDeliberaLoginForm']) && $_REQUEST['showDeliberaLoginForm'] == 1 ? true : false;
+		
+		$class = " et_pb_ajax_login ".($force_show ? ' et_pb_ajax_login_force_show ' : '')." et_pb_module et_pb_bg_layout_{$background_layout} et_pb_text_align_{$text_orientation}";
+		
 		$form = '';
 		$output = '';
-
-		if ( !is_user_logged_in() ) {
+		
+		if ( !is_user_logged_in() || $force_show ) {
 			$username = esc_html__( 'Username', 'et_builder' );
 			$password = esc_html__( 'Password', 'et_builder' );
 
@@ -392,57 +386,57 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 							<label class="et_pb_contact_form_label" for="user_pass" style="display: none;">%5$s</label>
 							<input id="user_pass" placeholder="%6$s" class="input" type="password" value="" name="pwd" />
 						</p>
-						<p class="et_pb_forgot_password"><a href="%12$s">%13$s</a><a href="%2$s">%1$s</a></p>
+						<p class="et_pb_forgot_password_panel"><a class="et_pb_register_link" href="%12$s">%13$s</a><a class="et_pb_forgot_password_link" href="%2$s">%1$s</a></p>
 						<p>
 							<button type="submit" class="et_pb_newsletter_button et_pb_button%11$s"%10$s>%8$s</button>
 							%9$s
 						</p>
 					</form>
 				</div>',
-					esc_html__( 'Forgot your password?', 'et_builder' ),
-					esc_url( wp_lostpassword_url() ),
-					esc_html( $username ),
-					esc_attr( $username ),
-					esc_html( $password ),
-					esc_attr( $password ),
-					esc_url( site_url( 'wp-login.php', 'login_post' ) ),
-					esc_html__( 'Login', 'et_builder' ),
-					( 'on' === $current_page_redirect
-							? sprintf( '<input type="hidden" name="redirect_to" value="%1$s" />',  $redirect_url )
-							: ''
-							),
-					'' !== $custom_icon && 'on' === $button_custom ? sprintf(
-							' data-icon="%1$s"',
-							esc_attr( et_pb_process_font_icon( $custom_icon ) )
-							) : '',
-					'' !== $custom_icon && 'on' === $button_custom ? ' et_pb_custom_button_icon' : '',
-					wp_registration_url(),
-					esc_html__( 'Register', 'et_builder' )
-					);
+				esc_html__( 'Forgot your password?', 'et_builder' ),
+				esc_url( wp_lostpassword_url() ),
+				esc_html( $username ),
+				esc_attr( $username ),
+				esc_html( $password ),
+				esc_attr( $password ),
+				esc_url( site_url( 'wp-login.php', 'login_post' ) ),
+				esc_html__( 'Login', 'et_builder' ),
+				( 'on' === $current_page_redirect
+						? sprintf( '<input type="hidden" name="redirect_to" value="%1$s" />',  $redirect_url )
+						: ''
+						),
+				'' !== $custom_icon && 'on' === $button_custom ? sprintf(
+						' data-icon="%1$s"',
+						esc_attr( et_pb_process_font_icon( $custom_icon ) )
+						) : '',
+				'' !== $custom_icon && 'on' === $button_custom ? ' et_pb_custom_button_icon' : '',
+				wp_registration_url(),
+				esc_html__( 'Register', 'et_builder' )
+			);
 			$output = sprintf(
-					'<div%6$s class="et_pb_newsletter et_pb_login clearfix%4$s%7$s"%5$s>
+				'<div%6$s class="et_pb_newsletter et_pb_login clearfix%4$s%7$s" %5$s>
 					<div style="%8$s" class="et_pb_ajax_login_button">
 						%1$s
 					</div>
-					<div class="et_pb_ajax_login_panel"%5$s>
+					<div class="et_pb_ajax_login_panel" %5$s>
 						<div class="et_pb_newsletter_description">
 							%2$s
 						</div>
 						%3$s
 					</div>
 				</div>',
-					( '' !== $title ? '<h2>' . esc_html( $title ) . '</h2>' : '' ),
-					$content,
-					$form,
-					esc_attr( $class ),
-					( 'on' === $use_background_color
-							? sprintf( ' style="background-color: %1$s;'.( 'on' === $show_button ? '' : ' height:0;margin:0;padding:0;width:0;' ).'"', esc_attr( $background_color ) )
-							: ( 'on' === $show_button ? '' : ' style="height:0;margin:0;padding:0;width:0;"' )
-							),
-					( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
-					( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' ),
-					( 'on' === $show_button ? '' : 'display:none;' )
-					);
+				( '' !== $title ? '<h2>' . esc_html( $title ) . '</h2>' : '' ),
+				$content,
+				$form,
+				esc_attr( $class ),
+				( 'on' === $use_background_color
+						? sprintf( ' style="background-color: %1$s;'.( 'on' === $show_button ? '' : ' height:0;margin:0;padding:0;width:0;' ).'"', esc_attr( $background_color ) )
+						: ( 'on' === $show_button ? '' : ' style="height:0;margin:0;padding:0;width:0;"' )
+						),
+				( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
+				( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' ),
+				( 'on' === $show_button ? '' : 'display:none;' )
+			);
 		}
 
 		return $output;

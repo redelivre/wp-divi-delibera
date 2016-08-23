@@ -9,11 +9,15 @@
     z-index: 9999;
 }
 
-.et_pb_ajax_login .et_pb_newsletter_form.et_pb_login_form p.et_pb_forgot_password {
+.et_pb_ajax_login.et_pb_ajax_login_force_show .et_pb_ajax_login_panel {
+	display: block;
+}
+
+.et_pb_ajax_login .et_pb_newsletter_form.et_pb_login_form p.et_pb_forgot_password_panel {
 	margin: 9px 0;
 }
 
-.et_pb_ajax_login .et_pb_forgot_password a,
+.et_pb_ajax_login .et_pb_forgot_password_panel a,
 .et_pb_ajax_login .wp-opauth-login-strategy span {
     color: #ffffff;
 }
@@ -76,7 +80,7 @@
     margin-bottom: 10px;
 }
 
-.et_pb_ajax_login .et_pb_forgot_password > a {
+.et_pb_ajax_login .et_pb_forgot_password_panel > a {
     margin-right: 20px;
 }
 
