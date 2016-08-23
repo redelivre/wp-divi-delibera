@@ -665,7 +665,7 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 				die();
 			}
 		}
-		elseif(!is_user_logged_in())
+		elseif(!is_user_logged_in() && intval(get_query_var('et_pb_formulario_mobilizacao_export')) > 0)
 		{
 			auth_redirect();
 		}
