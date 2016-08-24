@@ -10,8 +10,14 @@ jQuery(document).ready(function() {
 	jQuery('.et_pb_ajax_login_button a, a.delibera-like-login, a.delibera-unlike-login, a.delibera-seguir-login, .pauta-content .warning.message a.button').attr("href", "javascript:ajax_login_toggle_panel();");
 	jQuery('.et_pb_ajax_login_button a, a.delibera-like-login, a.delibera-unlike-login, a.delibera-seguir-login, .pauta-content .warning.message a.button').click(function(event){
 		event.preventDefault();
-		jQuery('.et_pb_ajax_login').find(".et_pb_ajax_login_panel").toggle();
-		
+		if(ET_Builder_Module_Ajax_Login.force_provider == 'n')
+		{
+			jQuery('.et_pb_ajax_login').find(".et_pb_ajax_login_panel").toggle();
+		}
+		else
+		{
+			window.location = ET_Builder_Module_Ajax_Login.provider_url;
+		}
 	});
 	jQuery('.second-register-painel .close-button').click(function(){
 		jQuery('.second-register-painel').hide();

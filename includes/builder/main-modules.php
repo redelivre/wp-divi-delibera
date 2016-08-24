@@ -97,6 +97,7 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 	function javascriptFiles()
 	{
 		wp_enqueue_script('ET_Builder_Module_Ajax_Login', get_stylesheet_directory_uri().'/js/ET_Builder_Module_Ajax_Login.js', array('jquery'));
+		$provider_id = get_theme_mod('divi-child-delibera-login-force-login-service', 'n');
 		$data = array(
 			'invalid_email' => WPOPAUTH_INVALID_EMAIL,
 			'ajaxurl' => admin_url('admin-ajax.php'),
@@ -110,7 +111,9 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 				//'user-email' => get_theme_mod('divi-child-second-form-required-email', true), // custom checked
 				//'phone' => get_theme_mod('divi-child-second-form-required-telefone', true), // custom checked
 				//'custom-register-bairro' => get_theme_mod('divi-child-second-form-required-bairro', false) // custom checked
-			)
+			),
+			'force_provider' => $provider_id,
+			'provider_url' => plugins_url("auth/$provider_id", WPOPAUTH_PATH . DIRECTORY_SEPARATOR . 'wpopauth.php')
 		);
 		
 		wp_localize_script('ET_Builder_Module_Ajax_Login', 'ET_Builder_Module_Ajax_Login', $data);
