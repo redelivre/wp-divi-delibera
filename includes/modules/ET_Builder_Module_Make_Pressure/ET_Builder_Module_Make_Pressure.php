@@ -1,9 +1,9 @@
 <?php
 
-class ET_Builder_Module_People extends ET_Builder_Module {
+class ET_Builder_Module_Public_Agent extends ET_Builder_Module {
 	function init() {
-		$this->name = esc_html__( 'People Grid', 'et_builder' );
-		$this->slug = 'et_pb_people';
+		$this->name = esc_html__( 'Public Agent Grid', 'et_builder' );
+		$this->slug = 'et_pb_public_agent';
 
 		$this->whitelisted_fields = array(
 			'fullwidth',
@@ -85,16 +85,16 @@ class ET_Builder_Module_People extends ET_Builder_Module {
 				'type'            => 'select',
 				'option_category' => 'layout',
 				'options'         => array(
-					'on'  => esc_html__( 'Fullwidth', 'et_builder' ),
-					'off' => esc_html__( 'Grid', 'et_builder' ),
+					'off'  => esc_html__( 'Fullwidth', 'et_builder' ),
+					'on' => esc_html__( 'Grid', 'et_builder' ),
 				),
-				'description'       => esc_html__( 'Choose your desired people grid layout style.', 'et_builder' ),
+				'description'       => esc_html__( 'Choose your desired public agent grid layout style.', 'et_builder' ),
 			),
 			'posts_number' => array(
 				'label'             => esc_html__( 'Posts Number', 'et_builder' ),
 				'type'              => 'text',
 				'option_category'   => 'configuration',
-				'description'       => esc_html__( 'Define the number of people that should be displayed per page.', 'et_builder' ),
+				'description'       => esc_html__( 'Define the number of public agent that should be displayed per page.', 'et_builder' ),
 			),
 			'include_categories' => array(
 				'label'            => esc_html__( 'Include Categories', 'et_builder' ),
@@ -110,7 +110,7 @@ class ET_Builder_Module_People extends ET_Builder_Module {
 					'on'  => esc_html__( 'Yes', 'et_builder' ),
 					'off' => esc_html__( 'No', 'et_builder' ),
 				),
-				'description'       => esc_html__( 'Turn people titles on or off.', 'et_builder' ),
+				'description'       => esc_html__( 'Turn public agent titles on or off.', 'et_builder' ),
 			),
 			'show_categories' => array(
 				'label'           => esc_html__( 'Show Categories', 'et_builder' ),
@@ -377,12 +377,12 @@ class ET_Builder_Module_People extends ET_Builder_Module {
 		return $output;
 	}
 }
-new ET_Builder_Module_People;
+new ET_Builder_Module_Public_Agent;
 
-class ET_Builder_Module_Fullwidth_People extends ET_Builder_Module {
+class ET_Builder_Module_Fullwidth_Public_Agent extends ET_Builder_Module {
 	function init() {
-		$this->name       = esc_html__( 'Fullwidth People', 'et_builder' );
-		$this->slug       = 'et_pb_fullwidth_people';
+		$this->name       = esc_html__( 'Fullwidth Public Agent', 'et_builder' );
+		$this->slug       = 'et_pb_fullwidth_public_agent';
 		$this->fullwidth  = true;
 
 		// need to use global settings from the slider module
@@ -504,7 +504,7 @@ class ET_Builder_Module_Fullwidth_People extends ET_Builder_Module {
 				'label'           => esc_html__( 'Posts Number', 'et_builder' ),
 				'type'            => 'text',
 				'option_category' => 'configuration',
-				'description'     => esc_html__( 'Control how many people are displayed. Leave blank or use 0 to not limit the amount.', 'et_builder' ),
+				'description'     => esc_html__( 'Control how many public agent are displayed. Leave blank or use 0 to not limit the amount.', 'et_builder' ),
 			),
 			'show_title' => array(
 				'label'             => esc_html__( 'Show Title', 'et_builder' ),
@@ -514,7 +514,7 @@ class ET_Builder_Module_Fullwidth_People extends ET_Builder_Module {
 					'on'  => esc_html__( 'Yes', 'et_builder' ),
 					'off' => esc_html__( 'No', 'et_builder' ),
 				),
-				'description'        => esc_html__( 'Turn people titles on or off.', 'et_builder' ),
+				'description'        => esc_html__( 'Turn public agent titles on or off.', 'et_builder' ),
 			),
 			'show_date' => array(
 				'label'             => esc_html__( 'Show Date', 'et_builder' ),
@@ -670,12 +670,12 @@ class ET_Builder_Module_Fullwidth_People extends ET_Builder_Module {
 			);
 		}
 
-		$people = et_divi_get_people( $args );
+		$public_agent = et_divi_get_public_agent( $args );
 
 		ob_start();
-		if( $people->post_count > 0 ) {
-			while ( $people->have_posts() ) {
-				$people->the_post();
+		if( $public_agent->post_count > 0 ) {
+			while ( $public_agent->have_posts() ) {
+				$public_agent->the_post();
 				?>
 				<div id="post-<?php the_ID(); ?>" <?php post_class( 'et_pb_portfolio_item et_pb_grid_item ' ); ?>>
 				<?php
@@ -751,12 +751,12 @@ class ET_Builder_Module_Fullwidth_People extends ET_Builder_Module {
 		return $output;
 	}
 }
-new ET_Builder_Module_Fullwidth_People;
+new ET_Builder_Module_Fullwidth_Public_Agent;
 
-class ET_Builder_Module_Filterable_People extends ET_Builder_Module {
+class ET_Builder_Module_Filterable_Public_Agent extends ET_Builder_Module {
 	function init() {
-		$this->name = esc_html__( 'Filterable People', 'et_builder' );
-		$this->slug = 'et_pb_filterable_people';
+		$this->name = esc_html__( 'Filterable Public Agent', 'et_builder' );
+		$this->slug = 'et_pb_filterable_public_agent';
 
 		$this->whitelisted_fields = array(
 			'fullwidth',
@@ -873,7 +873,7 @@ class ET_Builder_Module_Filterable_People extends ET_Builder_Module {
 				'label'             => esc_html__( 'Posts Number', 'et_builder' ),
 				'type'              => 'text',
 				'option_category'   => 'configuration',
-				'description'       => esc_html__( 'Define the number of people that should be displayed per page.', 'et_builder' ),
+				'description'       => esc_html__( 'Define the number of public_agent that should be displayed per page.', 'et_builder' ),
 			),
 			'include_categories' => array(
 				'label'           => esc_html__( 'Include Categories', 'et_builder' ),
@@ -1035,13 +1035,13 @@ class ET_Builder_Module_Filterable_People extends ET_Builder_Module {
 			);
 		}
 
-		$people = et_divi_get_people( $args );
+		$public_agent = et_divi_get_public_agent( $args );
 
 		$categories_included = array();
 		ob_start();
-		if( $people->post_count > 0 ) {
-			while ( $people->have_posts() ) {
-				$people->the_post();
+		if( $public_agent->post_count > 0 ) {
+			while ( $public_agent->have_posts() ) {
+				$public_agent->the_post();
 
 				$category_classes = array();
 				$categories = get_the_terms( get_the_ID(), 'category' );
@@ -1166,7 +1166,7 @@ class ET_Builder_Module_Filterable_People extends ET_Builder_Module {
 		return $output;
 	}
 }
-new ET_Builder_Module_Filterable_People;
+new ET_Builder_Module_Filterable_Public_Agent;
 
 if ( ! function_exists( 'et_builder_include_general_categories_option' ) ) :
 function et_builder_include_general_categories_option( $args = array() ) {
@@ -1186,7 +1186,7 @@ function et_builder_include_general_categories_option( $args = array() ) {
 	}
 
 	if ( empty( $cats_array ) ) {
-		$output = '<p>' . esc_html__( "You currently don't have any people assigned to a category.", 'et_builder' ) . '</p>';
+		$output = '<p>' . esc_html__( "You currently don't have any public agent assigned to a category.", 'et_builder' ) . '</p>';
 	}
 
 	foreach ( $cats_array as $category ) {
@@ -1210,10 +1210,10 @@ function et_builder_include_general_categories_option( $args = array() ) {
 }
 endif;
 
-if ( ! function_exists( 'et_divi_get_people' ) ) :
-function et_divi_get_people( $args = array() ) {
+if ( ! function_exists( 'et_divi_get_public_agent' ) ) :
+function et_divi_get_public_agent( $args = array() ) {
 	$default_args = array(
-		'post_type' => 'people',
+		'post_type' => 'public_agent',
 	);
 	$args = wp_parse_args( $args, $default_args );
 	return new WP_Query( $args );
