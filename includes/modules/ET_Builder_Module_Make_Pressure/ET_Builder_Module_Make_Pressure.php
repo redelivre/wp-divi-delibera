@@ -329,13 +329,15 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 				<?php endif; ?>
 
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-					<a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true); ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo (get_post_meta(  get_the_ID(), 'public_agent_cargo', true) != null)?$job[0][get_post_meta(  get_the_ID(), 'public_agent_cargo', true)]:""; ?>%20<?php echo get_the_title(); ?>,%20...">Email</a>
+					<a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,%20...">Email</a>
 				<?php endif; ?>
+
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
 				  <a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?>%20por%20favor%20defenda%20a%20exist%C3%AAncia%20do%20MCTI,%20fundamental%20para%20o%20desenvolvimento%20do%20Brasil%20&url=http%3A//goo.gl/Sc9aen&hashtags=FicaMCTI" class="twitter-mention-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 				<?php endif; ?>
+				
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
-				  <a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>"">Facebook</a>
+				  <a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>"">Facebook</a>
 				<?php endif; ?>
 				
 				</div> <!-- .et_pb_portfolio_item -->
@@ -747,7 +749,17 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 					<p class="post-meta"><?php //echo get_the_term_list( get_the_ID(), 'category', '', ', ' ); ?></p>
 				<?php endif; ?>
 
-				<a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true); ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo (get_post_meta(  get_the_ID(), 'public_agent_cargo', true) != null)?$job[0][get_post_meta(  get_the_ID(), 'public_agent_cargo', true)]:""; ?>%20<?php echo get_the_title(); ?>,%20...">Email</a>
+				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
+					<a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,%20...">Email</a>
+				<?php endif; ?>
+
+				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
+				  <a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?>%20por%20favor%20defenda%20a%20exist%C3%AAncia%20do%20MCTI,%20fundamental%20para%20o%20desenvolvimento%20do%20Brasil%20&url=http%3A//goo.gl/Sc9aen&hashtags=FicaMCTI" class="twitter-mention-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+				<?php endif; ?>
+
+				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
+				  <a class="et_pb_button  et_pb_button_1 et_pb_module et_pb_bg_layout_light" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>"">Facebook</a>
+				<?php endif; ?>
 
 				</div><!-- .et_pb_portfolio_item -->
 				<?php
