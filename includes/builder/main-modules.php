@@ -98,6 +98,7 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 	{
 		wp_enqueue_script('ET_Builder_Module_Ajax_Login', get_stylesheet_directory_uri().'/js/ET_Builder_Module_Ajax_Login.js', array('jquery'));
 		$provider_id = get_theme_mod('divi-child-delibera-login-force-login-service', 'n');
+		$redirect_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		$data = array(
 			'invalid_email' => WPOPAUTH_INVALID_EMAIL,
 			'ajaxurl' => admin_url('admin-ajax.php'),
@@ -113,7 +114,8 @@ class ET_Builder_Module_Ajax_Login extends ET_Builder_Module_Login {
 				//'custom-register-bairro' => get_theme_mod('divi-child-second-form-required-bairro', false) // custom checked
 			),
 			'force_provider' => $provider_id,
-			'provider_url' => plugins_url("auth/$provider_id", WPOPAUTH_PATH . DIRECTORY_SEPARATOR . 'wpopauth.php')
+			'provider_url' => plugins_url("auth/$provider_id", WPOPAUTH_PATH . DIRECTORY_SEPARATOR . 'wpopauth.php')."?redirect_to=".urlencode($redirect_url),
+			'redirect_url' => $redirect_url,
 		);
 		
 		wp_localize_script('ET_Builder_Module_Ajax_Login', 'ET_Builder_Module_Ajax_Login', $data);
