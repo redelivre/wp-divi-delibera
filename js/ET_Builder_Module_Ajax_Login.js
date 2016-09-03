@@ -10,14 +10,7 @@ jQuery(document).ready(function() {
 	jQuery('.et_pb_ajax_login_button a, a.delibera-like-login, a.delibera-unlike-login, a.delibera-seguir-login, .pauta-content .warning.message a.button').attr("href", "javascript:ajax_login_toggle_panel();");
 	jQuery('.et_pb_ajax_login_button a, a.delibera-like-login, a.delibera-unlike-login, a.delibera-seguir-login, .pauta-content .warning.message a.button').click(function(event){
 		event.preventDefault();
-		if(ET_Builder_Module_Ajax_Login.force_provider == 'n')
-		{
-			jQuery('.et_pb_ajax_login').find(".et_pb_ajax_login_panel").toggle();
-		}
-		else
-		{
-			window.location = ET_Builder_Module_Ajax_Login.provider_url;
-		}
+		ajax_login_toggle_panel();
 	});
 	jQuery('.second-register-painel .close-button').click(function(){
 		jQuery('.second-register-painel').hide();
@@ -122,8 +115,15 @@ function isValidEmail(email)
 
 function ajax_login_toggle_panel()
 {
-	jQuery('.et_pb_ajax_login').find(".et_pb_ajax_login_panel").toggle();
-	jQuery('.et_mobile_menu').toggle();
-	jQuery('.mobile_nav').toggleClass('opened');
-	jQuery('.mobile_nav').toggleClass('closed');
+	if(ET_Builder_Module_Ajax_Login.force_provider == 'n')
+	{
+		jQuery('.et_pb_ajax_login').find(".et_pb_ajax_login_panel").toggle();
+		jQuery('.et_mobile_menu').toggle();
+		jQuery('.mobile_nav').toggleClass('opened');
+		jQuery('.mobile_nav').toggleClass('closed');
+	}
+	else
+	{
+		window.location = ET_Builder_Module_Ajax_Login.provider_url;
+	}
 }
