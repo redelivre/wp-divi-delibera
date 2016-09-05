@@ -328,12 +328,21 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 					<p class="post-meta"><?php //echo get_the_term_list( get_the_ID(), 'category', '', ', ' ); ?></p>
 				<?php endif; ?>
 
+				<?php 
+				$email_subject = get_option( 'makepressure_email_title' );
+				$email_body = get_option( 'makepressure_email_body' );
+				$more_emails = get_option( 'makepressure_more_emails' );
+
+				$twitter_text = get_option( 'makepressure_twitter_text' );
+				$twitter_url = get_option( 'makepressure_twitter_url' );
+				$twitter_hashtag = get_option( 'makepressure_twitter_hashtag' );
+				?>
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-					<a style="margin:10px" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,%20..."><span style="font-size:38px" class="dashicons dashicons-email"></span></a>
+					<a style="margin:10px" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>"><span style="font-size:38px" class="dashicons dashicons-email"></span></a>
 				<?php endif; ?>
 
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-				  <a style="margin:10px" class="" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?>%20por%20favor%20defenda%20a%20exist%C3%AAncia%20do%20MCTI,%20fundamental%20para%20o%20desenvolvimento%20do%20Brasil%20&url=http%3A//goo.gl/Sc9aen&hashtags=FicaMCTI" class="twitter-mention-button" data-show-count="false"><span style="font-size:35px" class="dashicons dashicons-twitter"></span></a>
+				  <a style="margin:10px" class="" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"><span style="font-size:35px" class="dashicons dashicons-twitter"></span></a>
 				<?php endif; ?>
 				
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
@@ -748,13 +757,22 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 				<?php if ( 'on' === $show_categories ) : ?>
 					<p class="post-meta"><?php //echo get_the_term_list( get_the_ID(), 'category', '', ', ' ); ?></p>
 				<?php endif; ?>
+				
+				<?php 
+				$email_subject = get_option( 'makepressure_email_title' );
+				$email_body = get_option( 'makepressure_email_body' );
+				$more_emails = get_option( 'makepressure_more_emails' );
 
+				$twitter_text = get_option( 'makepressure_twitter_text' );
+				$twitter_url = get_option( 'makepressure_twitter_url' );
+				$twitter_hashtag = get_option( 'makepressure_twitter_hashtag' );
+				?>
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-					<a style="margin:10px" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,%20..."><span style="font-size:38px" class="dashicons dashicons-email"></span></a>
+					<a style="margin:10px" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>"><span style="font-size:38px" class="dashicons dashicons-email"></span></a>
 				<?php endif; ?>
 
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-				  <a style="margin:10px" class="" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?>%20por%20favor%20defenda%20a%20exist%C3%AAncia%20do%20MCTI,%20fundamental%20para%20o%20desenvolvimento%20do%20Brasil%20&url=http%3A//goo.gl/Sc9aen&hashtags=FicaMCTI" class="twitter-mention-button" data-show-count="false"><span style="font-size:35px" class="dashicons dashicons-twitter"></span></a>
+				  <a style="margin:10px" class="" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"><span style="font-size:35px" class="dashicons dashicons-twitter"></span></a>
 				<?php endif; ?>
 				
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
