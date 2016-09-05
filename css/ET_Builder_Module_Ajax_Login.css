@@ -192,6 +192,11 @@
 	display:none;
 }
 
+.logged-in #top-menu li.et_pb_ajax_login_button,
+.logged-in .et_pb_ajax_login_button {
+	display: none;
+}
+
 @media (max-width: 980px) {
     .et_pb_ajax_login .et_pb_ajax_login_panel {
 	    font-size: 0.4em;
