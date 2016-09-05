@@ -338,15 +338,15 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 				$twitter_hashtag = get_option( 'makepressure_twitter_hashtag' );
 				?>
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-					<a style="margin:10px" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>"><span style="font-size:38px" class="dashicons dashicons-email"></span></a>
+					<a class="fa fa-envelope fa-3x" style="margin:10px;color:green;" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>"></span></a>
 				<?php endif; ?>
 
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-				  <a style="margin:10px" class="" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"><span style="font-size:35px" class="dashicons dashicons-twitter"></span></a>
+				  <a style="margin:10px;color:#1dcaff;" class="fa fa-twitter fa-3x" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"></a>
 				<?php endif; ?>
 				
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
-				  <a style="margin:10px" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""><span style="font-size:35px" class="dashicons dashicons-facebook"></span></a>
+				  <a class="fa fa-facebook-official fa-3x" style="margin:10px;color:#3b5998;" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""></a>
 				<?php endif; ?>
 				
 				</div> <!-- .et_pb_portfolio_item -->
@@ -768,15 +768,15 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 				$twitter_hashtag = get_option( 'makepressure_twitter_hashtag' );
 				?>
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-					<a style="margin:10px" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>"><span style="font-size:38px" class="dashicons dashicons-email"></span></a>
+					<a class="fa fa-envelope fa-3x" style="margin:10px;color:green;" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>"></span></a>
 				<?php endif; ?>
 
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-				  <a style="margin:10px" class="" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"><span style="font-size:35px" class="dashicons dashicons-twitter"></span></a>
+				  <a style="margin:10px;color:#1dcaff;" class="fa fa-twitter fa-3x" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"></a>
 				<?php endif; ?>
 				
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
-				  <a style="margin:10px" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""><span style="font-size:35px" class="dashicons dashicons-facebook"></span></a>
+				  <a class="fa fa-facebook-official fa-3x" style="margin:10px;color:#3b5998;" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""></a>
 				<?php endif; ?>
 
 				</div><!-- .et_pb_portfolio_item -->
@@ -1452,3 +1452,11 @@ function et_divi_get_public_agent( $args = array() ) {
 }
 endif;
 
+add_action( 'wp_enqueue_scripts', 'wp_divi_delibera_script' );
+ 
+/**
+ * Enqueue Dashicons style for frontend use when enqueuing your theme's style sheet
+ */
+function wp_divi_delibera_script() {
+	wp_enqueue_style( 'wp-divi-delibera-style', get_stylesheet_uri(), 'dashicons' );
+}
