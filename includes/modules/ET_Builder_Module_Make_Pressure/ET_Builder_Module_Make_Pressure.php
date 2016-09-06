@@ -80,13 +80,19 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 
 	function get_fields() {
 		$fields = array(
+			'include_categories' => array(
+				'label'            => esc_html__( 'Include Categories', 'et_builder' ),
+				'renderer'         => 'et_builder_include_general_categories_option',
+				'option_category'  => 'basic_option',
+				'description'      => esc_html__( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			),
 			'fullwidth' => array(
 				'label'           => esc_html__( 'Layout', 'et_builder' ),
 				'type'            => 'select',
 				'option_category' => 'layout',
 				'options'         => array(
-					'on'  => esc_html__( 'Fullwidth', 'et_builder' ),
-					'off' => esc_html__( 'Grid', 'et_builder' ),
+					'off'  => esc_html__( 'Fullwidth', 'et_builder' ),
+					'on' => esc_html__( 'Grid', 'et_builder' ),
 				),
 				'description'       => esc_html__( 'Choose your desired portfolio layout style.', 'et_builder' ),
 			),
@@ -95,12 +101,6 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 				'type'              => 'text',
 				'option_category'   => 'configuration',
 				'description'       => esc_html__( 'Define the number of projects that should be displayed per page.', 'et_builder' ),
-			),
-			'include_categories' => array(
-				'label'            => esc_html__( 'Include Categories', 'et_builder' ),
-				'renderer'         => 'et_builder_include_general_categories_option',
-				'option_category'  => 'basic_option',
-				'description'      => esc_html__( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
 			),
 			'show_title' => array(
 				'label'           => esc_html__( 'Show Title', 'et_builder' ),
@@ -250,17 +250,87 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 			$paged = $et_paged;
 		}
 
-		if ( '' !== $include_categories )
-			$args['tax_query'] = array(
-				array(
+        $terms_category = "";
+        $terms_states = "";
+        $terms_party = "";
+        $terms_job = "";
+        $terms_genre = "";
+        $categories = explode( ',', $include_categories );
+        foreach ($categories as $category) {
+        	$term = get_term($category);
+        	if($term->taxonomy == "category"){
+        		$terms_category .= $terms_category ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_state") {
+        		$terms_states .= $terms_states ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_genre") {
+        		$terms_job .= $terms_job ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_job") {
+        		$terms_genre .= $terms_genre ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_party") {
+        		$terms_party .= $terms_party ? ", " . $category : $category;
+        	}
+
+        }        
+
+		$settings_states = "";
+		$settings_category = "";
+		$settings_job = "";
+		$settings_genre = "";
+		$settings_party = "";
+
+		if ($terms_category){
+			$settings_category = array(
 					'taxonomy' => 'category',
 					'field' => 'id',
-					'terms' => explode( ',', $include_categories ),
+					'terms' => explode( ',', $terms_category ),
 					'operator' => 'IN',
-				)
+				);
+		} elseif ($terms_states) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_state',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_states ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_job) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_job',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_job ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_genre) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_genre',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_genre ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_party) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_party',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_party ),
+					'operator' => 'IN',
+				);
+		}
+
+
+
+		if ( '' !== $include_categories )
+			$args['tax_query'] = array(
+				$settings_states,
+				$settings_category,
+				$settings_job,
+				$settings_genre,
+				$settings_party
 			);
 
-		if ( ! is_search() ) {
+       if ( ! is_search() ) {
 			$args['paged'] = $et_paged;
 		}
 
@@ -342,7 +412,7 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 				<?php endif; ?>
 
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-				  <a style="margin:10px;color:#1dcaff;" class="fa fa-twitter fa-3x" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"></a>
+				  <a class="fa fa-twitter fa-3x" style="margin:10px;color:#1dcaff;" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"></a>
 				<?php endif; ?>
 				
 				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
@@ -506,13 +576,19 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 
 	function get_fields() {
 		$fields = array(
+			'include_categories' => array(
+				'label'           => esc_html__( 'Include Categories', 'et_builder' ),
+				'renderer'        => 'et_builder_include_general_categories_option',
+				'option_category' => 'basic_option',
+				'description'     => esc_html__( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			),
 			'fullwidth' => array(
 				'label'           => esc_html__( 'Layout', 'et_builder' ),
 				'type'            => 'select',
 				'option_category' => 'layout',
 				'options'         => array(
-					'on'  => esc_html__( 'Fullwidth', 'et_builder' ),
-					'off' => esc_html__( 'Grid', 'et_builder' ),
+					'off'  => esc_html__( 'Fullwidth', 'et_builder' ),
+					'on' => esc_html__( 'Grid', 'et_builder' ),
 				),
 				'description'        => esc_html__( 'Choose your desired portfolio layout style.', 'et_builder' ),
 			),
@@ -521,12 +597,6 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 				'type'              => 'text',
 				'option_category'   => 'configuration',
 				'description'       => esc_html__( 'Define the number of projects that should be displayed per page.', 'et_builder' ),
-			),
-			'include_categories' => array(
-				'label'           => esc_html__( 'Include Categories', 'et_builder' ),
-				'renderer'        => 'et_builder_include_general_categories_option',
-				'option_category' => 'basic_option',
-				'description'     => esc_html__( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
 			),
 			'show_title' => array(
 				'label'             => esc_html__( 'Show Title', 'et_builder' ),
@@ -671,16 +741,87 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 			$args['posts_per_page'] = (int) $posts_number;
 		}
 
-		if ( '' !== $include_categories ) {
-			$args['tax_query'] = array(
-				array(
+
+        $terms_category = "";
+        $terms_states = "";
+        $terms_party = "";
+        $terms_job = "";
+        $terms_genre = "";
+        $categories = explode( ',', $include_categories );
+        foreach ($categories as $category) {
+        	$term = get_term($category);
+        	if($term->taxonomy == "category"){
+        		$terms_category .= $terms_category ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_state") {
+        		$terms_states .= $terms_states ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_genre") {
+        		$terms_job .= $terms_job ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_job") {
+        		$terms_genre .= $terms_genre ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_party") {
+        		$terms_party .= $terms_party ? ", " . $category : $category;
+        	}
+
+        }        
+
+		$settings_states = "";
+		$settings_category = "";
+		$settings_job = "";
+		$settings_genre = "";
+		$settings_party = "";
+
+		if ($terms_category){
+			$settings_category = array(
 					'taxonomy' => 'category',
 					'field' => 'id',
-					'terms' => explode( ',', $include_categories ),
+					'terms' => explode( ',', $terms_category ),
 					'operator' => 'IN',
-				)
-			);
+				);
+		} elseif ($terms_states) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_state',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_states ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_job) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_job',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_job ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_genre) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_genre',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_genre ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_party) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_party',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_party ),
+					'operator' => 'IN',
+				);
 		}
+
+
+
+		if ( '' !== $include_categories )
+			$args['tax_query'] = array(
+				$settings_states,
+				$settings_category,
+				$settings_job,
+				$settings_genre,
+				$settings_party
+			);
+
 
 		$projects = et_divi_get_public_agent( $args );
 
@@ -938,24 +1079,24 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Title displayed above the portfolio.', 'et_builder' ),
 			),
-			'fullwidth' => array(
-				'label'             => esc_html__( 'Layout', 'et_builder' ),
-				'type'              => 'select',
-				'option_category'   => 'layout',
-				'options'           => array(
-					'on'  => esc_html__( 'Carousel', 'et_builder' ),
-					'off' => esc_html__( 'Grid', 'et_builder' ),
-				),
-				'affects'           => array(
-					'#et_pb_auto',
-				),
-				'description'        => esc_html__( 'Choose your desired portfolio layout style.', 'et_builder' ),
-			),
 			'include_categories' => array(
 				'label'           => esc_html__( 'Include Categories', 'et_builder' ),
 				'renderer'        => 'et_builder_include_general_categories_option',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+			),
+			'fullwidth' => array(
+				'label'             => esc_html__( 'Layout', 'et_builder' ),
+				'type'              => 'select',
+				'option_category'   => 'layout',
+				'options'           => array(
+					'off'  => esc_html__( 'Carousel', 'et_builder' ),
+					'on' => esc_html__( 'Grid', 'et_builder' ),
+				),
+				'affects'           => array(
+					'#et_pb_auto',
+				),
+				'description'        => esc_html__( 'Choose your desired portfolio layout style.', 'et_builder' ),
 			),
 			'posts_number' => array(
 				'label'           => esc_html__( 'Posts Number', 'et_builder' ),
@@ -1116,16 +1257,87 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
 			$args['nopaging'] = true;
 		}
 
-		if ( '' !== $include_categories ) {
-			$args['tax_query'] = array(
-				array(
+
+        $terms_category = "";
+        $terms_states = "";
+        $terms_party = "";
+        $terms_job = "";
+        $terms_genre = "";
+        $categories = explode( ',', $include_categories );
+        foreach ($categories as $category) {
+        	$term = get_term($category);
+        	if($term->taxonomy == "category"){
+        		$terms_category .= $terms_category ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_state") {
+        		$terms_states .= $terms_states ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_genre") {
+        		$terms_job .= $terms_job ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_job") {
+        		$terms_genre .= $terms_genre ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_party") {
+        		$terms_party .= $terms_party ? ", " . $category : $category;
+        	}
+
+        }        
+
+		$settings_states = "";
+		$settings_category = "";
+		$settings_job = "";
+		$settings_genre = "";
+		$settings_party = "";
+
+		if ($terms_category){
+			$settings_category = array(
 					'taxonomy' => 'category',
 					'field' => 'id',
-					'terms' => explode( ',', $include_categories ),
-					'operator' => 'IN'
-				)
-			);
+					'terms' => explode( ',', $terms_category ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_states) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_state',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_states ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_job) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_job',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_job ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_genre) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_genre',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_genre ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_party) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_party',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_party ),
+					'operator' => 'IN',
+				);
 		}
+
+
+
+		if ( '' !== $include_categories )
+			$args['tax_query'] = array(
+				$settings_states,
+				$settings_category,
+				$settings_job,
+				$settings_genre,
+				$settings_party
+			);
+
 
 		$projects = et_divi_get_public_agent( $args );
 
@@ -1339,22 +1551,95 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
         $args = array(
 			'post_type'      => 'public_agent',
 		);
+		
+
+        $terms_category = "";
+        $terms_states = "";
+        $terms_party = "";
+        $terms_job = "";
+        $terms_genre = "";
+        $categories = explode( ',', $include_categories );
+        foreach ($categories as $category) {
+        	$term = get_term($category);
+        	if($term->taxonomy == "category"){
+        		$terms_category .= $terms_category ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_state") {
+        		$terms_states .= $terms_states ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_genre") {
+        		$terms_job .= $terms_job ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_job") {
+        		$terms_genre .= $terms_genre ? ", " . $category : $category;
+        	}
+        	elseif ($term->taxonomy == "public_agent_party") {
+        		$terms_party .= $terms_party ? ", " . $category : $category;
+        	}
+
+        }        
+
+		$settings_states = "";
+		$settings_category = "";
+		$settings_job = "";
+		$settings_genre = "";
+		$settings_party = "";
+
+		if ($terms_category){
+			$settings_category = array(
+					'taxonomy' => 'category',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_category ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_states) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_state',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_states ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_job) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_job',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_job ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_genre) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_genre',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_genre ),
+					'operator' => 'IN',
+				);
+		} elseif ($terms_party) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_party',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_party ),
+					'operator' => 'IN',
+				);
+		}
+
+
 
 		if ( '' !== $include_categories )
 			$args['tax_query'] = array(
-				array(
-					'taxonomy' => 'category',
-					'field' => 'id',
-					'terms' => explode( ',', $include_categories ),
-					'operator' => 'IN',
-				)
+				$settings_states,
+				$settings_category,
+				$settings_job,
+				$settings_genre,
+				$settings_party
 			);
+
 		
 		$the_query = new WP_Query( $args );
 
 		// The Loop
 		$aux = "";
 		$aux2 ="";
+		$button_url = "mailto:";
 		if ( $the_query->have_posts() ) {
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
@@ -1362,7 +1647,7 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
 				if ($aux) $aux2 .= $aux2 ? "," . $aux: $aux;
 			}
 
-			$button_url = "mailto:" . $aux2 ;
+			$button_url .= $aux2 ;
 			/* Restore original Post Data */
 			wp_reset_postdata();
 		} else {
@@ -1404,7 +1689,7 @@ if ( ! function_exists( 'et_builder_include_general_categories_option' ) ) :
 function et_builder_include_general_categories_option( $args = array() ) {
 	$defaults = apply_filters( 'et_builder_include_categories_defaults', array (
 		'use_terms' => true,
-		'term_name' => 'category',
+		'term_name' => array('public_agent_state', 'category', 'public_agent_job', 'public_agent_party', 'public_agent_genre'),
 	) );
 
 	$args = wp_parse_args( $args, $defaults );
