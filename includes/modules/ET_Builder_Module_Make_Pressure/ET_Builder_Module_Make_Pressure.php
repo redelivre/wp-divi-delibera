@@ -342,7 +342,6 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 		ob_start();
 
 		query_posts( $args );
-		wp_enqueue_style('ET_Builder_Module_Make_Pressure', get_stylesheet_directory_uri().'/includes/modules/ET_Builder_Module_Make_Pressure/frontend/css/ET_Builder_Module_Make_Pressure.css');
 		if ( have_posts() ) {
 			while ( have_posts() ) {
 				the_post(); ?>
@@ -1772,11 +1771,8 @@ function et_divi_get_public_agent( $args = array() ) {
 }
 endif;
 
-add_action( 'wp_enqueue_scripts', 'wp_divi_delibera_script' );
- 
-/**
- * Enqueue Dashicons style for frontend use when enqueuing your theme's style sheet
- */
-function wp_divi_delibera_script() {
-	wp_enqueue_style( 'wp-divi-delibera-style', get_stylesheet_uri(), 'dashicons' );
+add_action( 'wp_enqueue_scripts', 'wp_divi_makepressure_script' );
+
+function wp_divi_makepressure_script() {
+	wp_enqueue_style('ET_Builder_Module_Make_Pressure', get_stylesheet_directory_uri().'/includes/modules/ET_Builder_Module_Make_Pressure/frontend/css/ET_Builder_Module_Make_Pressure.css');
 }
