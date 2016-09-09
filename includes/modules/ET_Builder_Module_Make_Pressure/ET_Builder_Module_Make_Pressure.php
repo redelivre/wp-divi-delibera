@@ -342,20 +342,27 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 		ob_start();
 
 		query_posts( $args );
-
+		wp_enqueue_style('ET_Builder_Module_Make_Pressure', get_stylesheet_directory_uri().'/includes/modules/ET_Builder_Module_Make_Pressure/frontend/css/ET_Builder_Module_Make_Pressure.css');
 		if ( have_posts() ) {
 			while ( have_posts() ) {
 				the_post(); ?>
 
-				<div id="post-<?php the_ID(); ?>" <?php post_class( $main_post_class ); ?>>
+				<?php 
+				  //var_dump($main_post_class); 
+				  //Old post class $main_post_class
+				?>
+
+
+				
+				<div id="post-<?php the_ID(); ?>" <?php post_class( " makepressure_grid makepressure_grid_item" ); ?>>
 
 			<?php
 				$thumb = '';
 
-				$width = 'on' === $fullwidth ?  1080 : 400;
+				$width = 'on' === $fullwidth ?  150 : 400;
 				$width = (int) apply_filters( 'et_pb_portfolio_image_width', $width );
 
-				$height = 'on' === $fullwidth ?  9999 : 284;
+				$height = 'on' === $fullwidth ?  200 : 284;
 				$height = (int) apply_filters( 'et_pb_portfolio_image_height', $height );
 				$classtext = 'on' === $fullwidth ? 'et_pb_post_main_image' : '';
 				$titletext = get_the_title();
@@ -365,9 +372,9 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 				if ( '' !== $thumb ) : ?>
 					<a href="<?php esc_url( the_permalink() ); ?>">
 					<?php if ( 'on' !== $fullwidth ) : ?>
-						<span class="et_portfolio_image">
+						<span>
 					<?php endif; ?>
-							<?php print_thumbnail( $thumb, $thumbnail["use_timthumb"], $titletext, $width, $height ); ?>
+							<?php the_post_thumbnail(array(175,175), array('class' => 'makepressure_post_main_image')); ?>
 					<?php if ( 'on' !== $fullwidth ) :
 
 							$data_icon = '' !== $hover_icon
@@ -389,10 +396,34 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 			<?php
 				endif;
 			?>
-
+				<div class="makepressure_label">
 				<?php if ( 'on' === $show_title ) : ?>
-					<h2><a href="<?php esc_url( the_permalink() ); ?>"><?php the_title(); ?></a></h2>
+					<h2 class="makepressure_title"><a href="<?php esc_url( the_permalink() ); ?>"><?php the_title(); ?></a></h2>
 				<?php endif; ?>
+
+				<?php
+				  //pre get categories
+				  $state = wp_get_post_terms( get_the_ID() , 'public_agent_state');
+				  $party = wp_get_post_terms( get_the_ID() , 'public_agent_party');
+				  //$category = wp_get_post_terms( get_the_ID() , 'category')[0];
+				?>
+
+				<?php if ($state): ?>
+				  <strong class="makepressure_upper">
+				    <?php echo $state[0]->slug; ?> /
+				<?php else: ?>
+				  <br>
+				<?php endif; ?>
+
+				<?php if ($party): ?>
+				    <?php echo $party[0]->slug; ?>
+				  </strong>
+				<?php else: ?>
+				  <br>
+				<?php endif; ?>
+				</div>
+
+
 
 				<?php if ( 'on' === $show_categories ) : ?>
 					<p class="post-meta"><?php //echo get_the_term_list( get_the_ID(), 'category', '', ', ' ); ?></p>
@@ -407,19 +438,22 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 				$twitter_url = get_option( 'makepressure_twitter_url' );
 				$twitter_hashtag = get_option( 'makepressure_twitter_hashtag' );
 				?>
-				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-					<a class="fa fa-envelope fa-3x" style="margin:10px;color:green;" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>"></span></a>
-				<?php endif; ?>
+				<div class="makepressure_action" >
+					<?php
+					if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
+				  	  <a class="fa fa-3x fa-envelope makepressure_email" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo urlencode($email_body); ?>" ></a>
+					<?php endif; ?>
 
-				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-				  <a class="fa fa-twitter fa-3x" style="margin:10px;color:#1dcaff;" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"></a>
-				<?php endif; ?>
-				
-				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
-				  <a class="fa fa-facebook-official fa-3x" style="margin:10px;color:#3b5998;" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""></a>
-				<?php endif; ?>
-				
+					<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
+					  <a class="fa fa-twitter fa-3x makepressure_twitter twitter-mention-button" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" data-show-count="false"></a>
+					<?php endif; ?>
+					
+					<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
+					  <a class="fa fa-facebook-official fa-3x makepressure_facebook" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""></a>
+					<?php endif; ?>
+				</div>
 				</div> <!-- .et_pb_portfolio_item -->
+
 	<?php	}
 
 			if ( 'on' === $show_pagination && ! is_search() ) {
@@ -1361,6 +1395,7 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
 					$orientation = ( $thumb_height > $thumb_width ) ? 'portrait' : 'landscape';
 
 					if ( '' !== $thumb_src ) : ?>
+
 						<div class="et_pb_portfolio_image <?php echo esc_attr( $orientation ); ?>">
 							<a href="<?php esc_url( the_permalink() ); ?>">
 								<img src="<?php echo esc_url( $thumb_src ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>"/>
