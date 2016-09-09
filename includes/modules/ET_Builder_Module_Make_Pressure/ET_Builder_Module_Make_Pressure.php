@@ -383,11 +383,6 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 								)
 								: '';
 
-							printf( '<span class="et_overlay%1$s"%2$s></span>',
-								( '' !== $hover_icon ? ' et_pb_inline_icon' : '' ),
-								$data_icon
-							);
-
 					?>
 						</span>
 					<?php endif; ?>
@@ -1406,6 +1401,11 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
 											esc_attr( et_pb_process_font_icon( $hover_icon ) )
 										)
 										: '';
+
+									printf( '<span class="et_overlay%1$s"%2$s></span>',
+										( '' !== $hover_icon ? ' et_pb_inline_icon' : '' ),
+										$data_icon
+									);
 								?>
 									<?php if ( 'on' === $show_title ) : ?>
 										<h3><?php the_title(); ?></h3>
