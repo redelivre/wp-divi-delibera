@@ -373,7 +373,9 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 					<?php if ( 'on' !== $fullwidth ) : ?>
 						<span>
 					<?php endif; ?>
-							<?php the_post_thumbnail(array(175,175), array('class' => 'makepressure_post_main_image')); ?>
+					        <a href="<?php the_permalink() ?>">
+							  <?php the_post_thumbnail(array(175,175), array('class' => 'makepressure_post_main_image')); ?>
+							</a>
 					<?php if ( 'on' !== $fullwidth ) :
 
 							$data_icon = '' !== $hover_icon
