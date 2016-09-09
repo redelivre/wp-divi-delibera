@@ -255,6 +255,7 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
         $terms_party = "";
         $terms_job = "";
         $terms_genre = "";
+        $terms_commission = "";
         $categories = explode( ',', $include_categories );
         foreach ($categories as $category) {
         	$term = get_term($category);
@@ -273,6 +274,9 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
         	elseif ($term->taxonomy == "public_agent_party") {
         		$terms_party .= $terms_party ? ", " . $category : $category;
         	}
+        	elseif ($term->taxonomy == "public_agent_commission") {
+        		$terms_commission .= $terms_commission ? ", " . $category : $category;
+        	}
 
         }        
 
@@ -281,6 +285,7 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 		$settings_job = "";
 		$settings_genre = "";
 		$settings_party = "";
+		$settings_commission = "";
 
 		if ($terms_category){
 			$settings_category = array(
@@ -317,6 +322,13 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 					'terms' => explode( ',', $terms_party ),
 					'operator' => 'IN',
 				);
+		} elseif ($terms_commission) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_commission',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_commission ),
+					'operator' => 'IN',
+				);
 		}
 
 
@@ -327,8 +339,11 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 				$settings_category,
 				$settings_job,
 				$settings_genre,
-				$settings_party
+				$settings_party,
+				$settings_commission
 			);
+
+
 
        if ( ! is_search() ) {
 			$args['paged'] = $et_paged;
@@ -777,6 +792,7 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
         $terms_party = "";
         $terms_job = "";
         $terms_genre = "";
+        $terms_commission = "";
         $categories = explode( ',', $include_categories );
         foreach ($categories as $category) {
         	$term = get_term($category);
@@ -795,6 +811,9 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
         	elseif ($term->taxonomy == "public_agent_party") {
         		$terms_party .= $terms_party ? ", " . $category : $category;
         	}
+        	elseif ($term->taxonomy == "public_agent_commission") {
+        		$terms_commission .= $terms_commission ? ", " . $category : $category;
+        	}
 
         }        
 
@@ -803,6 +822,7 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 		$settings_job = "";
 		$settings_genre = "";
 		$settings_party = "";
+		$settings_commission = "";
 
 		if ($terms_category){
 			$settings_category = array(
@@ -839,6 +859,13 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 					'terms' => explode( ',', $terms_party ),
 					'operator' => 'IN',
 				);
+		} elseif ($terms_commission) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_commission',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_commission ),
+					'operator' => 'IN',
+				);
 		}
 
 
@@ -849,8 +876,11 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 				$settings_category,
 				$settings_job,
 				$settings_genre,
-				$settings_party
+				$settings_party,
+				$settings_commission
 			);
+
+
 
 
 		$projects = et_divi_get_public_agent( $args );
@@ -1293,6 +1323,7 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
         $terms_party = "";
         $terms_job = "";
         $terms_genre = "";
+        $terms_commission = "";
         $categories = explode( ',', $include_categories );
         foreach ($categories as $category) {
         	$term = get_term($category);
@@ -1311,6 +1342,9 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
         	elseif ($term->taxonomy == "public_agent_party") {
         		$terms_party .= $terms_party ? ", " . $category : $category;
         	}
+        	elseif ($term->taxonomy == "public_agent_commission") {
+        		$terms_commission .= $terms_commission ? ", " . $category : $category;
+        	}
 
         }        
 
@@ -1319,6 +1353,7 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
 		$settings_job = "";
 		$settings_genre = "";
 		$settings_party = "";
+		$settings_commission = "";
 
 		if ($terms_category){
 			$settings_category = array(
@@ -1355,6 +1390,13 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
 					'terms' => explode( ',', $terms_party ),
 					'operator' => 'IN',
 				);
+		} elseif ($terms_commission) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_commission',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_commission ),
+					'operator' => 'IN',
+				);
 		}
 
 
@@ -1365,7 +1407,8 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
 				$settings_category,
 				$settings_job,
 				$settings_genre,
-				$settings_party
+				$settings_party,
+				$settings_commission
 			);
 
 
@@ -1584,11 +1627,12 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
 		);
 		
 
-        $terms_category = "";
+         $terms_category = "";
         $terms_states = "";
         $terms_party = "";
         $terms_job = "";
         $terms_genre = "";
+        $terms_commission = "";
         $categories = explode( ',', $include_categories );
         foreach ($categories as $category) {
         	$term = get_term($category);
@@ -1607,6 +1651,9 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
         	elseif ($term->taxonomy == "public_agent_party") {
         		$terms_party .= $terms_party ? ", " . $category : $category;
         	}
+        	elseif ($term->taxonomy == "public_agent_commission") {
+        		$terms_commission .= $terms_commission ? ", " . $category : $category;
+        	}
 
         }        
 
@@ -1615,6 +1662,7 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
 		$settings_job = "";
 		$settings_genre = "";
 		$settings_party = "";
+		$settings_commission = "";
 
 		if ($terms_category){
 			$settings_category = array(
@@ -1651,6 +1699,13 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
 					'terms' => explode( ',', $terms_party ),
 					'operator' => 'IN',
 				);
+		} elseif ($terms_commission) {
+			$settings_states = array(
+					'taxonomy' => 'public_agent_commission',
+					'field' => 'id',
+					'terms' => explode( ',', $terms_commission ),
+					'operator' => 'IN',
+				);
 		}
 
 
@@ -1661,9 +1716,9 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
 				$settings_category,
 				$settings_job,
 				$settings_genre,
-				$settings_party
+				$settings_party,
+				$settings_commission
 			);
-
 		
 		$the_query = new WP_Query( $args );
 
@@ -1720,7 +1775,7 @@ if ( ! function_exists( 'et_builder_include_general_categories_option' ) ) :
 function et_builder_include_general_categories_option( $args = array() ) {
 	$defaults = apply_filters( 'et_builder_include_categories_defaults', array (
 		'use_terms' => true,
-		'term_name' => array('public_agent_state', 'category', 'public_agent_job', 'public_agent_party', 'public_agent_genre'),
+		'term_name' => array('public_agent_state', 'category', 'public_agent_job', 'public_agent_party', 'public_agent_genre', 'public_agent_commission'),
 	) );
 
 	$args = wp_parse_args( $args, $defaults );
