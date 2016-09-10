@@ -258,23 +258,25 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
         $terms_commission = "";
         $categories = explode( ',', $include_categories );
         foreach ($categories as $category) {
+
         	$term = get_term($category);
+        	
         	if($term->taxonomy == "category"){
         		$terms_category .= $terms_category ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_state") {
+        	if ($term->taxonomy == "public_agent_state") {
         		$terms_states .= $terms_states ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_genre") {
+        	if ($term->taxonomy == "public_agent_job") {
         		$terms_job .= $terms_job ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_job") {
+        	if ($term->taxonomy == "public_agent_genre") {
         		$terms_genre .= $terms_genre ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_party") {
+        	if ($term->taxonomy == "public_agent_party") {
         		$terms_party .= $terms_party ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_commission") {
+        	if ($term->taxonomy == "public_agent_commission") {
         		$terms_commission .= $terms_commission ? ", " . $category : $category;
         	}
 
@@ -294,36 +296,36 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 					'terms' => explode( ',', $terms_category ),
 					'operator' => 'IN',
 				);
-		} elseif ($terms_states) {
+		} if ($terms_states) {
 			$settings_states = array(
 					'taxonomy' => 'public_agent_state',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_states ),
 					'operator' => 'IN',
 				);
-		} elseif ($terms_job) {
-			$settings_states = array(
+		} if ($terms_job) {
+			$settings_job = array(
 					'taxonomy' => 'public_agent_job',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_job ),
 					'operator' => 'IN',
 				);
-		} elseif ($terms_genre) {
-			$settings_states = array(
+		} if ($terms_genre) {
+			$settings_genre = array(
 					'taxonomy' => 'public_agent_genre',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_genre ),
 					'operator' => 'IN',
 				);
-		} elseif ($terms_party) {
-			$settings_states = array(
+		} if ($terms_party) {
+			$settings_party = array(
 					'taxonomy' => 'public_agent_party',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_party ),
 					'operator' => 'IN',
 				);
-		} elseif ($terms_commission) {
-			$settings_states = array(
+		} if ($terms_commission) {
+			$settings_commission = array(
 					'taxonomy' => 'public_agent_commission',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_commission ),
@@ -331,10 +333,9 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 				);
 		}
 
-
-
 		if ( '' !== $include_categories )
 			$args['tax_query'] = array(
+				'relation' => 'AND',
 				$settings_states,
 				$settings_category,
 				$settings_job,
@@ -802,10 +803,10 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
         	elseif ($term->taxonomy == "public_agent_state") {
         		$terms_states .= $terms_states ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_genre") {
+        	elseif ($term->taxonomy == "public_agent_job") {
         		$terms_job .= $terms_job ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_job") {
+        	elseif ($term->taxonomy == "public_agent_genre") {
         		$terms_genre .= $terms_genre ? ", " . $category : $category;
         	}
         	elseif ($term->taxonomy == "public_agent_party") {
@@ -839,28 +840,28 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 					'operator' => 'IN',
 				);
 		} elseif ($terms_job) {
-			$settings_states = array(
+			$settings_job = array(
 					'taxonomy' => 'public_agent_job',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_job ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_genre) {
-			$settings_states = array(
+			$settings_genre = array(
 					'taxonomy' => 'public_agent_genre',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_genre ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_party) {
-			$settings_states = array(
+			$settings_party = array(
 					'taxonomy' => 'public_agent_party',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_party ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_commission) {
-			$settings_states = array(
+			$settings_commission = array(
 					'taxonomy' => 'public_agent_commission',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_commission ),
@@ -880,9 +881,6 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 				$settings_commission
 			);
 
-
-
-
 		$projects = et_divi_get_public_agent( $args );
 
 		$categories_included = array();
@@ -893,6 +891,7 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 
 				$category_classes = array();
 				$categories = get_the_terms( get_the_ID(), 'category' );
+				//$category_classes[] = 'category_' . urldecode( $category->slug );
 				if ( $categories ) {
 					foreach ( $categories as $category ) {
 						$category_classes[] = 'category_' . urldecode( $category->slug );
@@ -909,14 +908,14 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 				);
 
 				?>
-				<div id="post-<?php the_ID(); ?>" <?php post_class( $main_post_class ); ?>>
+				<div id="post-<?php the_ID(); ?>" <?php post_class( " makepressure_grid makepressure_grid_item" ); ?>>
 				<?php
 					$thumb = '';
 
-					$width = 'on' === $fullwidth ?  1080 : 400;
+					$width = 'on' === $fullwidth ?  150 : 400;
 					$width = (int) apply_filters( 'et_pb_portfolio_image_width', $width );
 
-					$height = 'on' === $fullwidth ?  9999 : 284;
+					$height = 'on' === $fullwidth ?  200 : 284;
 					$height = (int) apply_filters( 'et_pb_portfolio_image_height', $height );
 					$classtext = 'on' === $fullwidth ? 'et_pb_post_main_image' : '';
 					$titletext = get_the_title();
@@ -928,7 +927,9 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 						<?php if ( 'on' !== $fullwidth ) : ?>
 							<span class="et_portfolio_image">
 						<?php endif; ?>
-								<?php print_thumbnail( $thumb, $thumbnail["use_timthumb"], $titletext, $width, $height ); ?>
+					      <a href="<?php the_permalink() ?>">
+							  <?php the_post_thumbnail(array(175,175), array('class' => 'makepressure_post_main_image')); ?>
+					      </a>
 						<?php if ( 'on' !== $fullwidth ) :
 
 								$data_icon = '' !== $hover_icon
@@ -937,12 +938,6 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 										esc_attr( et_pb_process_font_icon( $hover_icon ) )
 									)
 									: '';
-
-								printf( '<span class="et_overlay%1$s"%2$s></span>',
-									( '' !== $hover_icon ? ' et_pb_inline_icon' : '' ),
-									$data_icon
-								);
-
 						?>
 							</span>
 						<?php endif; ?>
@@ -951,14 +946,39 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 					endif;
 				?>
 
+				<div class="makepressure_label">
 				<?php if ( 'on' === $show_title ) : ?>
-					<h2><a href="<?php esc_url( the_permalink() ); ?>"><?php the_title(); ?></a></h2>
+					<h2 class="makepressure_title"><a href="<?php esc_url( the_permalink() ); ?>"><?php the_title(); ?></a></h2>
 				<?php endif; ?>
+
+				<?php
+				  //pre get categories
+				  $state = wp_get_post_terms( get_the_ID() , 'public_agent_state');
+				  $party = wp_get_post_terms( get_the_ID() , 'public_agent_party');
+				  //$category = wp_get_post_terms( get_the_ID() , 'category')[0];
+				?>
+
+				<?php if ($state): ?>
+				  <strong class="makepressure_upper">
+				    <?php echo $state[0]->slug; ?> /
+				<?php else: ?>
+				  <br>
+				<?php endif; ?>
+
+				<?php if ($party): ?>
+				    <?php echo $party[0]->slug; ?>
+				  </strong>
+				<?php else: ?>
+				  <br>
+				<?php endif; ?>
+				</div>
+
+
 
 				<?php if ( 'on' === $show_categories ) : ?>
 					<p class="post-meta"><?php //echo get_the_term_list( get_the_ID(), 'category', '', ', ' ); ?></p>
 				<?php endif; ?>
-				
+
 				<?php 
 				$email_subject = get_option( 'makepressure_email_title' );
 				$email_body = get_option( 'makepressure_email_body' );
@@ -968,19 +988,21 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 				$twitter_url = get_option( 'makepressure_twitter_url' );
 				$twitter_hashtag = get_option( 'makepressure_twitter_hashtag' );
 				?>
-				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-					<a class="fa fa-envelope fa-3x" style="margin:10px;color:green;" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>"></span></a>
-				<?php endif; ?>
+				<div class="makepressure_action" >
+					<?php
+					if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
+				  	  <a class="fa fa-3x fa-envelope makepressure_email" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissimo%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo urlencode($email_body); ?>" ></a>
+					<?php endif; ?>
 
-				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-				  <a style="margin:10px;color:#1dcaff;" class="fa fa-twitter fa-3x" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" class="twitter-mention-button" data-show-count="false"></a>
-				<?php endif; ?>
-				
-				<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
-				  <a class="fa fa-facebook-official fa-3x" style="margin:10px;color:#3b5998;" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""></a>
-				<?php endif; ?>
-
-				</div><!-- .et_pb_portfolio_item -->
+					<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
+					  <a class="fa fa-twitter fa-3x makepressure_twitter twitter-mention-button" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" data-show-count="false"></a>
+					<?php endif; ?>
+					
+					<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
+					  <a class="fa fa-facebook-official fa-3x makepressure_facebook" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""></a>
+					<?php endif; ?>
+				</div>
+				</div> <!-- .et_pb_portfolio_item -->
 				<?php
 			}
 		}
@@ -1333,10 +1355,10 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
         	elseif ($term->taxonomy == "public_agent_state") {
         		$terms_states .= $terms_states ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_genre") {
+        	elseif ($term->taxonomy == "public_agent_job") {
         		$terms_job .= $terms_job ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_job") {
+        	elseif ($term->taxonomy == "public_agent_genre") {
         		$terms_genre .= $terms_genre ? ", " . $category : $category;
         	}
         	elseif ($term->taxonomy == "public_agent_party") {
@@ -1370,28 +1392,28 @@ class ET_Builder_Module_Fullwidth_Make_Pressure extends ET_Builder_Module {
 					'operator' => 'IN',
 				);
 		} elseif ($terms_job) {
-			$settings_states = array(
+			$settings_job = array(
 					'taxonomy' => 'public_agent_job',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_job ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_genre) {
-			$settings_states = array(
+			$settings_genre = array(
 					'taxonomy' => 'public_agent_genre',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_genre ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_party) {
-			$settings_states = array(
+			$settings_party = array(
 					'taxonomy' => 'public_agent_party',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_party ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_commission) {
-			$settings_states = array(
+			$settings_commission = array(
 					'taxonomy' => 'public_agent_commission',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_commission ),
@@ -1642,10 +1664,10 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
         	elseif ($term->taxonomy == "public_agent_state") {
         		$terms_states .= $terms_states ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_genre") {
+        	elseif ($term->taxonomy == "public_agent_job") {
         		$terms_job .= $terms_job ? ", " . $category : $category;
         	}
-        	elseif ($term->taxonomy == "public_agent_job") {
+        	elseif ($term->taxonomy == "public_agent_genre") {
         		$terms_genre .= $terms_genre ? ", " . $category : $category;
         	}
         	elseif ($term->taxonomy == "public_agent_party") {
@@ -1679,28 +1701,28 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
 					'operator' => 'IN',
 				);
 		} elseif ($terms_job) {
-			$settings_states = array(
+			$settings_job = array(
 					'taxonomy' => 'public_agent_job',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_job ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_genre) {
-			$settings_states = array(
+			$settings_genre = array(
 					'taxonomy' => 'public_agent_genre',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_genre ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_party) {
-			$settings_states = array(
+			$settings_party = array(
 					'taxonomy' => 'public_agent_party',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_party ),
 					'operator' => 'IN',
 				);
 		} elseif ($terms_commission) {
-			$settings_states = array(
+			$settings_commission = array(
 					'taxonomy' => 'public_agent_commission',
 					'field' => 'id',
 					'terms' => explode( ',', $terms_commission ),
