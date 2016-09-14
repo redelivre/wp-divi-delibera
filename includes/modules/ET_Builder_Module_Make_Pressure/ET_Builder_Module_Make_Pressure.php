@@ -2030,7 +2030,7 @@ class ET_Builder_Module_Make_Pressure_Gmail_Button extends ET_Builder_Module {
 				if ($aux) $aux2 .= $aux2 ? "," . $aux: $aux;
 			}
 
-			$button_url .= $aux2 . "&su=" . get_option('makepressure_email_title') . "&body=" . get_option('makepressure_email_body');
+			$button_url .= $aux2 . "&su=" . get_option('makepressure_email_title') . "&body=" . get_option('makepressure_email_body') ;
 			/* Restore original Post Data */
 			wp_reset_postdata();
 		} else {
