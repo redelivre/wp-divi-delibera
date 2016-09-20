@@ -2272,6 +2272,7 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 
 		$this->whitelisted_fields = array(
 			'background_layout',
+			'categories',
 			'text_orientation',
 			'content_new',
 			'admin_label',
@@ -2313,6 +2314,16 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 
 	function get_fields() {
 		$fields = array(
+			'categories' => array(
+				'label'           => esc_html__( 'Categorias', 'et_builder' ),
+				'type'            => 'select',
+				'option_category' => 'layout',
+				'options'         => array(
+					'public_agent_state'  => esc_html__( 'Estado', 'et_builder' ),
+					'public_agent_genre' => esc_html__( 'Genêro', 'et_builder' ),
+				),
+				'description'       => esc_html__( 'Escolha a categoria desejada', 'et_builder' ),
+			),
 			'background_layout' => array(
 				'label'             => esc_html__( 'Text Color', 'et_builder' ),
 				'type'              => 'select',
@@ -2393,6 +2404,7 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 		$max_width            = $this->shortcode_atts['max_width'];
 		$max_width_tablet     = $this->shortcode_atts['max_width_tablet'];
 		$max_width_phone      = $this->shortcode_atts['max_width_phone'];
+		$categories     	  = $this->shortcode_atts['categories'];
 
 		$module_class = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
 
@@ -2424,183 +2436,56 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 			( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' )
 		);
 
-		$email_count = array();
-		$twitter_count = array();
-		$facebook_count = array();
-
-		$cat_terms = get_terms(
-		  array('public_agent_state'),
-		  array(
-		   'hide_empty'    => false,
-		   'orderby'       => 'name',
-		   'order'         => 'ASC',
-		   'number'        => 200 //specify yours
-		  )
-		);
-
-		foreach($cat_terms as $term){
-		  $email_sum = 0;
-		  $twitter_sum = 0;
-		  $facebook_sum = 0;
-
-		  $args = array(
-		    'post_type'             => 'public_agent',
-		    'posts_per_page'        => 1000, //specify yours
-		    'post_status'           => 'publish',
-		    'tax_query'             => array(
-		      array(
-		        'taxonomy' => 'public_agent_state',
-		        'field'    => 'id',
-		        'terms'    => $term->term_id,
-		      ),
-		    )
-		  );
-		  $posts = new WP_Query( $args );
-
-		  if( $posts->have_posts() ) :
-		    while( $posts->have_posts() ) : $posts->the_post();
-			  $email = get_post_meta( get_the_ID(), 'makepressure_email_counter' )?get_post_meta( get_the_ID(), 'makepressure_email_counter' ):"";
-			  $twitter = get_post_meta( get_the_ID(), 'makepressure_twitter_counter' )?get_post_meta( get_the_ID(), 'makepressure_twitter_counter' ):"";
-		      $facebook = get_post_meta( get_the_ID(), 'makepressure_facebook_counter' )?get_post_meta( get_the_ID(), 'makepressure_facebook_counter' ):"";
-			  if (is_array($email))
-			    $email_sum +=  (int)$email[0];
-			  if(is_array($twitter))
-			    $twitter_sum +=  (int)$twitter[0];
-		      if(is_array($facebook))
-		        $facebook_sum +=  (int)$facebook[0];
-		    endwhile;
-		  endif;
-		  wp_reset_postdata(); //important
-		  $email_count[$term->name] = ($email_sum != ""?$email_sum:0);
-		  $twitter_count[$term->name] = ($twitter_sum =! ""?$twitter_sum:0);
-		  $facebook_count[$term->name] = ($facebook_sum =! ""?$facebook_sum:0);
-		}
-
 		$output .= '<script type="text/javascript" >
 				    jQuery(function ($) {
-				      var ctx = document.getElementById("makepressure");
-				      var myChart = new Chart(ctx, {
-				          type: "bar",
-				          data: {
-				              labels: ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"],
-				              datasets: [{
-				                  label: "Número de cliques no email Estado",
-				                  data: [
-									' . (int)$email_count['Acre'] . ',
-									' . (int)$email_count['Alagoas'] . ',
-									' . (int)$email_count['Amapa'] . ',
-									' . (int)$email_count['Amazonas'] . ',
-									' . (int)$email_count['Bahia'] . ',
-									' . (int)$email_count['Ceara'] . ',
-									' . (int)$email_count['Distrito Federal'] . ',
-									' . (int)$email_count['Espirito Santo'] . ',
-									' . (int)$email_count['Goias'] . ',
-									' . (int)$email_count['Maranhao'] . ',
-									' . (int)$email_count['Mato Grosso'] . ',
-									' . (int)$email_count['Mato Grosso do Sul'] . ',
-									' . (int)$email_count['Minas Gerais'] . ',
-									' . (int)$email_count['Para'] . ',
-									' . (int)$email_count['Paraiba'] . ',
-									' . (int)$email_count['Parana'] . ',
-									' . (int)$email_count['Pernambuco'] . ',
-									' . (int)$email_count['Piaui'] . ',
-									' . (int)$email_count['Rio de Janeiro'] . ',
-									' . (int)$email_count['Rio Grande do Norte'] . ',
-									' . (int)$email_count['Rio Grande do Sul'] . ',
-									' . (int)$email_count['Rondonia'] . ',
-									' . (int)$email_count['Roraima'] . ',
-									' . (int)$email_count['Santa Catarina'] . ',
-									' . (int)$email_count['Sao Paulo'] . ',
-									' . (int)$email_count['Sergipe'] . ',
-									' . (int)$email_count['Tocantins'] . '
-				                  ],
-				                  backgroundColor: "rgba(75, 192, 192, 0.2)",
-				                  borderColor: "rgba(75, 192, 192, 1)",
-				                  borderWidth: 1
-				              },
-				              {
-				                  label: "Número de cliques no twitter por Estado",
-				                  data: [
-									' . $twitter_count['Acre'] . ',
-									' . $twitter_count['Alagoas'] . ',
-									' . $twitter_count['Amapa'] . ',
-									' . $twitter_count['Amazonas'] . ',
-									' . $twitter_count['Bahia'] . ',
-									' . $twitter_count['Ceara'] . ',
-									' . $twitter_count['Distrito Federal'] . ',
-									' . $twitter_count['Espirito Santo'] . ',
-									' . $twitter_count['Goias'] . ',
-									' . $twitter_count['Maranhao'] . ',
-									' . $twitter_count['Mato Grosso'] . ',
-									' . $twitter_count['Mato Grosso do Sul'] . ',
-									' . $twitter_count['Minas Gerais'] . ',
-									' . $twitter_count['Para'] . ',
-									' . $twitter_count['Paraiba'] . ',
-									' . $twitter_count['Parana'] . ',
-									' . $twitter_count['Pernambuco'] . ',
-									' . $twitter_count['Piaui'] . ',
-									' . $twitter_count['Rio de Janeiro'] . ',
-									' . $twitter_count['Rio Grande do Norte'] . ',
-									' . $twitter_count['Rio Grande do Sul'] . ',
-									' . $twitter_count['Rondonia'] . ',
-									' . $twitter_count['Roraima'] . ',
-									' . $twitter_count['Santa Catarina'] . ',
-									' . $twitter_count['Sao Paulo'] . ',
-									' . $twitter_count['Sergipe'] . ',
-									' . $twitter_count['Tocantins'] . '
-				                  ],
-				                  backgroundColor: "rgba(255, 99, 132, 0.2)",
-				                  borderColor: "rgba(255,99,132,1)",
-				                  borderWidth: 1
-				              },
-				              {
-				                  label: "Número de cliques no facebook por Estado",
-				                  data: [
-									' . $facebook_count['Acre'] . ',
-									' . $facebook_count['Alagoas'] . ',
-									' . $facebook_count['Amapa'] . ',
-									' . $facebook_count['Amazonas'] . ',
-									' . $facebook_count['Bahia'] . ',
-									' . $facebook_count['Ceara'] . ',
-									' . $facebook_count['Distrito Federal'] . ',
-									' . $facebook_count['Espirito Santo'] . ',
-									' . $facebook_count['Goias'] . ',
-									' . $facebook_count['Maranhao'] . ',
-									' . $facebook_count['Mato Grosso'] . ',
-									' . $facebook_count['Mato Grosso do Sul'] . ',
-									' . $facebook_count['Minas Gerais'] . ',
-									' . $facebook_count['Para'] . ',
-									' . $facebook_count['Paraiba'] . ',
-									' . $facebook_count['Parana'] . ',
-									' . $facebook_count['Pernambuco'] . ',
-									' . $facebook_count['Piaui'] . ',
-									' . $facebook_count['Rio de Janeiro'] . ',
-									' . $facebook_count['Rio Grande do Norte'] . ',
-									' . $facebook_count['Rio Grande do Sul'] . ',
-									' . $facebook_count['Rondonia'] . ',
-									' . $facebook_count['Roraima'] . ',
-									' . $facebook_count['Santa Catarina'] . ',
-									' . $facebook_count['Sao Paulo'] . ',
-									' . $facebook_count['Sergipe'] . ',
-									' . $facebook_count['Tocantins'] . '
-				                  ],
-				                  backgroundColor: "rgba(255, 206, 86, 0.2)",
-				                  borderColor: "rgba(255, 206, 86, 1)",
-				                  borderWidth: 1
-				              }],
-				          },
-				          options: {
-				              scales: {
-				                  yAxes: [{
-				                      ticks: {
-				                          beginAtZero:true
-				                      }
-				                  }]
-				              }
-				          }
+				      var output = $.getJSON("http://redelivre.pretao/stats/states/' . $categories . '", 
+				      function(response){
+				      	  //console.log(response);
+				      	  var arr = $.map(response, function(el) { return el });
+				      	  var email = arr.map(function(arr){return arr["email"]});
+				      	  var twitter = arr.map(function(arr){return arr["twitter"]});
+				      	  var facebook = arr.map(function(arr){return arr["facebook"]});
+					      var ctx = document.getElementById("makepressure");
+					      var myChart = new Chart(ctx, {
+					          type: "bar",
+					          data: {
+					              labels: Object.keys(response),
+					              datasets: [{
+					                  label: "Número de cliques no email Estado",
+					                  data: email,
+					                  backgroundColor: "rgba(75, 192, 192, 0.2)",
+					                  borderColor: "rgba(75, 192, 192, 1)",
+					                  borderWidth: 1
+					              },
+					              {
+					                  label: "Número de cliques no twitter por Estado",
+					                  data: twitter,
+					                  backgroundColor: "rgba(255, 99, 132, 0.2)",
+					                  borderColor: "rgba(255,99,132,1)",
+					                  borderWidth: 1
+					              },
+					              {
+					                  label: "Número de cliques no facebook por Estado",
+					                  data: facebook,
+					                  backgroundColor: "rgba(255, 206, 86, 0.2)",
+					                  borderColor: "rgba(255, 206, 86, 1)",
+					                  borderWidth: 1
+					              }],
+					          },
+					          options: {
+					              scales: {
+					                  yAxes: [{
+					                      ticks: {
+					                          beginAtZero:true
+					                      }
+					                  }]
+					              }
+					          }
+					      });
+					    });
+
 				      });
-				    });
-				    </script>';
+			</script>';
 	    $output .= '<canvas height="500px" width="1080" id="makepressure" style="display: block; width: 1080px; height: 500px;"></canvas>';
 
 		return $output;
