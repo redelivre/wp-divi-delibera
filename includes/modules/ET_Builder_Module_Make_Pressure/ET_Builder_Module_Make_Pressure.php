@@ -2435,6 +2435,9 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 			( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
 			( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' )
 		);
+		while (ob_get_level() > 0) {
+    		ob_end_clean();
+		}
 		header('Access-Control-Allow-Origin: *');
 		$output .= '<script type="text/javascript" >
 				    jQuery(function ($) {
