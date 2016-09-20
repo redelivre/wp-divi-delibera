@@ -2440,7 +2440,7 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 				    jQuery(function ($) {
 				      var output = $.getJSON("http://redelivre.pretao/stats/states/' . $categories . '", 
 				      function(response){
-				      	  //console.log(response);
+				      	  console.log(response);
 				      	  var arr = $.map(response, function(el) { return el });
 				      	  var email = arr.map(function(arr){return arr["email"]});
 				      	  var twitter = arr.map(function(arr){return arr["twitter"]});
