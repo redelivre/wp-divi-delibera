@@ -2437,8 +2437,9 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 		);
 		while (ob_get_level() > 0) {
     		ob_end_clean();
+    		header('Access-Control-Allow-Origin: *');
 		}
-		header('Access-Control-Allow-Origin: *');
+		
 		$output .= '<script type="text/javascript" >
 				    jQuery(function ($) {
 				      var output = $.getJSON("http://redelivre.pretao/stats/states/' . $categories . '", 
