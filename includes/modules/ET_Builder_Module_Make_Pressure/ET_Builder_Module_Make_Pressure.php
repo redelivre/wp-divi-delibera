@@ -2683,6 +2683,7 @@ class ET_Builder_Module_Make_Pressure_Search extends ET_Builder_Module {
 	 		$output .= '<p>Cargo: ';
 	 		$output .= wp_dropdown_categories( $args );
 	 		$output .= '</p>';
+	 		$output .= '<input type="hidden" name="post_type" value="public_agent">';
 
 		$output .= '</form>';
 
