@@ -2321,6 +2321,7 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 				'options'         => array(
 					'public_agent_state'  => esc_html__( 'Estado', 'et_builder' ),
 					'public_agent_genre' => esc_html__( 'Genêro', 'et_builder' ),
+					'public_agent_party' => esc_html__( 'Partido', 'et_builder' ),
 				),
 				'description'       => esc_html__( 'Escolha a categoria desejada', 'et_builder' ),
 			),
@@ -2435,12 +2436,21 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 			( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
 			( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' )
 		);
+
+		if ($categories == "public_agent_state") {
+			$label_category = "Estado";
+		}
+		elseif($categories == "public_agent_genre"){
+			$label_category = "Genêro"; 
+		}
+		elseif ($categories == "public_agent_party") {
+			$label_category = "Partido";
+		}
 		
 		$output .= '<script type="text/javascript" >
 				    jQuery(function ($) {
 				      var output = $.getJSON("' . get_site_url() . '/stats/states/' . $categories . '", 
 				      function(response){
-				      	  console.log(response);
 				      	  var arr = $.map(response, function(el) { return el });
 				      	  var email = arr.map(function(arr){return arr["email"]});
 				      	  var twitter = arr.map(function(arr){return arr["twitter"]});
@@ -2451,21 +2461,21 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 					          data: {
 					              labels: Object.keys(response),
 					              datasets: [{
-					                  label: "Número de cliques no email Estado",
+					                  label: "Número de cliques no email por ' . $label_category . '",
 					                  data: email,
 					                  backgroundColor: "rgba(75, 192, 192, 0.2)",
 					                  borderColor: "rgba(75, 192, 192, 1)",
 					                  borderWidth: 1
 					              },
 					              {
-					                  label: "Número de cliques no twitter por Estado",
+					                  label: "Número de cliques no twitter por ' . $label_category . '",
 					                  data: twitter,
 					                  backgroundColor: "rgba(255, 99, 132, 0.2)",
 					                  borderColor: "rgba(255,99,132,1)",
 					                  borderWidth: 1
 					              },
 					              {
-					                  label: "Número de cliques no facebook por Estado",
+					                  label: "Número de cliques no facebook por ' . $label_category . '",
 					                  data: facebook,
 					                  backgroundColor: "rgba(255, 206, 86, 0.2)",
 					                  borderColor: "rgba(255, 206, 86, 1)",
