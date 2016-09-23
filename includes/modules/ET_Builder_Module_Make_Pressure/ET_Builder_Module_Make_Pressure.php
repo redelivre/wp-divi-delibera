@@ -457,7 +457,7 @@ class ET_Builder_Module_Make_Pressure extends ET_Builder_Module {
 					<?php endif; ?>
 
 					<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-					  <a id="<?php echo get_the_ID(); ?>" class="fa fa-twitter fa-3x makepressure_twitter twitter-mention-button" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" data-show-count="false"></a>
+					  <a id="<?php echo get_the_ID(); ?>" class="fa fa-twitter fa-3x makepressure_twitter" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" data-show-count="false"></a>
 					<?php endif; ?>
 					
 					<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
@@ -995,7 +995,7 @@ class ET_Builder_Module_Filterable_Make_Pressure extends ET_Builder_Module {
 					<?php endif; ?>
 
 					<?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
-					  <a  id="<?php echo get_the_ID(); ?>" class="fa fa-twitter fa-3x makepressure_twitter twitter-mention-button" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" data-show-count="false"></a>
+					  <a  id="<?php echo get_the_ID(); ?>" class="fa fa-twitter fa-3x makepressure_twitter" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" data-show-count="false"></a>
 					<?php endif; ?>
 					
 					<?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>

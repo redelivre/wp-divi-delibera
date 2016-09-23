@@ -50,7 +50,9 @@
 
 .makepressure_title{
 	text-transform: capitalize;
-	width: 130px;
+	width: 200px;
+	max-height: 50px;
+	overflow: hidden;
   	max-height: 3.8ch;
 }
 
