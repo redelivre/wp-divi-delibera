@@ -683,10 +683,13 @@ function divi_child_customize_login( $wp_customize )
 	if(class_exists('WPOpauth'))
 	{
 		global $WPOpauth;
-		$strategies = $WPOpauth->getStrategies();
-		foreach ($strategies as $id => $values)
+		if(is_object($WPOpauth) && method_exists($WPOpauth, 'getStrategies'))
 		{
-			$choices[$id] = $values['name'];
+			$strategies = $WPOpauth->getStrategies();
+			foreach ($strategies as $id => $values)
+			{
+				$choices[$id] = $values['name'];
+			}
 		}
 	}
 	
