@@ -2069,7 +2069,7 @@ class ET_Builder_Module_Make_Pressure_Gmail_Button extends ET_Builder_Module {
 
 		$output = sprintf(
 			'<div class="et_pb_button_module_wrapper et_pb_module%8$s">
-				<a class="et_pb_button%5$s%7$s" href="%1$s"%3$s%4$s%6$s>%2$s</a>
+				<a class="et_pb_button%5$s%7$s"  target="_blank" href="%1$s"%3$s%4$s%6$s>%2$s</a>
 			</div>',
 			esc_url( $button_url ),
 			'' !== $button_text ? esc_html( $button_text ) : esc_url( $button_url ),
