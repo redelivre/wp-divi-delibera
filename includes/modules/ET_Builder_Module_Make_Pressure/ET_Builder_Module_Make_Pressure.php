@@ -3134,9 +3134,7 @@ class ET_Builder_Module_Make_Pressure_Search extends ET_Builder_Module {
 	 		$output .= wp_dropdown_categories( $args );
 	 		$output .= '</p>';
 
-			$terms = get_terms( 'public_agent_job', array(
-			    'hide_empty' => false,
-			) );
+			$terms = get_terms( 'public_agent_job' );
 	 		if (!empty($terms)) {
 		 		$args['taxonomy'] = 'public_agent_job';
 		 		$args['name'] = 'public_agent_job';
