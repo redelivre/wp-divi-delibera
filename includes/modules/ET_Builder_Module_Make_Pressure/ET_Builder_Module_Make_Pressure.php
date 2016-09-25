@@ -3116,23 +3116,33 @@ class ET_Builder_Module_Make_Pressure_Search extends ET_Builder_Module {
 			$output .= '</p>';
 
 			$args = array( 'taxonomy' => 'public_agent_party','name' => 'public_agent_party', 'show_count' => 1, 'value_field' => 'slug', 'echo' => 0, 'show_option_none' => 'Selecione', 'option_none_value' => '');
-			$output .= '<p> Partido: ';
-			$output .= wp_dropdown_categories( $args );
-			$output .= '</p>';
-
-			$args['taxonomy'] = 'public_agent_state';
-			$args['name'] = 'public_agent_state';
 			
-			$output .= '<p>Estado: ';
-	 		$output .= wp_dropdown_categories( $args );
-	 		$output .= '</p>';
+			$terms = get_terms( 'public_agent_party' );
+	 		if (!empty($terms)) {
+				$output .= '<p> Partido: ';
+				$output .= wp_dropdown_categories( $args );
+				$output .= '</p>';
+			}
 
-	 		$args['taxonomy'] = 'public_agent_genre';
-	 		$args['name'] = 'public_agent_genre';
-	 		
-	 		$output .= '<p>Genêro: ';
-	 		$output .= wp_dropdown_categories( $args );
-	 		$output .= '</p>';
+			$terms = get_terms( 'public_agent_state' );
+	 		if (!empty($terms)) {
+				$args['taxonomy'] = 'public_agent_state';
+				$args['name'] = 'public_agent_state';
+				
+				$output .= '<p>Estado: ';
+		 		$output .= wp_dropdown_categories( $args );
+		 		$output .= '</p>';
+		 	}
+
+			$terms = get_terms( 'public_agent_genre' );
+	 		if (!empty($terms)) {
+		 		$args['taxonomy'] = 'public_agent_genre';
+		 		$args['name'] = 'public_agent_genre';
+		 		
+		 		$output .= '<p>Genêro: ';
+		 		$output .= wp_dropdown_categories( $args );
+		 		$output .= '</p>';
+		 	}
 
 			$terms = get_terms( 'public_agent_job' );
 	 		if (!empty($terms)) {
