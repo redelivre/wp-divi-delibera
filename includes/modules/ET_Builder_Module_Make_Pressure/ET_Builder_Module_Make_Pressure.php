@@ -3134,12 +3134,20 @@ class ET_Builder_Module_Make_Pressure_Search extends ET_Builder_Module {
 	 		$output .= wp_dropdown_categories( $args );
 	 		$output .= '</p>';
 
-	 		$args['taxonomy'] = 'public_agent_job';
-	 		$args['name'] = 'public_agent_job';
-	 		
-	 		$output .= '<p>Cargo: ';
-	 		$output .= wp_dropdown_categories( $args );
-	 		$output .= '</p>';
+	 		$args_terms = array(
+			    'taxonomy' => 'public_agent_job',
+			    'hide_empty' => false,
+			);
+			$count = get_terms( $args_terms );
+			
+	 		if ($count) {
+		 		$args['taxonomy'] = 'public_agent_job';
+		 		$args['name'] = 'public_agent_job';
+		 		
+		 		$output .= '<p>Cargo: ';
+		 		$output .= wp_dropdown_categories( $args );
+		 		$output .= '</p>';
+	 		}
 	 		$output .= '<input type="hidden" name="post_type" value="public_agent">';
 
 		$output .= '</form>';
