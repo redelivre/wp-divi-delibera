@@ -1656,35 +1656,41 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
 
         $args = array(
 			'post_type'      => 'public_agent',
+			'post_status'    => 'publish',
+			'posts_per_page' => '600',
 		);
 		
 
-         $terms_category = "";
+        $terms_category = "";
         $terms_states = "";
         $terms_party = "";
         $terms_job = "";
         $terms_genre = "";
         $terms_commission = "";
         $categories = explode( ',', $include_categories );
+
         foreach ($categories as $category) {
         	$term = get_term($category);
-        	if($term->taxonomy == "category"){
-        		$terms_category .= $terms_category ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_state") {
-        		$terms_states .= $terms_states ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_job") {
-        		$terms_job .= $terms_job ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_genre") {
-        		$terms_genre .= $terms_genre ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_party") {
-        		$terms_party .= $terms_party ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_commission") {
-        		$terms_commission .= $terms_commission ? ", " . $category : $category;
+
+        	if (!is_wp_error($term)) {
+        	    if($term->taxonomy == "category"){
+        		    $terms_category .= $terms_category ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_state") {
+	        		$terms_states .= $terms_states ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_job") {
+	        		$terms_job .= $terms_job ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_genre") {
+	        		$terms_genre .= $terms_genre ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_party") {
+	        		$terms_party .= $terms_party ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_commission") {
+	        		$terms_commission .= $terms_commission ? ", " . $category : $category;
+	        	}
         	}
 
         }        
@@ -1931,6 +1937,8 @@ class ET_Builder_Module_Make_Pressure_Gmail_Button extends ET_Builder_Module {
 
         $args = array(
 			'post_type'      => 'public_agent',
+			'post_status'    => 'publish',
+			'posts_per_page' => '600',
 		);
 		
 
@@ -1943,23 +1951,26 @@ class ET_Builder_Module_Make_Pressure_Gmail_Button extends ET_Builder_Module {
         $categories = explode( ',', $include_categories );
         foreach ($categories as $category) {
         	$term = get_term($category);
-        	if($term->taxonomy == "category"){
-        		$terms_category .= $terms_category ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_state") {
-        		$terms_states .= $terms_states ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_job") {
-        		$terms_job .= $terms_job ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_genre") {
-        		$terms_genre .= $terms_genre ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_party") {
-        		$terms_party .= $terms_party ? ", " . $category : $category;
-        	}
-        	elseif ($term->taxonomy == "public_agent_commission") {
-        		$terms_commission .= $terms_commission ? ", " . $category : $category;
+
+        	if (!is_wp_error($term)) {
+        	    if($term->taxonomy == "category"){
+        		    $terms_category .= $terms_category ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_state") {
+	        		$terms_states .= $terms_states ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_job") {
+	        		$terms_job .= $terms_job ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_genre") {
+	        		$terms_genre .= $terms_genre ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_party") {
+	        		$terms_party .= $terms_party ? ", " . $category : $category;
+	        	}
+	        	elseif ($term->taxonomy == "public_agent_commission") {
+	        		$terms_commission .= $terms_commission ? ", " . $category : $category;
+	        	}
         	}
 
         }        
