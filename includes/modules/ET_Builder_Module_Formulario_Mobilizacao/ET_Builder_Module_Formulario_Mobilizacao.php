@@ -589,7 +589,8 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 				header('Content-Disposition: attachment; filename='.date('Ymd_His').'_'.__('registrations_report', 'et_builder').'.xls');
 				
 				$table_header = array();
-				$row = $registrations[0];
+				$row = end($registrations);
+				reset($registrations);
 				
 				foreach ($row as $item => $values)
 				{
@@ -638,6 +639,10 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 					    				}
 					    			}
 					    			echo "<td>{$registration[$key]['value']}</td>";
+					    		}
+					    		else 
+					    		{
+					    			echo "<td></td>";
 					    		}
 					    	}?>
 					    </tr><?php
