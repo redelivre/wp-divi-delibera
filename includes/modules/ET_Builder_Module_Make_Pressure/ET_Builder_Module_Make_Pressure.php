@@ -2896,7 +2896,7 @@ class ET_Builder_Module_Statistics extends ET_Builder_Module {
 		
 		$output .= '<script type="text/javascript" >
 				    jQuery(function ($) {
-				      var output = $.getJSON("' . get_site_url() . '/stats/states/' . $categories . '", 
+				      var output = $.getJSON("' . get_site_url() . '/stats/' . $categories . '", 
 				      function(response){
 				      	  var arr = $.map(response, function(el) { return el });
 				      	  var email = arr.map(function(arr){return arr["email"]});
@@ -3116,7 +3116,7 @@ class ET_Builder_Module_Make_Pressure_Search extends ET_Builder_Module {
 			$output .= '</p>';
 
 			$args = array( 'taxonomy' => 'public_agent_party','name' => 'public_agent_party', 'show_count' => 1, 'value_field' => 'slug', 'echo' => 0, 'show_option_none' => 'Selecione', 'option_none_value' => '');
-			
+
 			$terms = get_terms( 'public_agent_party' );
 	 		if (!empty($terms)) {
 				$output .= '<p> Partido: ';
