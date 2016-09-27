@@ -27,7 +27,7 @@ if ($wp_query->is_search() && array_key_exists ( 'public_agent_state' , $_GET ))
               <div class="makepressure_grid makepressure_grid_item post-7848 public_agent type-public_agent status-publish has-post-thumbnail hentry public_agent_state-ac public_agent_party-pcdob public_agent_job-deputado_federal public_agent_genre-masculino public_agent_commission-suplente-cffc" id="post-7848">
 
 
-              <a href="http://redelivre.pretao/public_agent/moises-diniz/">
+              <a href="<?php esc_url( the_permalink() ); ?>">
                 <?php the_post_thumbnail(array(175,175), array('class' => 'makepressure_post_main_image')); ?>
               </a>
               <div class="makepressure_label">
