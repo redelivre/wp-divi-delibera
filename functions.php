@@ -964,6 +964,23 @@ function wp_divi_customize_login_css()
 }
 add_action( 'wp_head', 'wp_divi_customize_login_css');
 
+function wp_divi_add_search_template($template) {
+  if (is_search() && (
+	   array_key_exists ( 'public_agent_state' , $_GET ) ||
+	   array_key_exists ( 'public_agent_party' , $_GET ) ||
+	   array_key_exists ( 'public_agent_genre' , $_GET ) ||
+	   array_key_exists ( 'public_agent_job' , $_GET )
+   	) 
+  ) {
+    $new_template = locate_template( array('/public_agent_search_result.php') );
+    if ( '' != $new_template ) {
+      return $new_template;
+    }
+  }
+  return $template;
+}
+
+add_filter( 'template_include', 'wp_divi_add_search_template', 99 );
+
 require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
 require_once get_stylesheet_directory().'/includes/modules/modules.php';
-?>
