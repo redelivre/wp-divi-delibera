@@ -408,7 +408,7 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 
 		if ( $et_contact_error ) {
 			$form = sprintf( '
-				<div class="et_pb_contact" onclick="divi_child_teste();">
+				<div class="et_pb_contact" ">
 					<form class="et_pb_contact_form clearfix" method="post" action="%1$s">
 						%8$s
 						<input type="hidden" value="et_contact_proccess" name="et_pb_mobilizacaoform_submit_%7$s">
@@ -589,7 +589,8 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 				header('Content-Disposition: attachment; filename='.date('Ymd_His').'_'.__('registrations_report', 'et_builder').'.xls');
 				
 				$table_header = array();
-				$row = $registrations[0];
+				$row = end($registrations);
+				reset($registrations);
 				
 				foreach ($row as $item => $values)
 				{
@@ -638,6 +639,10 @@ class ET_Builder_Module_Formulario_Mobilizacao extends ET_Builder_Module {
 					    				}
 					    			}
 					    			echo "<td>{$registration[$key]['value']}</td>";
+					    		}
+					    		else 
+					    		{
+					    			echo "<td></td>";
 					    		}
 					    	}?>
 					    </tr><?php
