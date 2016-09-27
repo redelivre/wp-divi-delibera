@@ -3118,8 +3118,7 @@ class ET_Builder_Module_Make_Pressure_Search extends ET_Builder_Module {
 
 		$output .= '<form method="get" action="' . get_site_url() . '">';
 		 	$output .= '<p>';
-			$output .= '<input type="text" name="s">';
-			$output .= '<button>Buscar</button>';
+			$output .= 'Busca: <input type="text" name="s">';
 			$output .= '</p>';
 
 			$args = array( 'taxonomy' => 'public_agent_party','name' => 'public_agent_party', 'show_count' => 1, 'value_field' => 'slug', 'echo' => 0, 'show_option_none' => 'Selecione', 'option_none_value' => '');
@@ -3160,8 +3159,11 @@ class ET_Builder_Module_Make_Pressure_Search extends ET_Builder_Module {
 		 		$output .= wp_dropdown_categories( $args );
 		 		$output .= '</p>';
 	 		}
-	 		$output .= '<input type="hidden" name="post_type" value="public_agent">';
 
+	 		$output .= '<input type="hidden" name="post_type" value="public_agent">';
+	 		$output .= '<p>';
+	 		$output .= '<button>Buscar</button>';
+	 		$output .= '</p>';
 		$output .= '</form>';
 
 		return $output;
