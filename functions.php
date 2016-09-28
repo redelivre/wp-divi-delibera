@@ -990,7 +990,14 @@ function wp_divi_add_facebook_meta(){
   <meta property="og:type" content="website" />
   <meta property="og:title" content="<?= $post->post_title; ?>" />
   <meta property="og:description" content="<?= bloginfo("name"); ?>" />
+  
+  <?php if (is_home()): ?>
   <meta property="og:image" content="<?= the_post_thumbnail_url($post->ID); ?>" />
+  <?php else: ?>
+  <meta property="og:image" content="<?= get_header_image(); ?>" />
+  <?php endif; ?>
+      
+  
   <?php
 }
 
