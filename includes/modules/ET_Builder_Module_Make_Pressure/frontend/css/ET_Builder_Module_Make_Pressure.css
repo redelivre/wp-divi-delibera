@@ -1,3 +1,9 @@
+.makepressure_search_button{
+	position: absolute;
+    right: 106px;
+    top: -30px;
+}
+
 .makepressure_facebook{
 	margin:10px;
 	color:gray;
