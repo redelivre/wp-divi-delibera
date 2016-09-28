@@ -1761,21 +1761,21 @@ class ET_Builder_Module_Make_Pressure_Button extends ET_Builder_Module {
 		$the_query = new WP_Query( $args );
 
 		// The Loop
-		$aux = "";
-		$aux2 ="";
+		$emails = "";
+		$aux ="";
 		$button_url = "mailto:" . get_option('makepressure_more_emailsmails');
 		if ( $the_query->have_posts() ) {
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
-				$aux = get_post_meta(  get_the_ID(), 'public_agent_email', true) ? get_post_meta(  get_the_ID(), 'public_agent_email', true):"";
-				if ($aux) $aux2 .= $aux2 ? "," . $aux: $aux;
+				$emails = get_post_meta(  get_the_ID(), 'public_agent_email', true) ? get_post_meta(  get_the_ID(), 'public_agent_email', true):"";
+				if ($emails) $aux .= $aux ? "," . $emails: $emails;
 			}
 
-			$button_url .= $aux2 . "?subject=" . get_option('makepressure_email_title') . "&body=" . get_option('makepressure_email_body') ;
+			$button_url .= $aux . "?subject=" . get_option('makepressure_email_title') . "&body=" . get_option('makepressure_email_body') ;
 			/* Restore original Post Data */
 			wp_reset_postdata();
 		} else {
-			// no posts found
+			_e('Não há agentes públicos','makepressure');
 		}
 
 		// Nothing to output if neither Button Text nor Button URL defined
