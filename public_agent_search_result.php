@@ -45,7 +45,7 @@ if ( have_posts() ) {
         );
           echo $output;
       ?>
-      <h1><?php _e("Veja o resultado da sua Busca", "makepressure"); ?>:</h1>
+      <div><h1><?php _e("Veja o resultado da sua Busca", "makepressure"); ?>:</h1></div>
       <div class="et_pb_column et_pb_column_4_4  et_pb_column_2">
         <div class="et_pb_portfolio_grid clearfix et_pb_module et_pb_bg_layout_light  et_pb_public_agent_0">
           <?php 
