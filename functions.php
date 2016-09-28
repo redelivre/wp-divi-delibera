@@ -992,7 +992,7 @@ function wp_divi_add_facebook_meta(){
   <meta property="og:description" content="<?= bloginfo("name"); ?>" />
   <?php if (!is_null(the_post_thumbnail_url($post->ID))): ?>
   <meta property="og:image" content="<?= the_post_thumbnail_url($post->ID); ?>" />
-  <?php elseif ( bloginfo("name") == "Brasil 2036" ) : ?>
+  <?php elseif ( get_bloginfo("name") == "Brasil 2036" ) : ?>
   <meta property="og:image" content="http://brasil2036.org.br/files/2016/09/topo3.png" />
   <?php else: ?>
   <meta property="og:image" content="<?= get_header_image(); ?>" />
