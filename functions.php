@@ -982,5 +982,19 @@ function wp_divi_add_search_template($template) {
 
 add_filter( 'template_include', 'wp_divi_add_search_template', 99 );
 
+
+function wp_divi_add_facebook_meta(){
+  global $post;
+  ?>
+  <meta property="og:url" content="<?= get_permalink($post); ?>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="<?= $post->post_title; ?>" />
+  <meta property="og:description" content="<?= bloginfo("name"); ?>" />
+  <meta property="og:image" content="<?= the_post_thumbnail_url($post->ID); ?>" />
+  <?php
+}
+
+add_action('wp_head', 'wp_divi_add_facebook_meta');
+
 require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
 require_once get_stylesheet_directory().'/includes/modules/modules.php';
