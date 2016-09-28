@@ -55,9 +55,6 @@ if ( have_posts() ) {
             <div class="makepressure_grid makepressure_grid_item post-7848 public_agent type-public_agent status-publish has-post-thumbnail hentry public_agent_state-ac public_agent_party-pcdob public_agent_job-deputado_federal public_agent_genre-masculino public_agent_commission-suplente-cffc" id="post-7848">
 
 
-            <a href="<?php esc_url( the_permalink() ); ?>">
-              <?php the_post_thumbnail(array(175,175), array('class' => 'makepressure_post_main_image')); ?>
-            </a>
             <div class="makepressure_label">
               <h2 class="makepressure_title">
                 <a href="<?php esc_url( the_permalink() ); ?>"><?= get_the_title(); ?></a>
@@ -74,6 +71,9 @@ if ( have_posts() ) {
               ?>
               <strong class="makepressure_upper"><?=  $state->slug ?> / <?= $party->slug ?></strong>
             </div>
+            <a href="<?php esc_url( the_permalink() ); ?>">
+              <?php the_post_thumbnail(array(175,175), array('class' => 'makepressure_post_main_image')); ?>
+            </a>
 
             <p class="post-meta"></p>
             <?php 
