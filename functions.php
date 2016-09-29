@@ -984,23 +984,13 @@ add_filter( 'template_include', 'wp_divi_add_search_template', 99 );
 
 
 function wp_divi_add_facebook_meta(){
-  if (!is_search()){
     global $post;
     ?>
-    <meta property="og:url" content="<?= get_permalink($post); ?>" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="<?= $post->post_title; ?>" />
-    <meta property="og:description" content="<?= bloginfo("name"); ?>" />
-    <?php if ( has_post_thumbnail( $post ) ): ?>
-    <meta property="og:image" content="<?= the_post_thumbnail_url($post->ID); ?>" />
-    <?php elseif ( get_bloginfo("name") == "Brasil 2036" ) : ?>
-    <meta property="og:image" content="http://brasil2036.org.br/files/2016/09/topo3.png" />
-    <?php else: ?>
-    <meta property="og:image" content="<?= get_header_image(); ?>" />
-    <?php endif; ?>
-    <?php
-  }
+    <?php if ( get_bloginfo("name") == "Brasil 2036" ) : ?>
+    <meta property="og:image" content="http://brasil2036.org.br/files/2016/09/share_fb.png" />
+    <?php endif; 
 }
+
 
 add_action('wp_head', 'wp_divi_add_facebook_meta');
 
