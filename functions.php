@@ -32,7 +32,7 @@ function et_builder_add_main_elements() {
 }
 endif;
 
-/** modifica��es para alterar a taxonomia bairro */
+/** modificações para alterar a taxonomia bairro */
 
 /**
  * Registers the 'bairro' taxonomy for users.  This is a taxonomy for the 'user' object type rather than a
@@ -993,6 +993,8 @@ function wp_divi_add_facebook_meta(){
 
 
 add_action('wp_head', 'wp_divi_add_facebook_meta');
+
+add_filter('em_calendar_get_default_search', function ($atts) { $atts['blog']  = false;return $atts;});
 
 require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
 require_once get_stylesheet_directory().'/includes/modules/modules.php';
