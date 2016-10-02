@@ -3199,14 +3199,27 @@ if (is_plugin_active('BotaPressao/makepressure.php')){
   			'<%%= _.contains( et_pb_include_categories_temp, "%1$s" ) ? checked="checked" : "" %%>',
   			esc_html( $category->term_id )
   		);
-  
-  		$output .= sprintf(
-  			'%4$s<label><input type="checkbox" name="et_pb_include_categories" value="%1$s"%3$s> %2$s</label><br/>',
-  			esc_attr( $category->term_id ),
-  			esc_html( $category->name ),
-  			$contains,
-  			"\n\t\t\t\t\t"
-  		);
+      if ( $category->taxonomy == 'public_agent_commission' ) {
+        //separados pois não deve ser impresso apenas comissão sem suplente e titular
+        if ( $category->name == 'titular' || $category->name == 'suplente' ) {
+          $output .= sprintf(
+            '%4$s<label><input type="checkbox" name="et_pb_include_categories" value="%1$s"%3$s> %2$s</label><br/>',
+            esc_attr( $category->term_id ),
+            esc_html( get_category_parents( $category->term_id, false, ' &raquo; ' ) ),
+            $contains,
+            "\n\t\t\t\t\t"
+          );
+        }
+      }else{
+        $output .= sprintf(
+          '%4$s<label><input type="checkbox" name="et_pb_include_categories" value="%1$s"%3$s> %2$s</label><br/>',
+          esc_attr( $category->term_id ),
+          esc_html( $category->name ),
+          $contains,
+          "\n\t\t\t\t\t"
+        );
+      }
+  		
   	}
   
   	$output = '<div id="et_pb_include_categories">' . $output . '</div>';
