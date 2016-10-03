@@ -1,32 +1,42 @@
 
 .makepressure_facebook{
-	margin:10px;
+	margin:5px;
 	color:gray;
 }
 
 .makepressure_facebook:hover{
-	margin:10px;
+	margin:5px;
 	color:#3b5998;
 }
 
 .makepressure_twitter{
-	margin:10px;
+	margin:5px;
 	color:grey;
 }
 
 .makepressure_twitter:hover{
-	margin:10px;
+	margin:5px;
 	color:#1dcaff;
 }
 
 .makepressure_email{
-	margin:10px;
+	margin:5px;
 	color:gray;
 }
 
 .makepressure_email:hover{
-	margin:10px;
+	margin:5px;
 	color:red;
+}
+
+.makepressure_gmail{
+	margin:5px;
+	color:gray;
+}
+
+.makepressure_gmail:hover{
+	margin:5px;
+	color:#4285f4;
 }
 
 .makepressure_whatsapp{
