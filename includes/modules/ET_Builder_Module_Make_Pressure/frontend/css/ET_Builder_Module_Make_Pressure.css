@@ -1,8 +1,3 @@
-.makepressure_search_button{
-    position: absolute;
-    right: 73px;
-    top: -6px;
-}
 
 .makepressure_facebook{
 	margin:10px;
@@ -168,6 +163,19 @@
    .makepressure_action{
    		text-align: center;
    }
+
+  .makepressure_search_button{
+      position: absolute;
+      right: 73px;
+      top: -6px;
+  }
+
+  .makepressure_search_button_gmail{
+      position: absolute;
+      right: 268px;
+      top: -6px;
+  }
+
 }
 @media all and (max-width: 767px) {
 	.et_pb_column_1_2 .makepressure_grid_item {
