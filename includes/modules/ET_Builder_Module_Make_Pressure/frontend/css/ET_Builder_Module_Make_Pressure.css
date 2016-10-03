@@ -55,6 +55,7 @@
 	max-height: 50px;
 	overflow: hidden;
   	max-height: 3.8ch;
+  	min-height: 60px;
 }
 
 .makepressure_portfolio_item {
@@ -65,6 +66,7 @@
 .makepressure_label{
 	margin: 10px;
 	position: relative;
+    float:left;
 
 }
 
@@ -93,6 +95,18 @@
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+.makepressure_post_main_image {
+}
+
+.makepressure_search_button{
+	padding: 10px;
+	margin-left: 20px;
+}
+
+.makepressure_search_button_gmail{
+  padding: 10px;
 }
 
 @media all and (min-width: 1232px) {
@@ -130,6 +144,18 @@
        position: absolute;
        top: 95px;
    }
+
+  .makepressure_search_button{
+      position: absolute;
+      right: 73px;
+      top: -6px;
+  }
+
+  .makepressure_search_button_gmail{
+      position: absolute;
+      right: 305px;
+      top: -6px;
+  }
 }
 @media all and (min-width: 768px) and (max-width: 1232px) {
 	.et_pb_column_1_2 .makepressure_grid_item {
@@ -160,22 +186,10 @@
 	.makepressure_post_main_image{
 		width: 100%;
     }
+
    .makepressure_action{
    		text-align: center;
    }
-
-  .makepressure_search_button{
-      position: absolute;
-      right: 73px;
-      top: -6px;
-  }
-
-  .makepressure_search_button_gmail{
-      position: absolute;
-      right: 268px;
-      top: -6px;
-  }
-
 }
 @media all and (max-width: 767px) {
 	.et_pb_column_1_2 .makepressure_grid_item {
