@@ -80,6 +80,11 @@
 
 }
 
+.makepressure_clipboard{
+	padding:10px; 
+	width: 100%;
+}
+
 /* Tooltip container */
 .tooltip {
     position: relative;
