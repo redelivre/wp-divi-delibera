@@ -261,24 +261,26 @@ if (is_plugin_active('BotaPressao/makepressure.php')){
   
           	$term = get_term($category);
           	
-          	if($term->taxonomy == "category"){
-          		$terms_category .= $terms_category ? ", " . $category : $category;
-          	}
-          	if ($term->taxonomy == "public_agent_state") {
-          		$terms_states .= $terms_states ? ", " . $category : $category;
-          	}
-          	if ($term->taxonomy == "public_agent_job") {
-          		$terms_job .= $terms_job ? ", " . $category : $category;
-          	}
-          	if ($term->taxonomy == "public_agent_genre") {
-          		$terms_genre .= $terms_genre ? ", " . $category : $category;
-          	}
-          	if ($term->taxonomy == "public_agent_party") {
-          		$terms_party .= $terms_party ? ", " . $category : $category;
-          	}
-          	if ($term->taxonomy == "public_agent_commission") {
-          		$terms_commission .= $terms_commission ? ", " . $category : $category;
-          	}
+            if (!is_wp_error($term)) {
+              if($term->taxonomy == "category"){
+                $terms_category .= $terms_category ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_state") {
+                $terms_states .= $terms_states ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_job") {
+                $terms_job .= $terms_job ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_genre") {
+                $terms_genre .= $terms_genre ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_party") {
+                $terms_party .= $terms_party ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_commission") {
+                $terms_commission .= $terms_commission ? ", " . $category : $category;
+              }
+            }
   
           }        
   
@@ -805,24 +807,26 @@ if (is_plugin_active('BotaPressao/makepressure.php')){
           $categories = explode( ',', $include_categories );
           foreach ($categories as $category) {
           	$term = get_term($category);
-          	if($term->taxonomy == "category"){
-          		$terms_category .= $terms_category ? ", " . $category : $category;
-          	}
-          	elseif ($term->taxonomy == "public_agent_state") {
-          		$terms_states .= $terms_states ? ", " . $category : $category;
-          	}
-          	elseif ($term->taxonomy == "public_agent_job") {
-          		$terms_job .= $terms_job ? ", " . $category : $category;
-          	}
-          	elseif ($term->taxonomy == "public_agent_genre") {
-          		$terms_genre .= $terms_genre ? ", " . $category : $category;
-          	}
-          	elseif ($term->taxonomy == "public_agent_party") {
-          		$terms_party .= $terms_party ? ", " . $category : $category;
-          	}
-          	elseif ($term->taxonomy == "public_agent_commission") {
-          		$terms_commission .= $terms_commission ? ", " . $category : $category;
-          	}
+            if (!is_wp_error($term)) {
+              if($term->taxonomy == "category"){
+                $terms_category .= $terms_category ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_state") {
+                $terms_states .= $terms_states ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_job") {
+                $terms_job .= $terms_job ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_genre") {
+                $terms_genre .= $terms_genre ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_party") {
+                $terms_party .= $terms_party ? ", " . $category : $category;
+              }
+              if ($term->taxonomy == "public_agent_commission") {
+                $terms_commission .= $terms_commission ? ", " . $category : $category;
+              }
+            }
   
           }        
   
@@ -3177,8 +3181,402 @@ if (is_plugin_active('BotaPressao/makepressure.php')){
   	}
   }
   new ET_Builder_Module_Make_Pressure_Search;
+
+  class ET_Builder_Module_Make_Pressure_ClipBoard extends ET_Builder_Module {
+    function init() {
+      $this->name = esc_html__( 'ClipBoard - Lista de emails dos Agentes Públicos para copiar', 'et_builder' );
+      $this->slug = 'et_pb_clipboard';
   
-  // functions
+      $this->whitelisted_fields = array(
+        'fullwidth',
+        'include_categories',
+        'admin_label',
+        'module_id',
+        'module_class',
+        'open',
+        'title',
+        'content_new',
+        'open_toggle_background_color',
+        'closed_toggle_background_color',
+        'icon_color',
+        'closed_toggle_text_color',
+        'open_toggle_text_color',
+      );
+  
+      $this->fields_defaults = array(
+        'fullwidth'         => array( 'on' ),
+        'show_title'        => array( 'on' ),
+      );
+  
+      $this->main_css_element = '%%order_class%% .et_pb_toggle';
+      $this->advanced_options = array(
+        'fonts' => array(
+          'title' => array(
+            'label'    => esc_html__( 'Title', 'et_builder' ),
+            'css'      => array(
+              'main' => "{$this->main_css_element} h5",
+            ),
+          ),
+          'body'   => array(
+            'label'    => esc_html__( 'Body', 'et_builder' ),
+            'css'      => array(
+              'line_height' => "{$this->main_css_element} p",
+            ),
+          ),
+        ),
+        'background' => array(
+          'settings' => array(
+            'color' => 'alpha',
+          ),
+        ),
+        'border' => array(),
+        'custom_margin_padding' => array(
+          'use_margin' => false,
+          'css' => array(
+            'important' => 'all',
+          ),
+        ),
+      );
+      $this->custom_css_options = array(
+        'open_toggle' => array(
+          'label'    => esc_html__( 'Open Toggle', 'et_builder' ),
+          'selector' => '.et_pb_toggle_open',
+        ),
+        'toggle_title' => array(
+          'label'    => esc_html__( 'Toggle Title', 'et_builder' ),
+          'selector' => '.et_pb_toggle_title',
+        ),
+        'toggle_icon' => array(
+          'label'    => esc_html__( 'Toggle Icon', 'et_builder' ),
+          'selector' => '.et_pb_toggle_title:before',
+        ),
+        'toggle_content' => array(
+          'label'    => esc_html__( 'Toggle Content', 'et_builder' ),
+          'selector' => '.et_pb_toggle_content',
+        ),
+      );
+    }
+  
+    function get_fields() {
+      $fields = array(
+        'include_categories' => array(
+          'label'            => esc_html__( 'Include Categories', 'et_builder' ),
+          'renderer'         => 'et_builder_include_general_categories_option',
+          'option_category'  => 'basic_option',
+          'description'      => esc_html__( 'Select the categories that you would like to include in the feed.', 'et_builder' ),
+        ),
+        'fullwidth' => array(
+          'label'           => esc_html__( 'Layout', 'et_builder' ),
+          'type'            => 'select',
+          'option_category' => 'layout',
+          'options'         => array(
+            'off'  => esc_html__( 'Fullwidth', 'et_builder' ),
+            'on' => esc_html__( 'Grid', 'et_builder' ),
+          ),
+          'description'       => esc_html__( 'Choose your desired portfolio layout style.', 'et_builder' ),
+        ),
+        'title' => array(
+          'label'           => esc_html__( 'Title', 'et_builder' ),
+          'type'            => 'text',
+          'option_category' => 'basic_option',
+          'description'     => esc_html__( 'The toggle title will appear above the content and when the toggle is closed.', 'et_builder' ),
+        ),
+        'open' => array(
+          'label'           => esc_html__( 'State', 'et_builder' ),
+          'type'            => 'select',
+          'option_category' => 'basic_option',
+          'options'         => array(
+            'off' => esc_html__( 'Close', 'et_builder' ),
+            'on'  => esc_html__( 'Open', 'et_builder' ),
+          ),
+          'description' => esc_html__( 'Choose whether or not this toggle should start in an open or closed state.', 'et_builder' ),
+        ),
+        'content_new' => array(
+          'label'             => esc_html__( 'Content', 'et_builder' ),
+          'type'              => 'tiny_mce',
+          'option_category'   => 'basic_option',
+          'description'       => esc_html__( 'Input the main text content for your module here.', 'et_builder' ),
+        ),
+        'open_toggle_background_color' => array(
+          'label'             => esc_html__( 'Open Toggle Background Color', 'et_builder' ),
+          'type'              => 'color-alpha',
+          'custom_color'      => true,
+          'tab_slug'          => 'advanced',
+        ),
+        'open_toggle_text_color' => array(
+          'label'             => esc_html__( 'Open Toggle Text Color', 'et_builder' ),
+          'type'              => 'color',
+          'custom_color'      => true,
+          'tab_slug'          => 'advanced',
+        ),
+        'closed_toggle_background_color' => array(
+          'label'             => esc_html__( 'Closed Toggle Background Color', 'et_builder' ),
+          'type'              => 'color-alpha',
+          'custom_color'      => true,
+          'tab_slug'          => 'advanced',
+        ),
+        'closed_toggle_text_color' => array(
+          'label'             => esc_html__( 'Closed Toggle Text Color', 'et_builder' ),
+          'type'              => 'color',
+          'custom_color'      => true,
+          'tab_slug'          => 'advanced',
+        ),
+        'icon_color' => array(
+          'label'             => esc_html__( 'Icon Color', 'et_builder' ),
+          'type'              => 'color',
+          'custom_color'      => true,
+          'tab_slug'          => 'advanced',
+        ),
+        'disabled_on' => array(
+          'label'           => esc_html__( 'Disable on', 'et_builder' ),
+          'type'            => 'multiple_checkboxes',
+          'options'         => array(
+            'phone'   => esc_html__( 'Phone', 'et_builder' ),
+            'tablet'  => esc_html__( 'Tablet', 'et_builder' ),
+            'desktop' => esc_html__( 'Desktop', 'et_builder' ),
+          ),
+          'additional_att'  => 'disable_on',
+          'option_category' => 'configuration',
+          'description'     => esc_html__( 'This will disable the module on selected devices', 'et_builder' ),
+        ),
+        'admin_label' => array(
+          'label'       => esc_html__( 'Admin Label', 'et_builder' ),
+          'type'        => 'text',
+          'description' => esc_html__( 'This will change the label of the module in the builder for easy identification.', 'et_builder' ),
+        ),
+        'module_id' => array(
+          'label'           => esc_html__( 'CSS ID', 'et_builder' ),
+          'type'            => 'text',
+          'option_category' => 'configuration',
+          'tab_slug'        => 'custom_css',
+          'option_class'    => 'et_pb_custom_css_regular',
+        ),
+        'module_class' => array(
+          'label'           => esc_html__( 'CSS Class', 'et_builder' ),
+          'type'            => 'text',
+          'option_category' => 'configuration',
+          'tab_slug'        => 'custom_css',
+          'option_class'    => 'et_pb_custom_css_regular',
+        ),
+      );
+      return $fields;
+    }
+  
+    function shortcode_callback( $atts, $content = null, $function_name ) {
+      $module_id                      = $this->shortcode_atts['module_id'];
+      $module_class                   = $this->shortcode_atts['module_class'];
+      $fullwidth                      = $this->shortcode_atts['fullwidth'];
+      $include_categories             = $this->shortcode_atts['include_categories'];
+      $title                          = $this->shortcode_atts['title'];
+      $open                           = $this->shortcode_atts['open'];
+      $open_toggle_background_color   = $this->shortcode_atts['open_toggle_background_color'];
+      $closed_toggle_background_color = $this->shortcode_atts['closed_toggle_background_color'];
+      $icon_color                     = $this->shortcode_atts['icon_color'];
+      $closed_toggle_text_color       = $this->shortcode_atts['closed_toggle_text_color'];
+      $open_toggle_text_color         = $this->shortcode_atts['open_toggle_text_color'];
+
+      global $paged;
+  
+      $module_class = ET_Builder_Element::add_module_order_class( $module_class, $function_name );
+
+      if ( '' !== $open_toggle_background_color ) {
+        ET_Builder_Element::set_style( $function_name, array(
+          'selector'    => '%%order_class%%.et_pb_toggle_open',
+          'declaration' => sprintf(
+            'background-color: %1$s;',
+            esc_html( $open_toggle_background_color )
+          ),
+        ) );
+      }
+
+      if ( '' !== $closed_toggle_background_color ) {
+        ET_Builder_Element::set_style( $function_name, array(
+          'selector'    => '%%order_class%%.et_pb_toggle_close',
+          'declaration' => sprintf(
+            'background-color: %1$s;',
+            esc_html( $closed_toggle_background_color )
+          ),
+        ) );
+      }
+
+      if ( '' !== $icon_color ) {
+        ET_Builder_Element::set_style( $function_name, array(
+          'selector'    => '%%order_class%% .et_pb_toggle_title:before',
+          'declaration' => sprintf(
+            'color: %1$s;',
+            esc_html( $icon_color )
+          ),
+        ) );
+      }
+
+      if ( '' !== $closed_toggle_text_color ) {
+        ET_Builder_Element::set_style( $function_name, array(
+          'selector'    => '%%order_class%%.et_pb_toggle_close h5.et_pb_toggle_title',
+          'declaration' => sprintf(
+            'color: %1$s !important;',
+            esc_html( $closed_toggle_text_color )
+          ),
+        ) );
+      }
+
+      if ( '' !== $open_toggle_text_color ) {
+        ET_Builder_Element::set_style( $function_name, array(
+          'selector'    => '%%order_class%%.et_pb_toggle_open h5.et_pb_toggle_title',
+          'declaration' => sprintf(
+            'color: %1$s !important;',
+            esc_html( $open_toggle_text_color )
+          ),
+        ) );
+      }
+  
+      $args = array(
+        'posts_per_page' => -1,
+        'post_type'      => 'public_agent',
+      );
+
+      $terms_category = "";
+      $terms_states = "";
+      $terms_party = "";
+      $terms_job = "";
+      $terms_genre = "";
+      $terms_commission = "";
+      $categories = explode( ',', $include_categories );
+      foreach ($categories as $category) {
+
+        $term = get_term($category);
+        if (!is_wp_error($term)) {
+          if($term->taxonomy == "category"){
+            $terms_category .= $terms_category ? ", " . $category : $category;
+          }
+          if ($term->taxonomy == "public_agent_state") {
+            $terms_states .= $terms_states ? ", " . $category : $category;
+          }
+          if ($term->taxonomy == "public_agent_job") {
+            $terms_job .= $terms_job ? ", " . $category : $category;
+          }
+          if ($term->taxonomy == "public_agent_genre") {
+            $terms_genre .= $terms_genre ? ", " . $category : $category;
+          }
+          if ($term->taxonomy == "public_agent_party") {
+            $terms_party .= $terms_party ? ", " . $category : $category;
+          }
+          if ($term->taxonomy == "public_agent_commission") {
+            $terms_commission .= $terms_commission ? ", " . $category : $category;
+          }
+        }
+      }        
+  
+      $settings_states = "";
+      $settings_category = "";
+      $settings_job = "";
+      $settings_genre = "";
+      $settings_party = "";
+      $settings_commission = "";
+  
+      if ($terms_category){
+        $settings_category = array(
+            'taxonomy' => 'category',
+            'field' => 'id',
+            'terms' => explode( ',', $terms_category ),
+            'operator' => 'IN',
+          );
+      } if ($terms_states) {
+        $settings_states = array(
+            'taxonomy' => 'public_agent_state',
+            'field' => 'id',
+            'terms' => explode( ',', $terms_states ),
+            'operator' => 'IN',
+          );
+      } if ($terms_job) {
+        $settings_job = array(
+            'taxonomy' => 'public_agent_job',
+            'field' => 'id',
+            'terms' => explode( ',', $terms_job ),
+            'operator' => 'IN',
+          );
+      } if ($terms_genre) {
+        $settings_genre = array(
+            'taxonomy' => 'public_agent_genre',
+            'field' => 'id',
+            'terms' => explode( ',', $terms_genre ),
+            'operator' => 'IN',
+          );
+      } if ($terms_party) {
+        $settings_party = array(
+            'taxonomy' => 'public_agent_party',
+            'field' => 'id',
+            'terms' => explode( ',', $terms_party ),
+            'operator' => 'IN',
+          );
+      } if ($terms_commission) {
+        $settings_commission = array(
+            'taxonomy' => 'public_agent_commission',
+            'field' => 'id',
+            'terms' => explode( ',', $terms_commission ),
+            'operator' => 'IN',
+          );
+      }
+  
+      if ( '' !== $include_categories )
+        $args['tax_query'] = array(
+          'relation' => 'AND',
+          $settings_states,
+          $settings_category,
+          $settings_job,
+          $settings_genre,
+          $settings_party,
+          $settings_commission
+        );
+  
+      ob_start();
+      
+      query_posts( $args );
+
+      $emails = "";
+      $aux = "";
+      $output = "";
+      if ( have_posts() ) {
+        $output .= '<textarea class="makepressure_clipboard">';
+        while ( have_posts() ) {
+            the_post();
+            $emails = get_post_meta(  get_the_ID(), 'public_agent_email', true) ? get_post_meta(  get_the_ID(), 'public_agent_email', true):"";
+            if ($emails) $aux .= $aux ? "," . $emails: $emails;
+          }
+          $output .= $aux;
+        $output .= '</textarea>';
+        wp_reset_query();
+      } else {
+        if ( et_is_builder_plugin_active() ) {
+          include( ET_BUILDER_PLUGIN_DIR . 'includes/no-results.php' );
+        } else {
+          get_template_part( 'includes/no-results', 'index' );
+        }
+      }
+
+      $output = sprintf(
+        '<div%4$s class="et_pb_module et_pb_toggle %2$s%5$s">
+          <h5 class="et_pb_toggle_title">%1$s</h5>
+          <div class="et_pb_toggle_content clearfix">
+            %3$s
+          </div> <!-- .et_pb_toggle_content -->
+        </div> <!-- .et_pb_toggle -->',
+        esc_html( $title ),
+        ( 'on' === $open ? 'et_pb_toggle_open' : 'et_pb_toggle_close' ),
+        $this->shortcode_content.$output,
+        ( '' !== $module_id ? sprintf( ' id="%1$s"', esc_attr( $module_id ) ) : '' ),
+        ( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' )
+      );
+
+      $posts = ob_get_contents();
+  
+      ob_end_clean();
+  
+      return $output;
+    }
+  }
+  new ET_Builder_Module_Make_Pressure_ClipBoard;
+  
+  // FUNCTIONS
   
   if ( ! function_exists( 'et_builder_include_general_categories_option' ) ) :
   function et_builder_include_general_categories_option( $args = array() ) {
