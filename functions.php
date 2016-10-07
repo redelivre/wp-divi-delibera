@@ -32,7 +32,7 @@ function et_builder_add_main_elements() {
 }
 endif;
 
-/** modifica��es para alterar a taxonomia bairro */
+/** modificações para alterar a taxonomia bairro */
 
 /**
  * Registers the 'bairro' taxonomy for users.  This is a taxonomy for the 'user' object type rather than a
@@ -977,6 +977,25 @@ function divi_child_logout_redirect( $redirect_to, $requested_redirect_to, $user
 }
 add_filter( 'logout_redirect', 'divi_child_logout_redirect', 10, 3 );
 
+function wp_divi_add_search_template($template) {
+  if (is_search() && (
+	   array_key_exists ( 'public_agent_state' , $_GET ) ||
+	   array_key_exists ( 'public_agent_party' , $_GET ) ||
+	   array_key_exists ( 'public_agent_genre' , $_GET ) ||
+	   array_key_exists ( 'public_agent_job' , $_GET )
+   	) 
+  ) {
+    $new_template = locate_template( array('/public_agent_search_result.php') );
+    if ( '' != $new_template ) {
+      return $new_template;
+    }
+  }
+  return $template;
+}
+
+add_filter( 'template_include', 'wp_divi_add_search_template', 99 );
+
+add_filter('em_calendar_get_default_search', function ($atts) { $atts['blog']  = false;return $atts;});
+
 require_once get_stylesheet_directory().'/includes/widgets/WidgetLoginAjax.php';
 require_once get_stylesheet_directory().'/includes/modules/modules.php';
-?>
