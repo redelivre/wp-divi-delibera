@@ -235,12 +235,14 @@ add_action( 'edit_user_profile_update', 'my_save_user_bairro_terms' );
  */
 function my_save_user_bairro_terms( $user_id ) {
 
-    $tax = get_taxonomy( 'bairro' );
-
     /* Make sure the current user can edit the user and assign terms before proceeding. */
     if ( !current_user_can( 'edit_user', $user_id ) && current_user_can( $tax->cap->assign_terms ) )
         return false;
 
+    if( !array_key_exists('bairro', $_POST) )
+    	return true;
+        
+    $tax = get_taxonomy( 'bairro' );
     $term = esc_attr( $_POST['bairro'] );
 
     /* Sets the terms (we're just using a single term) for the user. */
@@ -964,6 +966,17 @@ function wp_divi_customize_login_css()
 }
 add_action( 'wp_head', 'wp_divi_customize_login_css');
 
+function divi_child_logout_redirect( $redirect_to, $requested_redirect_to, $user )
+{
+	$provider = get_theme_mod('divi-child-delibera-login-force-login-service', 'n');
+	if($provider != 'n')
+	{
+		return home_url( '/' );
+	}
+	return $redirect_to;
+}
+add_filter( 'logout_redirect', 'divi_child_logout_redirect', 10, 3 );
+
 function wp_divi_add_search_template($template) {
   if (is_search() && (
 	   array_key_exists ( 'public_agent_state' , $_GET ) ||
@@ -981,18 +994,6 @@ function wp_divi_add_search_template($template) {
 }
 
 add_filter( 'template_include', 'wp_divi_add_search_template', 99 );
-
-
-function wp_divi_add_facebook_meta(){
-    global $post;
-    ?>
-    <?php if ( get_bloginfo("name") == "Brasil 2036" ) : ?>
-    <meta property="og:image" content="http://brasil2036.org.br/files/2016/09/share_fb.png" />
-    <?php endif; 
-}
-
-
-add_action('wp_head', 'wp_divi_add_facebook_meta');
 
 add_filter('em_calendar_get_default_search', function ($atts) { $atts['blog']  = false;return $atts;});
 
