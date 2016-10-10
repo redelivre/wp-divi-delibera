@@ -4,7 +4,8 @@ get_header();
 global $wp_query;
 
 query_posts(array_merge($wp_query->query, array(
-    'posts_per_page' => -1
+    'posts_per_page' => -1,
+    //'fields'     => 'ids',
 )));
 
 if ( have_posts() ) {
@@ -48,21 +49,7 @@ if ( have_posts() ) {
       <?php
         $button_url = "https://mail.google.com/mail?view=cm&tf=0&to=";
         $button_text = "Super Pressão Gmail!";
-        $emails = "";
-        $aux = "";
-        // The Loop
-        if ( have_posts() ) {
 
-          while ( have_posts() ) {
-            the_post();
-            $emails = get_post_meta(  get_the_ID(), 'public_agent_email', true) ? get_post_meta(  get_the_ID(), 'public_agent_email', true):"";
-            if ($emails) $aux .= $aux ? "," . $emails: $emails;
-          }
-          wp_reset_postdata();
-          /* Restore original Post Data */
-        } else {
-          // no posts found
-        }
         $button_url .= $aux . "&su=" . get_option('makepressure_email_title') . "&body=" . get_option('makepressure_email_body');
         // Nothing to output if neither Button Text nor Button URL defined
         if ( '' === $button_text && '' === $button_url ) {
@@ -92,20 +79,26 @@ if ( have_posts() ) {
               <h2 class="makepressure_title">
                 <a href="<?php esc_url( the_permalink() ); ?>"><?= get_the_title(); ?></a>
               </h2>
+              <strong class="makepressure_upper">
               <?php 
                 $state = wp_get_post_terms( get_the_ID() , 'public_agent_state');
                 $party = wp_get_post_terms( get_the_ID() , 'public_agent_party');
-                if (is_array($state)) {
+                if (isset($state[0])) {
                   $state =  $state[0];
+                  echo $state->slug;
                 }
-                if (is_array($party)) {
+                if (isset($party[0])) {
                   $party = $party[0];
+                  echo ' / ';
+                  echo $party->slug;
                 }
               ?>
-              <strong class="makepressure_upper"><?=  $state->slug ?> / <?= $party->slug ?></strong>
+              </strong>
             </div>
             <a href="<?php esc_url( the_permalink() ); ?>">
+              <?php if(has_post_thumbnail()) : ?>
               <?php the_post_thumbnail(array(175,175), array('class' => 'makepressure_post_main_image')); ?>
+              <?php endif; ?>
             </a>
 
             <p class="post-meta"></p>
@@ -122,26 +115,26 @@ if ( have_posts() ) {
               <div class="makepressure_action" >
                 <?php
                 $genre = wp_get_post_terms( get_the_ID() , 'public_agent_genre');
-                  if (is_array($genre)) {
+                if (is_array($genre)) {
                     $genre = $genre[0];
                     $genre_slug = $genre->slug;
-                  }
+                }
                 if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-                    <a id="<?php echo get_the_ID(); ?>" class="fa fa-3x fa-envelope makepressure_email" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissim<?php echo $genre_slug=='feminino'?'a':'o'; ?>%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissim<?php echo $genre_slug=='feminino'?'a':'o'; ?>%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>" ></a>
+                  <a id="<?php echo get_the_ID(); ?>" class="fa fa-3x fa-envelope makepressure_email" href="mailto:<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>?subject=Excelentissim<?php echo $genre_slug=='feminino'?'a':'o'; ?>%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissim<?php echo $genre_slug=='feminino'?'a':'o'; ?>%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>" ></a>
                 <?php endif; ?>
 
                 <?php if ( get_post_meta(  get_the_ID(), 'public_agent_email', true) ) : ?>
-                <a id="<?php echo get_the_ID(); ?>" target="_blank" class="fa fa-3x fa-google makepressure_gmail" href="https://mail.google.com/mail?view=cm&tf=0&to=<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>&su=Excelentissim<?php echo $genre_slug=='feminino'?'a':'o'; ?>%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissim<?php echo $genre_slug=='feminino'?'a':'o'; ?>%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>" ></a>
-            <?php endif; ?>
+                  <a id="<?php echo get_the_ID(); ?>" target="_blank" class="fa fa-3x fa-google makepressure_gmail" href="https://mail.google.com/mail?view=cm&tf=0&to=<?php print_r(get_post_meta(  get_the_ID(), 'public_agent_email', true)); ?>&su=Excelentissim<?php echo $genre_slug=='feminino'?'a':'o'; ?>%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true)?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>&body=Excelentissim<?php echo $genre_slug=='feminino'?'a':'o'; ?>%20<?php echo get_post_meta(  get_the_ID(), 'public_agent_cargo', true) ?get_post_meta(  get_the_ID(), 'public_agent_cargo', true):""; ?>%20<?php echo get_the_title(); ?>,  %0A%0A<?php echo $email_body; ?>" ></a>
+                <?php endif; ?>
 
                 <?php if ( get_post_meta(  get_the_ID(), 'public_agent_twitter', true) ) : ?>
                   <a id="<?php echo get_the_ID(); ?>" class="fa fa-twitter fa-3x makepressure_twitter" href="https://twitter.com/intent/tweet?text=@<?php echo get_post_meta(  get_the_ID(), 'public_agent_twitter', true ); ?><?php echo $twitter_text; ?>&url=<?php echo $twitter_url; ?>&hashtags=<?php echo $twitter_hashtag; ?>" data-show-count="false"></a>
                 <?php endif; ?>
                 
                 <?php if ( get_post_meta(  get_the_ID(), 'public_agent_facebook', true) ) : ?>
-                  <a id="<?php echo get_the_ID(); ?>" class="fa fa-facebook-official fa-3x makepressure_facebook" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>""></a>
+                  <a id="<?php echo get_the_ID(); ?>" class="fa fa-facebook-official fa-3x makepressure_facebook" target="_brank" href="<?php echo get_post_meta(  get_the_ID(), 'public_agent_facebook', true); ?>"></a>
                 <?php endif; ?>
-              </div>
+                </div>
               </div> <!-- .et_pb_portfolio_item -->
           <?php
           }
