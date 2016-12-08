@@ -719,7 +719,8 @@ function divi_child_second_register()
 		$current_user = wp_get_current_user();
 		$valid_email = strpos($current_user->user_email, WPOPAUTH_INVALID_EMAIL) === false;
 		$telefone = get_user_meta($current_user->ID, 'telefone', true);
-		$bairro = array_shift(wp_get_object_terms($current_user->ID, 'bairro'));
+		$bairro_terms = wp_get_object_terms($current_user->ID, 'bairro');
+		$bairro = array_shift($bairro_terms);
 		$bairros = get_terms( 'bairro', array( 'hide_empty' => false, 'number' => 1 ) );
 		$firstname = $current_user->user_firstname;
 		$lastname = $current_user->user_lastname;
